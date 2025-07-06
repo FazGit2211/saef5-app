@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState } from "react";
+import { createContext, ReactNode, useState } from "react"
 
 interface PlayerType {
     name: string,
@@ -7,18 +7,26 @@ interface PlayerType {
     email: string
 };
 
+interface ContextType {
+    players: PlayerType[],
+    addPlayers: (player: PlayerType) => void,
+};
 
-const PlayersContext = createContext({});
+interface ProviderType {
+    children: ReactNode
+};
 
-const PlayersProvider: React.FC<PropsWithChildren> = ({ children }) => {
-    const [playerAdd, setPlayerAdd] = useState<PlayerType>();
-    const handleAddPlayer = (player: PlayerType) => {
-        setPlayerAdd(player);
+const PlayerContext = createContext<ContextType | {}>({});
+
+const PlayerProvider: React.FC<ProviderType> = ({ children }) => {
+    const [players, setPlayers] = useState<PlayerType[]>([]);
+    const addPlayers = (player: PlayerType) => {
+        const values = [...players, player];
+        setPlayers(values);
     };
-    
-    const data = {playerAdd, handleAddPlayer}
-    return <PlayersContext.Provider value={data}>{children}</PlayersContext.Provider>
-}
+    const data = { players, addPlayers };
 
-export { PlayersProvider }
-export default PlayersContext
+    return <PlayerContext.Provider value={data}>{children}</PlayerContext.Provider>
+}
+export { PlayerProvider }
+export default PlayerContext;

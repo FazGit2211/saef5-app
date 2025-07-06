@@ -1,3 +1,4 @@
+import PlayersContext from "@/context/PlayersContext";
 import { Button, FormGroup, TextField } from "@mui/material";
 import { useContext, useState } from "react";
 interface FormData {
@@ -5,11 +6,14 @@ interface FormData {
     surname: string,
     phoneNumber: number,
     email: string
-}
+};
+
 export default function FormCreate() {
     const [form, setForm] = useState<FormData>({
         name: "", surname: "", phoneNumber: 0, email: ""
     });
+
+    const context = useContext(PlayersContext)
 
     const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({

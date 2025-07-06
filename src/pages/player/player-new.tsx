@@ -1,7 +1,9 @@
+'use client'
+import PlayersContext from "@/context/PlayersContext";
 import FormCreate from "@/ui/forms/FormCreate";
 import { Add } from "@mui/icons-material";
 import { Box, Button, Modal } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 const style = {
     position: 'absolute',
@@ -14,11 +16,13 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
 export default function PlayerNew() {
     const [open, setOpen] = useState(false);
     const handleClose = () => { setOpen(false) };
     const handleOpen = () => { setOpen(true) };
+    const { players } = useContext(PlayersContext);
+
+
     return (
         <>
             <h3>Player page</h3>
