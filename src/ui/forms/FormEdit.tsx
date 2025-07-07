@@ -1,19 +1,15 @@
-import PlayersContext from "@/context/PlayersContext";
+import { useState } from "react";
 import { Button, FormGroup, TextField } from "@mui/material";
-import { useContext, useState } from "react";
 interface FormData {
     name: string,
     surname: string,
     phoneNumber: number,
     email: string
 };
-
-export default function FormCreate() {
+export default function FormEdit() {
     const [form, setForm] = useState<FormData>({
         name: "", surname: "", phoneNumber: 0, email: ""
     });
-
-    const { addPlayers } = useContext(PlayersContext)
 
     const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
@@ -40,9 +36,9 @@ export default function FormCreate() {
     };
 
     const handleSubmit = () => {
-        addPlayers(form);
         setForm({ name: '', surname: '', phoneNumber: 0, email: '' });
     }
+
     return (
         <>
             <FormGroup>
@@ -55,5 +51,5 @@ export default function FormCreate() {
                 <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
             </FormGroup>
         </>
-    );
+    )
 }

@@ -15,8 +15,10 @@ interface ContextType {
 interface ProviderType {
     children: ReactNode
 };
-
-const PlayerContext = createContext<ContextType | {}>({});
+const useContextDefault: ContextType = {
+    players:[],addPlayers:() => {}
+}
+const PlayerContext = createContext(useContextDefault);
 
 const PlayerProvider: React.FC<ProviderType> = ({ children }) => {
     const [players, setPlayers] = useState<PlayerType[]>([]);

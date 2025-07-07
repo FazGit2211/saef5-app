@@ -1,4 +1,3 @@
-'use client'
 import { Add } from "@mui/icons-material";
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { useRouter } from "next/router";

@@ -1,10 +1,15 @@
-'use client'
-import PlayersContext from "@/context/PlayersContext";
-import FormCreate from "@/ui/forms/FormCreate";
-import ListPlayer from "@/ui/lists/ListPlayer";
-import { Add, Close } from "@mui/icons-material";
 import { Box, Button, Modal } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
+import FormEdit from "../forms/FormEdit";
+import { Close } from "@mui/icons-material";
+
+
+interface PlayerType {
+    name: string,
+    surname: string,
+    phoneNumber: number,
+    email: string
+};
 
 const style = {
     position: 'absolute',
@@ -17,22 +22,19 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-export default function PlayerNew() {
+
+export default function ModalEditPlayer() {
     const [open, setOpen] = useState(false);
     const handleClose = () => { setOpen(false) };
     const handleOpen = () => { setOpen(true) };
-    const { players } = useContext(PlayersContext);
-
     return (
-        <>            
-            <Button variant="contained" onClick={handleOpen}><Add /></Button>            
-            {players.length === 0 ? <h3>No hay jugadores agregados</h3> : <ListPlayer />}
+        <>
             <Modal open={open}>
                 <Box sx={style}>
-                    <FormCreate />
+                    <FormEdit />
                     <Button variant="contained" onClick={handleClose}><Close /></Button>
                 </Box>
             </Modal>
         </>
-    );
+    )
 }
