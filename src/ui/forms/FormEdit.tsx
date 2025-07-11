@@ -1,15 +1,31 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, FormGroup, TextField } from "@mui/material";
+import PlayerContext from "@/context/PlayersContext";
 interface FormData {
     name: string,
     surname: string,
     phoneNumber: number,
     email: string
 };
-export default function FormEdit() {
+
+interface PlayerType {
+    name: string,
+    surname: string,
+    phoneNumber: number,
+    email: string
+};
+
+interface PropsType {
+    playerEdit: PlayerType,
+    indexPlayerEdit: number
+};
+
+
+export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsType) {
     const [form, setForm] = useState<FormData>({
-        name: "", surname: "", phoneNumber: 0, email: ""
+        name: playerEdit.name, surname: playerEdit.surname, phoneNumber: playerEdit.phoneNumber, email: playerEdit.email
     });
+    const { players, removePlayers, addPlayers } = useContext(PlayerContext);
 
     const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
@@ -37,6 +53,7 @@ export default function FormEdit() {
 
     const handleSubmit = () => {
         setForm({ name: '', surname: '', phoneNumber: 0, email: '' });
+        players.splice(indexPlayerEdit,1,form);
     }
 
     return (

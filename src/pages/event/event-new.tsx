@@ -1,14 +1,19 @@
+import PlayerContext from "@/context/PlayersContext";
+import ListPlayer from "@/ui/lists/ListPlayer";
 import { Add } from "@mui/icons-material";
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { useContext, useState } from "react";
 
 export default function Event() {
     const router = useRouter();
+    const [disabledBtn, setDisabledBtn] = useState(false);
+    const { players } = useContext(PlayerContext);
 
     const handleClickRedirect = () => {
         router.push('/player/player-new');
     };
-    
+
     return (
         <>
             <Card>
@@ -24,6 +29,7 @@ export default function Event() {
                     <Button variant="contained">Canchas<Add></Add></Button>
                 </CardActions>
             </Card>
+            {players.length === 0 ? null : <ListPlayer disabledBtn={disabledBtn} />}
         </>
     );
 }

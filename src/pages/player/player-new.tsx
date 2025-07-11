@@ -1,38 +1,25 @@
 'use client'
 import PlayersContext from "@/context/PlayersContext";
-import FormCreate from "@/ui/forms/FormCreate";
 import ListPlayer from "@/ui/lists/ListPlayer";
-import { Add, Close } from "@mui/icons-material";
-import { Box, Button, Modal } from "@mui/material";
+import ModalCreatePlayer from "@/ui/modals/ModalCreatePlayer";
+import { Add } from "@mui/icons-material";
+import { Button } from "@mui/material";
 import { useContext, useState } from "react";
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+
 export default function PlayerNew() {
-    const [open, setOpen] = useState(false);
-    const handleClose = () => { setOpen(false) };
-    const handleOpen = () => { setOpen(true) };
+
+    const [openModal, setOpenModal] = useState(false);
+    const handleClose = () => { setOpenModal(false) };
+    const handleOpen = () => { setOpenModal(true) };
     const { players } = useContext(PlayersContext);
 
+
     return (
-        <>            
-            <Button variant="contained" onClick={handleOpen}><Add /></Button>            
+        <>
+            <Button variant="contained" onClick={handleOpen}><Add /></Button>
             {players.length === 0 ? <h3>No hay jugadores agregados</h3> : <ListPlayer />}
-            <Modal open={open}>
-                <Box sx={style}>
-                    <FormCreate />
-                    <Button variant="contained" onClick={handleClose}><Close /></Button>
-                </Box>
-            </Modal>
+            {openModal ? <ModalCreatePlayer openModal={openModal} closeModal={handleClose} /> : null}
         </>
     );
 }

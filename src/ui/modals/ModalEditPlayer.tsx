@@ -11,6 +11,13 @@ interface PlayerType {
     email: string
 };
 
+interface PropsType {
+    openModal: boolean,
+    closeModal: () => void,
+    dataEdit: PlayerType,
+    indexPlayer: number
+};
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -23,16 +30,14 @@ const style = {
     p: 4,
 };
 
-export default function ModalEditPlayer() {
-    const [open, setOpen] = useState(false);
-    const handleClose = () => { setOpen(false) };
-    const handleOpen = () => { setOpen(true) };
+export default function ModalEditPlayer({ openModal, closeModal, dataEdit, indexPlayer }: PropsType) {
+    const [open, setOpen] = useState(openModal);
     return (
         <>
             <Modal open={open}>
                 <Box sx={style}>
-                    <FormEdit />
-                    <Button variant="contained" onClick={handleClose}><Close /></Button>
+                    <FormEdit playerEdit={dataEdit} indexPlayerEdit={indexPlayer}/>
+                    <Button variant="contained" onClick={closeModal}><Close /></Button>
                 </Box>
             </Modal>
         </>
