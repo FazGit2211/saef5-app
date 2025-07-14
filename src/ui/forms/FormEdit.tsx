@@ -1,12 +1,7 @@
 import { useContext, useState } from "react";
-import { Button, FormGroup, TextField } from "@mui/material";
+import { Alert, Button, FormGroup, TextField } from "@mui/material";
 import PlayerContext from "@/context/PlayersContext";
-interface FormData {
-    name: string,
-    surname: string,
-    phoneNumber: number,
-    email: string
-};
+import useForm from "@/hooks/useForm";
 
 interface PlayerType {
     name: string,
@@ -20,40 +15,32 @@ interface PropsType {
     indexPlayerEdit: number
 };
 
+interface FormType {
+    initialForm: PlayerType,
+    validationsForm: () => void
+};
+
+
 
 export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsType) {
-    const [form, setForm] = useState<FormData>({
-        name: playerEdit.name, surname: playerEdit.surname, phoneNumber: playerEdit.phoneNumber, email: playerEdit.email
-    });
-    const { players, removePlayers, addPlayers } = useContext(PlayerContext);
-
-    const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, name: e.target.value
-        })
-    };
-
-    const handleChangeSurname = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, surname: e.target.value
-        })
-    };
-
-    const handleChangePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, phoneNumber: parseInt(e.target.value)
-        })
-    };
-
-    const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, email: e.target.value
-        })
-    };
+    //Inicializar form con los valores segun el jugador a editar
+    const defaultValues: FormType = {
+        initialForm: { name: playerEdit.name, surname: playerEdit.surname, phoneNumber: playerEdit.phoneNumber, email: playerEdit.email },
+        validationsForm: () => { }
+    }
+    const {form, setForm, handleChangeName, handleChangeSurname, handleChangePhoneNumber, handleChangeEmail} = useForm(defaultValues);
+    //Manejar el estado para los alert de mensajes
+    const [sendForm, setSendForm] = useState(false);
+    //Llamar al listado actual
+    const { players } = useContext(PlayerContext);
 
     const handleSubmit = () => {
-        setForm({ name: '', surname: '', phoneNumber: 0, email: '' });
-        players.splice(indexPlayerEdit,1,form);
+        players.splice(indexPlayerEdit, 1, form);
+        setSendForm(true);
+        setTimeout(() => {
+            setSendForm(false);
+            setForm({name:"",surname:"",phoneNumber:0,email:""});
+        }, 3000)
     }
 
     return (
@@ -66,6 +53,7 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsType) {
             </FormGroup>
             <FormGroup>
                 <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
+                {sendForm ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
             </FormGroup>
         </>
     )

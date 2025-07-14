@@ -2,7 +2,7 @@ import PlayerContext from "@/context/PlayersContext";
 import { Delete, Edit } from "@mui/icons-material";
 import { Button, ListItem } from "@mui/material";
 import List from "@mui/material/List";
-import { use, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import ModalEditPlayer from "../modals/ModalEditPlayer";
 import DeletedDialog from "../dialogs/DeletedDialog";
 import { useRouter } from "next/router";
@@ -15,11 +15,8 @@ interface PlayerType {
     email: string
 };
 
-interface PropsType {
-    disabledBtn: boolean
-}
 
-export default function ListPlayer({ disabledBtn }: PropsType) {
+export default function ListPlayer() {
     const [visibleModal, setVisibleModal] = useState(false);
     const [editPlayer, setEditPlayer] = useState<PlayerType>({ name: "", surname: "", phoneNumber: 0, email: "" });
     const { players } = useContext(PlayerContext);

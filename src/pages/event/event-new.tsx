@@ -1,35 +1,68 @@
 import PlayerContext from "@/context/PlayersContext";
-import ListPlayer from "@/ui/lists/ListPlayer";
-import { Add } from "@mui/icons-material";
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
-import { useRouter } from "next/router";
+import useApi from "@/hooks/useApi";
+import CardNewEvent from "@/ui/cards/CardNewEvent";
+import CardPlayers from "@/ui/cards/CardPlayers";
+import { Save } from "@mui/icons-material";
+import { Alert, Button, Card, CardActions, CardContent, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
-export default function Event() {
-    const router = useRouter();
-    const [disabledBtn, setDisabledBtn] = useState(false);
-    const { players } = useContext(PlayerContext);
+interface StadiumType {
+    name: string,
+    address: string
+}
 
-    const handleClickRedirect = () => {
-        router.push('/player/player-new');
+export default function Event() {
+    const [date, setDate] = useState("");
+    const [stadium, setStadium] = useState<StadiumType>({ name: "", address: "" });
+    //Manejar el estado para los alert de mensajes
+    const [sendForm, setSendForm] = useState(false);
+    //Llamar al contexto
+    const { players, removeAll } = useContext(PlayerContext);
+    let url = "http://localhost:5000/api/event";
+    const { loading, error, postEvent } = useApi(url);
+
+
+    const handleSetDate = (d: string) => {
+        setDate(d);
     };
+
+    const handleSetStadium = (s: StadiumType) => {
+        setStadium(s);
+    };
+
+    const handleSendEvent = () => {
+        postEvent({ date, stadium, players });
+        setSendForm(true);
+        handleError();
+        setTimeout(()=>{
+            setSendForm(false)
+        },3000)
+    };
+
+    const handleError = () => {
+        if (!error.errorValue) {
+            setDate("");
+            setStadium({ name: "", address: "" });
+            removeAll();
+        }
+    }
+
+
 
     return (
         <>
+            <CardNewEvent date={date} setDate={handleSetDate} stadium={stadium} addStadium={handleSetStadium} />
             <Card>
-                <CardMedia></CardMedia>
                 <CardContent>
-                    <Typography>
-                        Desde esta seccion podra crear un evento nuevo mediante la agregacion de las personas, la fecha de realizacion y la seleccion de las canchas.
-                    </Typography>
+                    <CardPlayers />
+                    <Typography>{date}</Typography>
+                    <Typography>{stadium.name + '' + stadium.address}</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button variant="contained" onClick={handleClickRedirect}>Participantes<Add></Add></Button>
-                    <Button variant="contained">Fecha<Add></Add></Button>
-                    <Button variant="contained">Canchas<Add></Add></Button>
+                    {((players.length != 0) && (date != '') && (stadium.name != '') && (stadium.address != '') ? <Button variant="contained" onClick={handleSendEvent}><Save /></Button> : null)}
+                    {sendForm ? <Alert variant="filled" severity="info">{error.message}</Alert> : null}
                 </CardActions>
             </Card>
-            {players.length === 0 ? null : <ListPlayer disabledBtn={disabledBtn} />}
         </>
     );
 }

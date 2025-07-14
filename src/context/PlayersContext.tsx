@@ -12,14 +12,15 @@ interface ContextType {
     playersEdited: PlayerType[],
     addPlayers: (player: PlayerType) => void,
     addPlayersEdited: (player: PlayerType) => void,
-    removePlayers: (indexPlayer: number) => void
+    removePlayers: (indexPlayer: number) => void,
+    removeAll: () => void;
 };
 
 interface ProviderType {
     children: ReactNode
 };
 const useContextDefault: ContextType = {
-    players: [], playersEdited: [], addPlayers: () => { }, addPlayersEdited: () => { }, removePlayers: () => { }
+    players: [], playersEdited: [], addPlayers: () => { }, addPlayersEdited: () => { }, removePlayers: () => { }, removeAll: () => { }
 }
 const PlayerContext = createContext(useContextDefault);
 
@@ -38,11 +39,15 @@ const PlayerProvider: React.FC<ProviderType> = ({ children }) => {
     }
 
     const removePlayers = (indexPlayer: number) => {
-        players.splice(indexPlayer,1);
+        players.splice(indexPlayer, 1);
         console.log(players);
     };
 
-    const data = { players, playersEdited, addPlayers, addPlayersEdited, removePlayers };
+    const removeAll = () => {
+        setPlayers(useContextDefault.players);
+    }
+
+    const data = { players, playersEdited, addPlayers, addPlayersEdited, removePlayers, removeAll };
 
     return <PlayerContext.Provider value={data}>{children}</PlayerContext.Provider>
 }

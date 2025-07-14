@@ -1,48 +1,42 @@
 import PlayersContext from "@/context/PlayersContext";
-import { Button, FormGroup, TextField } from "@mui/material";
+import useForm from "@/hooks/useForm";
+import { Alert, Button, FormGroup, TextField } from "@mui/material";
 import { useContext, useState } from "react";
-interface FormData {
+
+interface PlayerType {
     name: string,
     surname: string,
     phoneNumber: number,
     email: string
 };
 
+interface FormType {
+    initialForm: PlayerType,
+    validationsForm: () => void
+};
+
+const defaultValues: FormType = {
+    initialForm: { name: "", surname: "", phoneNumber: 0, email: "" },
+    validationsForm: () => { }
+}
 export default function FormCreate() {
-    const [form, setForm] = useState<FormData>({
-        name: "", surname: "", phoneNumber: 0, email: ""
-    });
-
-    const { addPlayers } = useContext(PlayersContext)
-
-    const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, name: e.target.value
-        })
-    };
-
-    const handleChangeSurname = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, surname: e.target.value
-        })
-    };
-
-    const handleChangePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, phoneNumber: parseInt(e.target.value)
-        })
-    };
-
-    const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form, email: e.target.value
-        })
-    };
+    //Manejar el estado para los alert de mensajes
+    const [sendForm, setSendForm] = useState(false);
+    //Llamar al contexto
+    const { addPlayers } = useContext(PlayersContext);
+    //Llamar al hook personalizado del formulario
+    const { form, setForm, handleChangeName, handleChangeSurname, handleChangePhoneNumber, handleChangeEmail } = useForm(defaultValues);
 
     const handleSubmit = () => {
         addPlayers(form);
-        setForm({ name: '', surname: '', phoneNumber: 0, email: '' });
-    }
+        setSendForm(true);
+        setTimeout(() => {
+            setSendForm(false);
+            setForm({name:"",surname:"",phoneNumber:0,email:""});
+        }, 3000);
+        
+    };
+
     return (
         <>
             <FormGroup>
@@ -53,6 +47,7 @@ export default function FormCreate() {
             </FormGroup>
             <FormGroup>
                 <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
+                {sendForm ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
             </FormGroup>
         </>
     );
