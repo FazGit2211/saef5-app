@@ -13,6 +13,7 @@ interface StadiumType {
 };
 
 interface EventType {
+    codigo: string,
     date: string,
     stadium: StadiumType,
     players: PlayerType[]
@@ -21,38 +22,56 @@ interface EventType {
 interface ErrorType {
     errorValue: boolean,
     message: string
-}
+};
+
 
 const useApi = (url: string) => {
 
-    const [data, setData] = useState([]);
+    const [dataInfo, setDataInfo] = useState([]);
     const [error, setError] = useState<ErrorType>({ errorValue: false, message: "" });
     const [loading, setLoading] = useState(false);
 
-    const postEvent = async ({ date, stadium, players }: EventType) => {
+    const postEvent = async ({ codigo, date, stadium, players }: EventType) => {
         setLoading(true);
-        const data = {
-            date, stadium, players
+        const dataValues = {
+            codigo, date, stadium, players
         };
 
         let options: RequestInit = {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(dataValues)
         };
 
         try {
             const response = await fetch(url, options);
             if (response.ok) {
                 setLoading(true);
-                setError({errorValue: false, message: "Enviado correctamente."})
+                setError({ errorValue: false, message: "Enviado correctamente." })
             }
         } catch (error) {
             setError({ errorValue: true, message: "Error al enviar datos." });
-        };
+        } finally {
+            setLoading(false);
+        }
 
+    };
+
+    const getEventByCodigo = async (codigo: string) => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${url}/${codigo}`);
+            if (response.ok) {
+                const dataValues = await response.json();
+                setDataInfo(dataValues);
+            }
+        } catch (error) {
+            setError({ errorValue: true, message: "Error al enviar datos." });
+        } finally {
+            setLoading(false);
+        }
     }
 
-    return { loading, error, postEvent }
+    return { dataInfo, loading, error, postEvent, getEventByCodigo }
 }
 export default useApi;

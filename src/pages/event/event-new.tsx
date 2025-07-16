@@ -3,7 +3,7 @@ import useApi from "@/hooks/useApi";
 import CardNewEvent from "@/ui/cards/CardNewEvent";
 import CardPlayers from "@/ui/cards/CardPlayers";
 import { Save } from "@mui/icons-material";
-import { Alert, Button, Card, CardActions, CardContent, Typography } from "@mui/material";
+import { Alert, Button, Card, CardActions, CardContent, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
 interface StadiumType {
@@ -14,6 +14,7 @@ interface StadiumType {
 export default function Event() {
     const [date, setDate] = useState("");
     const [stadium, setStadium] = useState<StadiumType>({ name: "", address: "" });
+    const [codigo, setCodigo] = useState("");
     //Manejar el estado para los alert de mensajes
     const [sendForm, setSendForm] = useState(false);
     //Llamar al contexto
@@ -31,23 +32,19 @@ export default function Event() {
     };
 
     const handleSendEvent = () => {
-        postEvent({ date, stadium, players });
+        postEvent({ codigo, date, stadium, players });
         setSendForm(true);
         handleError();
-        setTimeout(()=>{
+        setTimeout(() => {
             setSendForm(false)
-        },3000)
+        }, 6000)
     };
 
     const handleError = () => {
-        if (!error.errorValue) {
-            setDate("");
-            setStadium({ name: "", address: "" });
-            removeAll();
-        }
-    }
-
-
+        setDate("");
+        setStadium({ name: "", address: "" });
+        removeAll();
+    };
 
     return (
         <>
@@ -57,9 +54,11 @@ export default function Event() {
                     <CardPlayers />
                     <Typography>{date}</Typography>
                     <Typography>{stadium.name + '' + stadium.address}</Typography>
+                    <Typography><TextField label="Nombre, codigo o alias." variant="outlined" value={codigo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCodigo(e.target.value)}></TextField></Typography>
                 </CardContent>
                 <CardActions>
-                    {((players.length != 0) && (date != '') && (stadium.name != '') && (stadium.address != '') ? <Button variant="contained" onClick={handleSendEvent}><Save /></Button> : null)}
+                    {((players.length !== 0) && (date !== "") && (stadium.name !== "") && (stadium.address !== "") && (codigo !== "") ? <Button variant="contained" onClick={handleSendEvent}><Save /></Button> : null)}
+                    {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
                     {sendForm ? <Alert variant="filled" severity="info">{error.message}</Alert> : null}
                 </CardActions>
             </Card>
