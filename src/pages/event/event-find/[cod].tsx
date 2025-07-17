@@ -20,17 +20,13 @@ export default function EventFind() {
         }
     }, [url]);
 
-    if (dataInfo.length !== 0) {
-        dataInfo.forEach((elem) => {
-            console.log(elem);
-        })
-    };
 
+    console.log(dataInfo)
     return (
         <>
             <h3>Event find page</h3>
             {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-            {dataInfo.length == 0 ? <Alert variant="filled" severity="info">No hay datos {error.message}</Alert> : null}
+            {dataInfo ? <Alert variant="filled" severity="info">No hay datos {error.message}</Alert> : null}
         </>
     );
 };

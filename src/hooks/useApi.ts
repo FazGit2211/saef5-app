@@ -27,7 +27,7 @@ interface ErrorType {
 
 const useApi = (url: string) => {
 
-    const [dataInfo, setDataInfo] = useState([]);
+    const [dataInfo, setDataInfo] = useState<EventType>();
     const [error, setError] = useState<ErrorType>({ errorValue: false, message: "" });
     const [loading, setLoading] = useState(false);
 
