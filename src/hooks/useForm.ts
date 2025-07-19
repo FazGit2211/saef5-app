@@ -6,16 +6,24 @@ interface PlayerType {
     email: string
 };
 
+interface ErrorType {
+    errorValue: boolean,
+    name: string,
+    surname: string,
+    phoneNumber: string,
+    email: string
+}
+
 interface FormType {
     initialForm: PlayerType,
-    validationsForm: () => void
+    validationsForm: (form: PlayerType) => ErrorType
 };
 
-const useForm = ({ initialForm }: FormType) => {
+const useForm = ({ initialForm, validationsForm }: FormType) => {
     //Inicializar form con valores vacios
     const [form, setForm] = useState<PlayerType>(initialForm);
     //Estado para obtener los errores
-    const [error, setError] = useState({});
+    const [error, setError] = useState<ErrorType>({ errorValue: false, name: "", surname: "", phoneNumber: "", email: "" });
 
     //Funciones para detectar el ingreso de datos en los inputs
     const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +31,11 @@ const useForm = ({ initialForm }: FormType) => {
             ...form, name: e.target.value
         })
     };
+
+    const handleBlurName = (e: React.FocusEvent<HTMLInputElement>) => {
+        handleChangeName(e);
+        setError(validationsForm(form))
+    }
 
     const handleChangeSurname = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
@@ -42,7 +55,7 @@ const useForm = ({ initialForm }: FormType) => {
         })
     };
 
-    return { form, setForm, handleChangeName, handleChangeSurname, handleChangePhoneNumber, handleChangeEmail }
+    return { form, error, setForm, handleChangeName, handleBlurName, handleChangeSurname, handleChangePhoneNumber, handleChangeEmail }
 }
 
 export default useForm;

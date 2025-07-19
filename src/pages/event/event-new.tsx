@@ -49,12 +49,12 @@ export default function Event() {
     return (
         <>
             <CardNewEvent date={date} setDate={handleSetDate} stadium={stadium} addStadium={handleSetStadium} />
+            <CardPlayers />
             <Card>
                 <CardContent>
-                    <CardPlayers />
                     <Typography>{date}</Typography>
                     <Typography>{stadium.name + '' + stadium.address}</Typography>
-                    <Typography><TextField label="Nombre, codigo o alias." variant="outlined" value={codigo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCodigo(e.target.value)}></TextField></Typography>
+                    <TextField label="Nombre, codigo o alias del evento." variant="outlined" value={codigo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCodigo(e.target.value)}></TextField>
                 </CardContent>
                 <CardActions>
                     {((players.length !== 0) && (date !== "") && (stadium.name !== "") && (stadium.address !== "") && (codigo !== "") ? <Button variant="contained" onClick={handleSendEvent}><Save /></Button> : null)}

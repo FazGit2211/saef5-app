@@ -1,5 +1,5 @@
 import PlayerContext from "@/context/PlayersContext";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, People } from "@mui/icons-material";
 import { Button, ListItem } from "@mui/material";
 import List from "@mui/material/List";
 import { useContext, useState } from "react";
@@ -49,7 +49,7 @@ export default function ListPlayer() {
     return (
         <>
             <List>
-                {players.map((elem, index) => (<ListItem key={elem.name}>{elem.name} <Button variant="contained" onClick={() => handleDeletedItem(index)}><Delete /></Button> <Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button> </ListItem>))}
+                {players.map((elem, index) => (<ListItem key={elem.name}><People /> {elem.name} <Button variant="contained" onClick={() => handleDeletedItem(index)}><Delete /></Button> <Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button> </ListItem>))}
                 <Button variant="contained" onClick={handleConfirmBtn}>CONFIRMAR JUGADORES</Button>
             </List>
             {visibleModal ? <ModalEditPlayer openModal={visibleModal} closeModal={handleVisibleModal} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}

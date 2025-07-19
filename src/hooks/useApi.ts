@@ -37,7 +37,7 @@ const useApi = (url: string) => {
             codigo, date, stadium, players
         };
 
-        let options: RequestInit = {
+        const options: RequestInit = {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(dataValues)
@@ -49,8 +49,10 @@ const useApi = (url: string) => {
                 setLoading(true);
                 setError({ errorValue: false, message: "Enviado correctamente." })
             }
-        } catch (error) {
-            setError({ errorValue: true, message: "Error al enviar datos." });
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError({ errorValue: true, message: error.message });
+            }
         } finally {
             setLoading(false);
         }
@@ -60,13 +62,15 @@ const useApi = (url: string) => {
     const getEventByCodigo = async (codigo: string) => {
         try {
             setLoading(true);
-            const response = await fetch(`${url}/${codigo}`);
+            const response = await fetch(`${url}/?codigo=${codigo}`);
             if (response.ok) {
                 const dataValues = await response.json();
                 setDataInfo(dataValues);
             }
-        } catch (error) {
-            setError({ errorValue: true, message: "Error al enviar datos." });
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError({ errorValue: true, message: error.message });
+            }
         } finally {
             setLoading(false);
         }
