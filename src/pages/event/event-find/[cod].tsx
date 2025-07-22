@@ -21,17 +21,25 @@ export default function EventFind() {
     }, [url]);
 
     useEffect(() => {
-        if (dataInfo) {
-            addEvent({ date: dataInfo.date, codigo: dataInfo.codigo })
+        if (dataInfo.length !== 0) {
+            console.log("Tiene valores");
+            dataInfo.forEach((elem) => {
+                addEvent({ date: elem.date, codigo: elem.codigo });
+                elem.players.forEach((player) => {
+                    addPlayers({name: player.name, surname: player.surname, phoneNumber: player.phoneNumber, email: player.email});
+                })                
+            })
+        } else {
+            console.log("No hay valores");
         }
-    }, [dataInfo])
+    }, [dataInfo]);
 
 
     return (
         <>
             <h3>Event find page</h3>
             {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-            {dataInfo ? <Alert variant="filled" severity="info">No hay datos {error.message}</Alert> : <ListDataEvent />}
+            <ListDataEvent />
         </>
     );
 };

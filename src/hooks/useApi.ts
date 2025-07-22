@@ -27,7 +27,7 @@ interface ErrorType {
 
 const useApi = (url: string) => {
 
-    const [dataInfo, setDataInfo] = useState<EventType>();
+    const [dataInfo, setDataInfo] = useState<EventType[]>([]);
     const [error, setError] = useState<ErrorType>({ errorValue: false, message: "" });
     const [loading, setLoading] = useState(false);
 
@@ -64,7 +64,7 @@ const useApi = (url: string) => {
             setLoading(true);
             const response = await fetch(`${url}/?codigo=${codigo}`);
             if (response.ok) {
-                const dataValues = await response.json();
+                const dataValues = await response.json();                
                 setDataInfo(dataValues);
             }
         } catch (error: unknown) {
