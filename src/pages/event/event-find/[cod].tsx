@@ -3,7 +3,7 @@ import useApi from "@/hooks/useApi";
 import ListDataEvent from "@/ui/lists/ListDataEvent";
 import { Alert } from "@mui/material";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 export default function EventFind() {
     const route = useRouter();
@@ -14,19 +14,24 @@ export default function EventFind() {
 
     useEffect(() => {
         if (codigoEvent == undefined) {
-            console.log(error);
+            return;
         } else {
             getEventByCodigo(codigoEvent.toString());
         }
     }, [url]);
 
+    useEffect(() => {
+        if (dataInfo) {
+            addEvent({ date: dataInfo.date, codigo: dataInfo.codigo })
+        }
+    }, [dataInfo])
 
-    console.log(dataInfo)
+
     return (
         <>
             <h3>Event find page</h3>
             {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-            {dataInfo ? <Alert variant="filled" severity="info">No hay datos {error.message}</Alert> : null}
+            {dataInfo ? <Alert variant="filled" severity="info">No hay datos {error.message}</Alert> : <ListDataEvent />}
         </>
     );
 };

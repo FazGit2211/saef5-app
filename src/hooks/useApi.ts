@@ -1,18 +1,18 @@
 import { useState } from "react"
 
-interface PlayerType {
+export interface PlayerType {
     name: string,
     surname: string,
     phoneNumber: number,
     email: string
 };
 
-interface StadiumType {
+export interface StadiumType {
     name: string,
     address: string
 };
 
-interface EventType {
+export interface EventType {
     codigo: string,
     date: string,
     stadium: StadiumType,
