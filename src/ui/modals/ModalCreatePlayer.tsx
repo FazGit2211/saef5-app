@@ -2,13 +2,6 @@ import { Close } from "@mui/icons-material";
 import { Box, Button, Modal } from "@mui/material";
 import FormCreate from "../forms/FormCreate";
 
-interface PlayerType {
-    name: string,
-    surname: string,
-    phoneNumber: number,
-    email: string
-};
-
 interface PropsType {
     openModal: boolean,
     closeModal: () => void,

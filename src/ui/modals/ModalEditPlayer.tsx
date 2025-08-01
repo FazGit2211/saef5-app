@@ -2,14 +2,7 @@ import { Box, Button, Modal } from "@mui/material";
 import { useState } from "react";
 import FormEdit from "../forms/FormEdit";
 import { Close } from "@mui/icons-material";
-
-
-interface PlayerType {
-    name: string,
-    surname: string,
-    phoneNumber: number,
-    email: string
-};
+import { PlayerType } from "@/context/EventContext";
 
 interface PropsType {
     openModal: boolean,

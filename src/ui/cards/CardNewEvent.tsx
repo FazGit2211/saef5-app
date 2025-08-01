@@ -1,14 +1,10 @@
 import { Add } from "@mui/icons-material";
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import ModalDate from "../modals/ModalDate";
 import ModalStadium from "../modals/ModalStadium";
-
-interface StadiumType {
-    name: string,
-    address: string
-}
+import { StadiumType } from "@/context/EventContext";
+import useModal from "@/hooks/useModal";
 
 interface PropsType {
     date: string,
@@ -18,12 +14,8 @@ interface PropsType {
 }
 export default function CardNewEvent({ date, setDate, stadium, addStadium }: PropsType) {
     const router = useRouter();
-    const [openModalDate, setOpenModalDate] = useState(false);
-    const [openModalStadium, setOpenModalStadium] = useState(false);
-    const handleClose = () => { setOpenModalDate(false) };
-    const handleOpen = () => { setOpenModalDate(true) };
-    const handleCloseModalStadium = () => { setOpenModalStadium(false) };
-    const handleOpenModalStadium = () => { setOpenModalStadium(true) };
+
+    const {modalDate, closeModalDate, openModalDate, modalStadium, closeModalStadium, openModalStadium} = useModal();
 
     const handleClickRedirect = () => {
         router.push('/player/player-new');
@@ -39,12 +31,12 @@ export default function CardNewEvent({ date, setDate, stadium, addStadium }: Pro
                 </CardContent>
                 <CardActions>
                     <Button variant="contained" onClick={handleClickRedirect}>Participantes<Add></Add></Button>
-                    <Button variant="contained" onClick={handleOpen}>Fecha<Add></Add></Button>
-                    <Button variant="contained" onClick={handleOpenModalStadium}>Canchas<Add></Add></Button>
+                    <Button variant="contained" onClick={openModalDate}>Fecha<Add></Add></Button>
+                    <Button variant="contained" onClick={openModalStadium}>Canchas<Add></Add></Button>
                 </CardActions>
             </Card>
-            {openModalDate ? <ModalDate openModal={openModalDate} closeModal={handleClose} date={date} setDate={setDate} /> : null}
-            {openModalStadium ? <ModalStadium openModal={openModalStadium} closeModal={handleCloseModalStadium} stadium={stadium} addStadium={addStadium} /> : null}
+            {modalDate ? <ModalDate openModal={modalDate} closeModal={closeModalDate} date={date} setDate={setDate} /> : null}
+            {modalStadium ? <ModalStadium openModal={modalStadium} closeModal={closeModalStadium} stadium={stadium} addStadium={addStadium} /> : null}
         </>
     )
 };

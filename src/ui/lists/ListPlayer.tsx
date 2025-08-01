@@ -6,42 +6,31 @@ import { useContext, useState } from "react";
 import ModalEditPlayer from "../modals/ModalEditPlayer";
 import DeletedDialog from "../dialogs/DeletedDialog";
 import { useRouter } from "next/router";
-
-
-interface PlayerType {
-    name: string,
-    surname: string,
-    phoneNumber: number,
-    email: string
-};
-
+import { PlayerType } from "@/context/EventContext";
+import useModal from "@/hooks/useModal";
+import useDialog from "@/hooks/useDialog";
 
 export default function ListPlayer() {
-    const [visibleModal, setVisibleModal] = useState(false);
-    const [editPlayer, setEditPlayer] = useState<PlayerType>({ name: "", surname: "", phoneNumber: 0, email: "" });
+    //propiedades e método para utilizar los modales
+    const { modalPlayer, closeModalPlayer, openModalPlayer } = useModal();
+    //propiedades e método para utilizar los dialogos de confirmacion
+    const { deletePlayer, openDeletePlayer, closeDeletePlayer } = useDialog();
+    const [editPlayer, setEditPlayer] = useState<PlayerType>({ name: "", surname: "", phoneNumber: 0, email: "", state: "" });
     const { players } = useContext(PlayerContext);
     const [indexPlayer, setIndexPlayer] = useState<number>(0);
-    const [openDialog, setOpenDialog] = useState(false);
     const router = useRouter()
 
     const handleSelectEdit = (elem: PlayerType, index: number) => {
-        setVisibleModal(true);
+        openModalPlayer();
         setEditPlayer(elem);
         setIndexPlayer(index);
     };
 
-    const handleVisibleModal = () => {
-        setVisibleModal(false);
-    };
-
     const handleDeletedItem = (indexDeleted: number) => {
-        setOpenDialog(true);
+        openDeletePlayer();
         setIndexPlayer(indexDeleted);
     };
 
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-    };
 
     const handleConfirmBtn = () => {
         router.push("/event/event-new")
@@ -52,8 +41,8 @@ export default function ListPlayer() {
                 {players.map((elem, index) => (<ListItem key={elem.name}><People /> {elem.name} <Button variant="contained" onClick={() => handleDeletedItem(index)}><Delete /></Button> <Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button> </ListItem>))}
                 <Button variant="contained" onClick={handleConfirmBtn}>CONFIRMAR JUGADORES</Button>
             </List>
-            {visibleModal ? <ModalEditPlayer openModal={visibleModal} closeModal={handleVisibleModal} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
-            {openDialog ? <DeletedDialog openDialog={openDialog} indexDelete={indexPlayer} closeDialog={handleCloseDialog} /> : null}
+            {modalPlayer ? <ModalEditPlayer openModal={modalPlayer} closeModal={closeModalPlayer} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
+            {deletePlayer ? <DeletedDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} /> : null}
         </>
     )
 }
