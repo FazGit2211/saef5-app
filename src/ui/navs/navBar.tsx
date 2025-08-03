@@ -1,18 +1,22 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu"
-import { Home } from "@mui/icons-material";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import { AccountCircle, Home } from "@mui/icons-material";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
+    const router = useRouter();
+    const handleClickRedirect = () => {
+        router.push('event/event-new');
+    };
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
-                        <MenuIcon></MenuIcon>
+                    <IconButton size="large" edge="start" color="inherit" aria-label="home" onClick={handleClickRedirect}>
+                        <Home />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div" sx={{flexGrow:1, display: {xs:'none', sm:'block'}}}>
-                        <Home/>
-                    </Typography>
+                    <IconButton size="large" edge="end" color="inherit" >
+                        <AccountCircle />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </Box>

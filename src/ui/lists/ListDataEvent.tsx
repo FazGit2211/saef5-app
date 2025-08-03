@@ -55,6 +55,17 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
         return <Alert variant="filled" severity="warning">{error.message}</Alert>;
     };
 
+<<<<<<< HEAD
+export default function ListDataEvent() {
+    const { event, players } = useContext(EventContext);    
+    return (
+        <>
+        <ul>
+            <li>Fecha :{event.date}</li>
+            <li>Codigo : {event.codigo}</li>
+            {players.map((elem) => (<li>{elem.name}</li>))}
+        </ul>
+=======
     return (
         <>
             {data && data.length > 0 ? (<List>{data.map((elem) => (<ListItem key={elem.codigo}><Typography>Codigo: {elem.codigo} </Typography> <Typography>Fecha: {elem.date}</Typography> <Typography>Estadio : {elem.Stadium.name}</Typography> <Typography>Dirección : {elem.Stadium.address} </Typography></ListItem>))}</List>) : <h3>No hay datos</h3>}
@@ -63,6 +74,7 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
             <h2>Eliminar  <Button variant="contained" onClick={openDeleteEvent}><Delete /></Button></h2>
             {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} code={codigoParams} closeDialog={closeDeleteEvent} /> : null}
             <h2>Actualizar <Button variant="contained" onClick={handleClickRedirect}><Edit /></Button></h2>
+>>>>>>> master
         </>
     )
 }
