@@ -1,12 +1,7 @@
+import { StadiumType } from "@/context/EventContext";
 import { Close, Save } from "@mui/icons-material";
 import { Alert, Box, Button, Modal, TextField } from "@mui/material";
 import { useState } from "react";
-
-interface StadiumType {
-    name: string,
-    address: string
-}
-
 interface PropsType {
     openModal: boolean,
     closeModal: () => void,
@@ -25,8 +20,8 @@ const style = {
     p: 4,
 };
 export default function ModalStadium({ openModal, closeModal, stadium, addStadium }: PropsType) {
-    //Inicializar form con valores vacios
-    const [form, setForm] = useState<StadiumType>({ name: "", address: "" });
+    //Inicializar form con valores en las props
+    const [form, setForm] = useState<StadiumType>({ name: stadium.name, address: stadium.address });
     //Manejar el estado para los alert de mensajes
     const [sendForm, setSendForm] = useState(false);
 

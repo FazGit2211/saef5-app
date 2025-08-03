@@ -1,6 +1,7 @@
 import PlayerContext from "@/context/PlayersContext";
-import { Delete } from "@mui/icons-material";
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import useAlert from "@/hooks/useAlert";
+import { Cancel, Delete } from "@mui/icons-material";
+import { Alert, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useContext } from "react";
 
 interface PropsType {
@@ -22,20 +23,27 @@ const style = {
 };
 
 export default function DeletedDialog({ openDialog, indexDelete, closeDialog }: PropsType) {
+    //propiedades e métodos del contexto
     const { removePlayers } = useContext(PlayerContext);
+    //utilizar el hook personalizado para los alert
+    const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
 
     const handleDeleted = () => {
         removePlayers(indexDelete);
+        handleShowAlert();
+        handleSetTimeOut();
         closeDialog();
     }
 
     return (
         <Dialog open={openDialog} sx={style}>
             <DialogTitle>
-                Eliminar Jugador
+                Eliminar Jugador ?
             </DialogTitle>
             <DialogActions>
                 <Button variant="contained" onClick={handleDeleted}><Delete /></Button>
+                <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
+                {alert ? <Alert variant="filled" severity="success"></Alert> : null}
             </DialogActions>
         </Dialog>
     )

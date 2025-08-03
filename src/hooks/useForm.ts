@@ -1,17 +1,13 @@
+import { PlayerType } from "@/context/EventContext";
 import { useState } from "react";
-interface PlayerType {
-    name: string,
-    surname: string,
-    phoneNumber: number,
-    email: string
-};
 
 interface ErrorType {
     errorValue: boolean,
     name: string,
     surname: string,
     phoneNumber: string,
-    email: string
+    email: string;
+    state: string
 }
 
 interface FormType {
@@ -22,13 +18,12 @@ const useForm = ({ initialForm }: FormType) => {
     //Inicializar form con valores vacios
     const [form, setForm] = useState<PlayerType>(initialForm);
     //Estado para obtener los errores
-    const [error, setError] = useState<ErrorType>({ errorValue: false, name: "", surname: "", phoneNumber: "", email: "" });
+    const [error, setError] = useState<ErrorType>({ errorValue: false, name: "", surname: "", phoneNumber: "", email: "", state: "" });
     //Expreciones regulares
     const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     const regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
     //Funciones para detectar el ingreso de datos en los inputs
     const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e);
         setForm({
             ...form, name: e.target.value
         })
@@ -84,11 +79,25 @@ const useForm = ({ initialForm }: FormType) => {
         if ((!form.email.trim()) || (!regexEmail.test(form.email.trim()))) {
             setError({ ...error, errorValue: true, email: "El email no puede estar vacio" })
         } else {
-            setError({ ...error, errorValue: false, email:"" })
+            setError({ ...error, errorValue: false, email: "" })
         }
-    }
+    };
 
-    return { form, error, setForm, handleChangeName, handleBlurName, handleChangeSurname, handleBlurSurname, handleChangePhoneNumber, handleBlurPhoneNumber, handleChangeEmail, handleBlurEmail }
+    const handleChangeState = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, state: e.target.value })
+    };
+
+    const handleBlurState = () => {
+        if ((!form.state.trim()) || (!regexName.test(form.state.trim()))) {
+            setError({
+                ...error, errorValue: true, name: "El estado no puede estar vacio"
+            })
+        } else {
+            setError({ ...error, errorValue: false, name: "" })
+        };
+    };
+
+    return { form, error, setForm, handleChangeName, handleBlurName, handleChangeSurname, handleBlurSurname, handleChangePhoneNumber, handleBlurPhoneNumber, handleChangeEmail, handleBlurEmail, handleChangeState, handleBlurState }
 }
 
 export default useForm;

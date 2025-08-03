@@ -1,18 +1,19 @@
 import { createContext, ReactNode, useState } from "react"
 
-interface PlayerType {
+export interface PlayerType {
     name: string,
     surname: string,
     phoneNumber: number,
-    email: string
+    email: string,
+    state: string
 };
 
-interface StadiumType {
+export interface StadiumType {
     name: string,
     address: string
 };
 
-interface EventType {
+export interface EventType {
     codigo: string,
     date: string,
 };
@@ -23,7 +24,8 @@ interface ContextType {
     players: PlayerType[],
     addEvent: (even: EventType) => void,
     addStadium: (stadium: StadiumType) => void,
-    addPlayers: (player: PlayerType) => void,
+    addPlayers: (player: PlayerType[]) => void,
+    removeEvent: () => void
 };
 
 interface ProviderType {
@@ -36,7 +38,8 @@ const defaultValues: ContextType = {
     players: [],
     addEvent: () => { },
     addStadium: () => { },
-    addPlayers: () => { }
+    addPlayers: () => { },
+    removeEvent: () => { }
 }
 
 const EventContext = createContext(defaultValues);
@@ -53,12 +56,17 @@ const EventProvider = ({ children }: ProviderType) => {
         setStadium(stadiumData);
     };
 
-    const addPlayers = (playerData: PlayerType) => {
-        const values = [...players, playerData];
-        setPlayers(values);
+    const addPlayers = (playerData: PlayerType[]) => {
+        setPlayers(playerData);
     };
 
-    const data = { event, stadium, players, addEvent, addStadium, addPlayers };
+    const removeEvent = () => {
+        setEvent({ codigo: "", date: "" });
+        setStadium({ name: "", address: "" });
+        setPlayers([]);
+    }
+
+    const data = { event, stadium, players, addEvent, addStadium, addPlayers, removeEvent };
     return <EventContext.Provider value={data}>{children}</EventContext.Provider>
 }
 
