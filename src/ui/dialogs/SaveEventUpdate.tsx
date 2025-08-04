@@ -1,7 +1,6 @@
 import { Alert, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { PropsDialogType } from "./DeleteEventDialog";
 import { Cancel, Save } from "@mui/icons-material";
-import { useRouter } from "next/router";
 import useApi from "@/hooks/useApi";
 import { useContext, useEffect, useState } from "react";
 import EventContext from "@/context/EventContext";
@@ -23,8 +22,6 @@ export default function SaveEventUpdate({ openDialog, code, closeDialog }: Props
     const { putEvent, loading, error } = useApi(url);
     //propiedades e métodos para utilizar el contexto evento
     const { event, stadium, players } = useContext(EventContext);
-    //router para re direccionar a otra página
-    const router = useRouter();
     //estado para verificar respuesta de la api
     const [response, setResponse] = useState(false);
 
@@ -35,15 +32,14 @@ export default function SaveEventUpdate({ openDialog, code, closeDialog }: Props
             const codigo = event.codigo;
             const date = event.date;
             putEvent(code.toString(), { codigo, date, stadium, players });
-        }
-        //router.push('/');
+        };
     };
 
     useEffect(() => {
-        if ((!loading) && (!error.errorValue)) {
+        if (!loading && !error.errorValue) {
             setResponse(true);
-        }
-    }, [loading])
+        };
+    }, [loading]);
 
     return (
         <>
@@ -52,7 +48,6 @@ export default function SaveEventUpdate({ openDialog, code, closeDialog }: Props
                 <DialogActions><Button variant="contained" onClick={handleSave}><Save /></Button></DialogActions>
                 <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
                 {loading ? <Alert variant="filled" severity="info">Enviando ...</Alert> : null}
-                {error.errorValue ? <Alert variant="filled" severity="warning">Error {error.message}</Alert> : null}
                 {response ? <Alert variant="filled" severity="success">Actualizado</Alert> : null}
             </Dialog>
         </>

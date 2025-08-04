@@ -2,7 +2,7 @@ import useApi from "@/hooks/useApi";
 import { Alert, Button, ListItem, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import List from "@mui/material/List";
-import { Delete, Edit, People } from "@mui/icons-material";
+import { Delete, Edit, Fingerprint, OneK, People } from "@mui/icons-material";
 import EventContext from "@/context/EventContext";
 import { useRouter } from "next/router";
 import PlayerContext from "@/context/PlayersContext";
@@ -26,11 +26,9 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
     const { deleteEvent, openDeleteEvent, closeDeleteEvent } = useDialog();
     //invocación del método para buscar e obtener el evento
     useEffect(() => {
-        if (codigoParams === undefined) {
-            return;
-        } else {
+        if (codigoParams !== undefined) {
             getEventByCodigo(codigoParams.toString());
-        }
+        };
     }, [url]);
 
     //método para cargar datos al contexto
@@ -43,8 +41,10 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
     }
     //método para re direccionar
     const handleClickRedirect = async () => {
-        addDataContextEvent();
-        router.push('/event/event-update');
+        if (data.length > 0) {
+            addDataContextEvent();
+            router.push('/event/event-update');
+        };
     };
 
     if (loading) {
@@ -55,26 +55,14 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
         return <Alert variant="filled" severity="warning">{error.message}</Alert>;
     };
 
-<<<<<<< HEAD
-export default function ListDataEvent() {
-    const { event, players } = useContext(EventContext);    
     return (
         <>
-        <ul>
-            <li>Fecha :{event.date}</li>
-            <li>Codigo : {event.codigo}</li>
-            {players.map((elem) => (<li>{elem.name}</li>))}
-        </ul>
-=======
-    return (
-        <>
-            {data && data.length > 0 ? (<List>{data.map((elem) => (<ListItem key={elem.codigo}><Typography>Codigo: {elem.codigo} </Typography> <Typography>Fecha: {elem.date}</Typography> <Typography>Estadio : {elem.Stadium.name}</Typography> <Typography>Dirección : {elem.Stadium.address} </Typography></ListItem>))}</List>) : <h3>No hay datos</h3>}
+            {data && data.length > 0 ? (<List>{data.map((elem) => (<ListItem key={elem.codigo}><Typography>Codigo: {elem.codigo} , Fecha: {elem.date} , Estadio : {elem.Stadium.name}</Typography> <Typography>Dirección : {elem.Stadium.address} </Typography></ListItem>))}</List>) : <h3>No hay datos</h3>}
             <h2>Participantes</h2>
             {data && data.length > 0 ? <List>{data.map((elem) => (elem.Players.map((player, index) => (<ListItem key={player.name}><People />{player.name} {player.state}</ListItem>))))}</List> : <h3>No hay jugadores</h3>}
             <h2>Eliminar  <Button variant="contained" onClick={openDeleteEvent}><Delete /></Button></h2>
             {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} code={codigoParams} closeDialog={closeDeleteEvent} /> : null}
             <h2>Actualizar <Button variant="contained" onClick={handleClickRedirect}><Edit /></Button></h2>
->>>>>>> master
         </>
     )
 }

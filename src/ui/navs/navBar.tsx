@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 export default function NavBar() {
     const router = useRouter();
     const handleClickRedirect = () => {
-        router.push('event/event-new');
+        router.push('/');
     };
     return (
         <Box sx={{ flexGrow: 1 }}>

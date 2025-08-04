@@ -23,11 +23,7 @@ const useDefaulValues: EventGetType[] = [{ codigo: "", date: "", Stadium: { name
 
 const useApi = (url: string) => {
 
-<<<<<<< HEAD
-    const [dataInfo, setDataInfo] = useState<EventType[]>([]);
-=======
     const [data, setData] = useState(useDefaulValues);
->>>>>>> master
     const [error, setError] = useState<ErrorType>({ errorValue: false, message: "" });
     const [loading, setLoading] = useState(false);
 
@@ -60,10 +56,6 @@ const useApi = (url: string) => {
             setLoading(true);
             const response = await fetch(`${url}/?codigo=${codigo}`);
             if (response.ok) {
-<<<<<<< HEAD
-                const dataValues = await response.json();                
-                setDataInfo(dataValues);
-=======
                 const dataValues: EventGetType[] = await response.json();
                 setData(dataValues)
             }
@@ -92,7 +84,27 @@ const useApi = (url: string) => {
             if (response.ok) {
                 setLoading(true);
                 setError({ errorValue: false, message: "Enviado correctamente." })
->>>>>>> master
+            }
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError({ errorValue: true, message: error.message });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const deleteEvent = async (codigo: string) => {
+        const options: RequestInit = {
+            method: "DELETE",
+            headers: { "content-type": "application/json" },
+        };
+
+        try {
+            setLoading(true);
+            const request = await fetch(url, options);
+            if (!request.ok) {
+                setError({ errorValue: false, message: "Eliminado correctamente" });
             }
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -103,6 +115,6 @@ const useApi = (url: string) => {
         }
     }
 
-    return { data, loading, error, postEvent, getEventByCodigo, putEvent }
+    return { data, loading, error, postEvent, getEventByCodigo, putEvent, deleteEvent }
 }
 export default useApi;

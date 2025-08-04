@@ -9,7 +9,6 @@ interface PropsType {
     indexDelete: number,
     closeDialog: () => void
 };
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -21,8 +20,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
-export default function DeletedDialog({ openDialog, indexDelete, closeDialog }: PropsType) {
+export default function DeletePlayerDialog({ openDialog, indexDelete, closeDialog }: PropsType) {
     //propiedades e métodos del contexto
     const { removePlayers } = useContext(PlayerContext);
     //utilizar el hook personalizado para los alert
@@ -34,17 +32,18 @@ export default function DeletedDialog({ openDialog, indexDelete, closeDialog }: 
         handleSetTimeOut();
         closeDialog();
     }
-
     return (
-        <Dialog open={openDialog} sx={style}>
-            <DialogTitle>
-                Eliminar Jugador ?
-            </DialogTitle>
-            <DialogActions>
-                <Button variant="contained" onClick={handleDeleted}><Delete /></Button>
-                <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
-                {alert ? <Alert variant="filled" severity="success"></Alert> : null}
-            </DialogActions>
-        </Dialog>
-    )
+        <>
+            <Dialog open={openDialog} sx={style}>
+                <DialogTitle>
+                    Eliminar Jugador ?
+                </DialogTitle>
+                <DialogActions>
+                    <Button variant="contained" onClick={handleDeleted}><Delete /></Button>
+                    <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
+                    {alert ? <Alert variant="filled" severity="success"></Alert> : null}
+                </DialogActions>
+            </Dialog>
+        </>
+    );
 }

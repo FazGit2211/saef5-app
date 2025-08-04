@@ -4,11 +4,11 @@ import { Button, ListItem } from "@mui/material";
 import List from "@mui/material/List";
 import { useContext, useState } from "react";
 import ModalEditPlayer from "../modals/ModalEditPlayer";
-import DeletedDialog from "../dialogs/DeletedDialog";
 import { useRouter } from "next/router";
 import { PlayerType } from "@/context/EventContext";
 import useModal from "@/hooks/useModal";
 import useDialog from "@/hooks/useDialog";
+import DeletePlayerDialog from "../dialogs/DeletePlayerDialog";
 
 export default function ListPlayer() {
     //propiedades e método para utilizar los modales
@@ -42,7 +42,7 @@ export default function ListPlayer() {
                 <Button variant="contained" onClick={handleConfirmBtn}>CONFIRMAR JUGADORES</Button>
             </List>
             {modalPlayer ? <ModalEditPlayer openModal={modalPlayer} closeModal={closeModalPlayer} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
-            {deletePlayer ? <DeletedDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} /> : null}
+            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} /> : null}
         </>
     )
 }
