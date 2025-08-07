@@ -4,7 +4,7 @@ import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
 import CardEvent from "@/ui/cards/CardEvent";
 import CardStadium from "@/ui/cards/CardStadium";
-import DeletedDialog from "@/ui/dialogs/DeletedDialog";
+import DeletePlayerDialog from "@/ui/dialogs/DeletePlayerDialog";
 import SaveEventUpdate from "@/ui/dialogs/SaveEventUpdate";
 import ModalCreatePlayer from "@/ui/modals/ModalCreatePlayer";
 import ModalEditPlayer from "@/ui/modals/ModalEditPlayer";
@@ -38,7 +38,7 @@ export default function EventUpdate() {
     const handleAddPlayer = () => {
         openModalPlayer();
     }
-    //método para guardar e actualizar y enviar los datos
+    //método para guardar e actualizar los jugadores al contexto y enviar los datos
     const handleSaveEventUpdate = () => {
         addPlayers(players);
         openSaveEvent();
@@ -51,7 +51,7 @@ export default function EventUpdate() {
             <h2>Participantes</h2>
             {players && players.length > 0 ? <List>{players.map((elem, index) => (<ListItem key={elem.name}><People />{elem.name} {elem.state}<Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button><Button variant="contained" onClick={() => handleDeletedItem(index)}><Delete /></Button></ListItem>))}</List> : <h3>No hay jugadores</h3>}
             {modalPlayerEdit ? <ModalEditPlayer openModal={modalPlayerEdit} closeModal={closeModalPlayerEdit} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
-            {deletePlayer ? <DeletedDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} /> : null}
+            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} /> : null}
             <Button variant="contained" onClick={handleAddPlayer}><Add /></Button>
             {modalPlayer ? <ModalCreatePlayer openModal={modalPlayer} closeModal={closeModalPlayer} /> : null}
             <Button variant="contained" onClick={handleSaveEventUpdate}><Save /></Button>

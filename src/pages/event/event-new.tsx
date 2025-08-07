@@ -6,7 +6,7 @@ import CardNewEvent from "@/ui/cards/CardNewEvent";
 import CardPlayers from "@/ui/cards/CardPlayers";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, Card, CardActions, CardContent, TextField, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function Event() {
     const [date, setDate] = useState("");
@@ -30,9 +30,7 @@ export default function Event() {
 
     const handleSendEvent = () => {
         postEvent({ codigo, date, stadium, players });
-        handleShowAlert();
         handleError();
-        handleSetTimeOut();
     };
 
     const handleError = () => {
@@ -40,6 +38,13 @@ export default function Event() {
         setStadium({ name: "", address: "" });
         removeAll();
     };
+
+    useEffect(() => {
+        if (!loading && !error.errorValue) {
+            handleShowAlert();
+            handleSetTimeOut();
+        }
+    }, [loading]);
 
     return (
         <>

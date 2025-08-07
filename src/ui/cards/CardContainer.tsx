@@ -18,7 +18,7 @@ export default function CardContainer() {
 
     return (
         <>
-            <Button variant="contained" onClick={handleClickRedirect}><Add /></Button>
+            <Button variant="contained" onClick={handleClickRedirect}>Nuevo evento <Add /></Button>
             <TextField label="Nombre,codigo o alias evento" variant="outlined" value={codigo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCodigo(e.target.value)}></TextField>
             <Button variant="contained" onClick={handleClickBtnCodigo}><Search /></Button>
         </>

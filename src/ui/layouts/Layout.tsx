@@ -15,7 +15,7 @@ export default function Layout({ children }: LayoutProps) {
                 {children}
             </main>
             <footer className="flex">
-                <ul><li><Email /> zuletafacundoadolfo2211@gmail.com</li> <li><LinkedIn /></li></ul>
+                <ul><li><Email /> zuletafacundoadolfo2211@gmail.com</li> <li><LinkedIn />linkedin.com/in/facundo-zuleta-/</li></ul>
             </footer>
         </div>
     );

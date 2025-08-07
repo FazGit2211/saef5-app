@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardMedia } from "@mui/material";
 import { useRouter } from "next/router";
 import ModalDate from "../modals/ModalDate";
 import ModalStadium from "../modals/ModalStadium";
@@ -13,9 +13,10 @@ interface PropsType {
     addStadium: (s: StadiumType) => void
 }
 export default function CardNewEvent({ date, setDate, stadium, addStadium }: PropsType) {
+    //utilizar el hook router para redireccionar
     const router = useRouter();
-
-    const {modalDate, closeModalDate, openModalDate, modalStadium, closeModalStadium, openModalStadium} = useModal();
+    //propiedades e métodos para utilizar los modales
+    const { modalDate, closeModalDate, openModalDate, modalStadium, closeModalStadium, openModalStadium } = useModal();
 
     const handleClickRedirect = () => {
         router.push('/player/player-new');
@@ -24,15 +25,10 @@ export default function CardNewEvent({ date, setDate, stadium, addStadium }: Pro
         <>
             <Card>
                 <CardMedia></CardMedia>
-                <CardContent>
-                    <Typography>
-                        Desde esta seccion podra crear un evento nuevo mediante la agregacion de las personas, la fecha de realizacion y la seleccion de las canchas.
-                    </Typography>
-                </CardContent>
                 <CardActions>
                     <Button variant="contained" onClick={handleClickRedirect}>Participantes<Add></Add></Button>
                     <Button variant="contained" onClick={openModalDate}>Fecha<Add></Add></Button>
-                    <Button variant="contained" onClick={openModalStadium}>Canchas<Add></Add></Button>
+                    <Button variant="contained" onClick={openModalStadium}>Cancha<Add></Add></Button>
                 </CardActions>
             </Card>
             {modalDate ? <ModalDate openModal={modalDate} closeModal={closeModalDate} date={date} setDate={setDate} /> : null}
