@@ -51,7 +51,7 @@ export default function DeleteEventDialog({ openDialog, code, closeDialog }: Pro
         <>
             <Dialog open={openDialog} sx={style}>
                 <DialogTitle>
-                    Eliminar Evento ?
+                    Eliminar?
                 </DialogTitle>
                 <DialogActions>
                     <Button variant="contained" onClick={handleDeleted}><Delete /></Button>

@@ -57,7 +57,8 @@ const useApi = (url: string) => {
             const response = await fetch(`${url}/?codigo=${codigo}`);
             if (response.ok) {
                 const dataValues: EventGetType[] = await response.json();
-                setData(dataValues)
+                setData(dataValues);
+                setError({ errorValue: false, message: "Ok." });
             }
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -83,7 +84,7 @@ const useApi = (url: string) => {
             const response = await fetch(`${url}/?codigo=${codigoEvent}`, options);
             if (response.ok) {
                 setLoading(true);
-                setError({ errorValue: false, message: "Enviado correctamente." })
+                setError({ errorValue: false, message: "Actualizado correctamente." });
             }
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -102,7 +103,7 @@ const useApi = (url: string) => {
 
         try {
             setLoading(true);
-            const request = await fetch(url, options);
+            const request = await fetch(`${url}/?id=${codigo}`, options);
             if (!request.ok) {
                 setError({ errorValue: false, message: "Eliminado correctamente" });
             }

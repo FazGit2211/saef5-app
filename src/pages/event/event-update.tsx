@@ -38,7 +38,7 @@ export default function EventUpdate() {
     const handleAddPlayer = () => {
         openModalPlayer();
     }
-    //método para guardar e actualizar y enviar los datos
+    //método para guardar e actualizar los jugadores al contexto y enviar los datos
     const handleSaveEventUpdate = () => {
         addPlayers(players);
         openSaveEvent();
