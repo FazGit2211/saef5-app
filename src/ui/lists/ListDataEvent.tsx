@@ -48,10 +48,6 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
         };
     };
 
-    //método para abrir el dialogo de eliminar evento
-    const handleDeleteEvent = () => {
-        openDeleteEvent();
-    }
     return (
         <>
             {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
@@ -59,7 +55,7 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
             {data && data.length > 0 ? (<List>{data.map((elem) => (<ListItem key={elem.codigo}><Typography>Codigo: {elem.codigo} , Fecha: {elem.date} , Estadio : {elem.Stadium.name}</Typography> <Typography>Dirección : {elem.Stadium.address} </Typography></ListItem>))}</List>) : <h3>No hay datos</h3>}
             <h2>Participantes</h2>
             {data && data.length > 0 ? <List>{data.map((elem) => (elem.Players.map((player, index) => (<ListItem key={player.name}><People />{player.name} {player.state}</ListItem>))))}</List> : <h3>No hay jugadores</h3>}
-            <Button variant="contained" onClick={handleDeleteEvent}><Delete />Eliminar</Button>
+            <Button variant="contained" onClick={openDeleteEvent}><Delete />Eliminar</Button>
             {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} code={codigoParams} closeDialog={closeDeleteEvent} /> : null}
             <Button variant="contained" onClick={handleClickRedirect}><Edit />Actualizar</Button>
         </>
