@@ -2,7 +2,7 @@ import { Alert, Button, Dialog, DialogActions, DialogTitle } from "@mui/material
 import { PropsDialogType } from "./DeleteEventDialog";
 import { Cancel, Save } from "@mui/icons-material";
 import useApi from "@/hooks/useApi";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import EventContext from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
 
@@ -31,15 +31,10 @@ export default function SaveEventUpdate({ openDialog, code, closeDialog }: Props
             const codigo = event.codigo;
             const date = event.date;
             putEvent(code.toString(), { codigo, date, stadium, players });
-        };
-    };
-
-    useEffect(() => {
-        if (loading) {
             handleShowAlert();
             handleSetTimeOut();
         };
-    }, [loading, error]);
+    };
 
     return (
         <>
@@ -47,7 +42,8 @@ export default function SaveEventUpdate({ openDialog, code, closeDialog }: Props
                 <DialogTitle>Confirmar?</DialogTitle>
                 <DialogActions><Button variant="contained" onClick={handleSave}><Save /></Button></DialogActions>
                 <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
-                {alert ? <Alert variant="filled" severity="success">Enviando{error.message}</Alert> : null}
+                {alert && loading ? <Alert variant="filled" severity="info">Enviando....{error.message}</Alert> : null}
+                {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="success">Actualizado correctamente</Alert> : null}
             </Dialog>
         </>
     )
