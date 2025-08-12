@@ -4,24 +4,32 @@ import PlayerContext from "@/context/PlayersContext";
 import useForm from "@/hooks/useForm";
 import { PlayerType } from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
+import useApiPlayer from "@/hooks/useApiPlayer";
 
 interface PropsType {
     playerEdit: PlayerType,
-    indexPlayerEdit: number
+    indexPlayerEdit: number,
+    code: string
 };
 
-export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsType) {
+export default function FormEdit({ playerEdit, indexPlayerEdit, code }: PropsType) {
     //Inicializar form con los valores segun el jugador a editar
     const initialForm = { name: playerEdit.name, surname: playerEdit.surname, phoneNumber: playerEdit.phoneNumber, email: playerEdit.email, state: playerEdit.state }
-    //propiedades e métodos para el hook personalizado del formulario
+    //Utilizar las propiedades e métodos para el hook personalizado del formulario
     const { form, error, setForm, handleChangeName, handleChangeSurname, handleChangePhoneNumber, handleChangeEmail, handleBlurName, handleBlurSurname, handleBlurPhoneNumber, handleBlurEmail, handleChangeState, handleBlurState } = useForm({ initialForm });
-    //llamar a los alert del hook personalizado
+    //Utilizar a los alert del hook personalizado
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
+    //Utilizar las propiedades e métodos del hook personalizado del formulario
+    const url = "http://localhost:5000/api/player";
+    const { putPlayer } = useApiPlayer(url);
     //Llamar al listado actual
     const { players } = useContext(PlayerContext);
 
     const handleSubmit = () => {
         players.splice(indexPlayerEdit, 1, form);
+        if (code.trim() !== undefined || code.trim() !== "") {
+            putPlayer(code, { name: form.name, surname: form.surname, phoneNumber: form.phoneNumber, email: form.email, state: form.state });
+        }
         handleShowAlert();
         handleSetTimeOut();
         setForm({ name: "", surname: "", phoneNumber: 0, email: "", state: "" });

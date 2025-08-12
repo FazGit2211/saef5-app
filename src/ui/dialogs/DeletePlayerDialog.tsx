@@ -1,5 +1,7 @@
+import { PlayerType } from "@/context/EventContext";
 import PlayerContext from "@/context/PlayersContext";
 import useAlert from "@/hooks/useAlert";
+import useApiPlayer from "@/hooks/useApiPlayer";
 import { Cancel, Delete } from "@mui/icons-material";
 import { Alert, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useContext } from "react";
@@ -7,7 +9,8 @@ import { useContext } from "react";
 interface PropsType {
     openDialog: boolean,
     indexDelete: number,
-    closeDialog: () => void
+    namePlayerDelete: PlayerType,
+    closeDialog: () => void,
 };
 const style = {
     position: 'absolute',
@@ -20,14 +23,20 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-export default function DeletePlayerDialog({ openDialog, indexDelete, closeDialog }: PropsType) {
+export default function DeletePlayerDialog({ openDialog, indexDelete, namePlayerDelete, closeDialog }: PropsType) {
     //propiedades e métodos del contexto
     const { removePlayers } = useContext(PlayerContext);
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
+    //utilizar el hook personalizado para eliminar un jugador
+    const url = "http://localhost:5000/api/player";
+    const { deletePlayer, loading, error } = useApiPlayer(url);
 
     const handleDeleted = () => {
         removePlayers(indexDelete);
+        if (namePlayerDelete.name !== undefined || namePlayerDelete.name !== "") {
+            deletePlayer(namePlayerDelete);
+        };
         handleShowAlert();
         handleSetTimeOut();
         closeDialog();
@@ -42,6 +51,8 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, closeDialo
                     <Button variant="contained" onClick={handleDeleted}><Delete /></Button>
                     <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
                     {alert ? <Alert variant="filled" severity="success"></Alert> : null}
+                    {alert && loading ? <Alert variant="filled" severity="info">Eliminando...</Alert> : null}
+                    {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="success">Eliminado correctamente</Alert> : null}
                 </DialogActions>
             </Dialog>
         </>

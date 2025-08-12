@@ -1,5 +1,4 @@
 import { Box, Button, Modal } from "@mui/material";
-import { useState } from "react";
 import FormEdit from "../forms/FormEdit";
 import { Close } from "@mui/icons-material";
 import { PlayerType } from "@/context/EventContext";
@@ -8,7 +7,8 @@ interface PropsType {
     openModal: boolean,
     closeModal: () => void,
     dataEdit: PlayerType,
-    indexPlayer: number
+    indexPlayer: number,
+    code: string
 };
 
 const style = {
@@ -23,13 +23,12 @@ const style = {
     p: 4,
 };
 
-export default function ModalEditPlayer({ openModal, closeModal, dataEdit, indexPlayer }: PropsType) {
-    const [open, setOpen] = useState(openModal);
+export default function ModalEditPlayer({ openModal, closeModal, dataEdit, indexPlayer, code }: PropsType) {
     return (
         <>
-            <Modal open={open}>
+            <Modal open={openModal}>
                 <Box sx={style}>
-                    <FormEdit playerEdit={dataEdit} indexPlayerEdit={indexPlayer}/>
+                    <FormEdit playerEdit={dataEdit} indexPlayerEdit={indexPlayer} code={code} />
                     <Button variant="contained" onClick={closeModal}><Close /></Button>
                 </Box>
             </Modal>
