@@ -1,4 +1,3 @@
-'use client'
 import PlayersContext from "@/context/PlayersContext";
 import useModal from "@/hooks/useModal";
 import ListPlayer from "@/ui/lists/ListPlayer";

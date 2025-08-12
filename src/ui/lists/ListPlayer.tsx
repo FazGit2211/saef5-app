@@ -41,8 +41,8 @@ export default function ListPlayer() {
                 {players.map((elem, index) => (<ListItem key={elem.name}><People /> {elem.name} <Button variant="contained" onClick={() => handleDeletedItem(index)}><Delete /></Button> <Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button> </ListItem>))}
                 <Button variant="contained" onClick={handleConfirmBtn}>CONFIRMAR JUGADORES</Button>
             </List>
-            {modalPlayer ? <ModalEditPlayer openModal={modalPlayer} closeModal={closeModalPlayer} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
-            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} /> : null}
+            {modalPlayer ? <ModalEditPlayer openModal={modalPlayer} closeModal={closeModalPlayer} dataEdit={editPlayer} indexPlayer={indexPlayer} code=""/> : null}
+            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} namePlayerDelete={{name:"",surname:"",phoneNumber:0,email:"",state:""}}/> : null}
         </>
     )
 }

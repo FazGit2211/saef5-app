@@ -3,7 +3,7 @@ import useAlert from "@/hooks/useAlert";
 import useApi from "@/hooks/useApi";
 import { Cancel, Delete } from "@mui/icons-material";
 import { Alert, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 
 export interface PropsDialogType {
     openDialog: boolean,
@@ -33,19 +33,10 @@ export default function DeleteEventDialog({ openDialog, code, closeDialog }: Pro
     const handleDeleted = () => {
         if (code !== undefined) {
             deleteEvent(code.toString());
-        }
-    };
-
-    useEffect(() => {
-        if (!loading && !error.errorValue) {
-            removeEvent();
             handleShowAlert();
             handleSetTimeOut();
-            closeDialog();
         }
-
-    }, [loading]);
-
+    };
 
     return (
         <>
@@ -56,8 +47,8 @@ export default function DeleteEventDialog({ openDialog, code, closeDialog }: Pro
                 <DialogActions>
                     <Button variant="contained" onClick={handleDeleted}><Delete /></Button>
                     <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
-                    {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-                    {alert ? <Alert variant="filled" severity="success">{error.message}</Alert> : null}
+                    {alert && loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
+                    {alert && !loading ? <Alert variant="filled" severity="success">{error.message}</Alert> : null}
                 </DialogActions>
             </Dialog>
         </>

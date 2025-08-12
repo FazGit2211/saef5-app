@@ -30,6 +30,8 @@ export default function Event() {
 
     const handleSendEvent = () => {
         postEvent({ codigo, date, stadium, players });
+        handleShowAlert();
+        handleSetTimeOut();
         handleError();
     };
 
@@ -38,13 +40,6 @@ export default function Event() {
         setStadium({ name: "", address: "" });
         removeAll();
     };
-
-    useEffect(() => {
-        if (!loading && !error.errorValue) {
-            handleShowAlert();
-            handleSetTimeOut();
-        }
-    }, [loading]);
 
     return (
         <>
@@ -58,8 +53,8 @@ export default function Event() {
                 </CardContent>
                 <CardActions>
                     {((players.length !== 0) && (date !== "") && (stadium.name !== "") && (stadium.address !== "") && (codigo !== "") ? <Button variant="contained" onClick={handleSendEvent}><Save /></Button> : null)}
-                    {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-                    {alert ? <Alert variant="filled" severity="info">{error.message}</Alert> : null}
+                    {alert && loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
+                    {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="info">{error.message}</Alert> : null}
                 </CardActions>
             </Card>
         </>
