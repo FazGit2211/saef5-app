@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react"
 
 export interface PlayerType {
+    id:number;
     name: string,
     surname: string,
     phoneNumber: number,

@@ -33,15 +33,13 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
 
     //método para cargar datos al contexto
     const addDataContextEvent = () => {
-        data.forEach((elem) => {
-            addEvent({ codigo: elem.codigo, date: elem.date });
-            elem.Players.forEach((player) => (players.push(player)));
-            addStadium({ name: elem.Stadium.name, address: elem.Stadium.address });
-        });
-    }
+        addEvent({ codigo: data.codigo, date: data.date });
+        data.Players.forEach((player) => (players.push(player)));
+        addStadium({ name: data.Stadium.name, address: data.Stadium.address });
+    };
     //método para re direccionar
     const handleClickRedirect = async () => {
-        if (data.length > 0) {
+        if (data) {
             addDataContextEvent();
             router.push('/event/event-update');
         };
@@ -49,16 +47,15 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
     //Método para mostrar el dialogo de eliminar
     const handleDeleteEvent = () => {
         openDeleteEvent();
-    }
-
+    };
     return (
         <Card>
             <CardContent>
                 {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
                 {error.errorValue ? <Alert variant="filled" severity="warning">{error.message}</Alert> : null}
-                {data && data.length > 0 ? (<List>{data.map((elem) => (<ListItem key={elem.codigo}><Typography>Codigo: {elem.codigo} , Fecha: {elem.date} , Estadio : {elem.Stadium.name}</Typography> <Typography>Dirección : {elem.Stadium.address} </Typography></ListItem>))}</List>) : <h3>No hay datos</h3>}
+                {data ? <Typography>Codigo:{data.codigo} Fecha:{data.date} Estadio:{data.Stadium.name} Dirección:{data.Stadium.address}</Typography> : <h3>No hay datos</h3>}
                 <h2>Participantes</h2>
-                {data && data.length > 0 ? <List>{data.map((elem) => (elem.Players.map((player) => (<ListItem key={player.name}><People />{player.name} {player.state}</ListItem>))))}</List> : <h3>No hay jugadores</h3>}
+                {data ? <List>{data.Players.map((player) => (<ListItem key={player.id}><People />{player.name} {player.state}</ListItem>))}</List> : <h3>No hay jugadores</h3>}
                 {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} code={codigoParams} closeDialog={closeDeleteEvent} /> : null}
             </CardContent>
             <CardActions>

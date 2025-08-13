@@ -19,7 +19,7 @@ export interface ErrorType {
     message: string
 };
 
-const useDefaulValues: EventGetType[] = [{ codigo: "", date: "", Stadium: { name: "", address: "" }, Players: [{ name: "", surname: "", phoneNumber: 0, email: "", state: "" }] }];
+const useDefaulValues: EventGetType = { codigo: "", date: "", Stadium: { name: "", address: "" }, Players: [{ name: "", surname: "", phoneNumber: 0, email: "", state: "" }] };
 
 const useApi = (url: string) => {
 
@@ -60,7 +60,7 @@ const useApi = (url: string) => {
             setLoading(true);
             const response = await fetch(`${url}/${codigo}`, options);
             if (response.ok) {
-                const dataValues: EventGetType[] = await response.json();
+                const dataValues = await response.json();
                 setData(dataValues);
                 setError({ errorValue: false, message: "Ok." });
             }

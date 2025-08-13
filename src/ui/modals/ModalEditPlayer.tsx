@@ -8,7 +8,6 @@ interface PropsType {
     closeModal: () => void,
     dataEdit: PlayerType,
     indexPlayer: number,
-    code: string
 };
 
 const style = {
@@ -23,12 +22,12 @@ const style = {
     p: 4,
 };
 
-export default function ModalEditPlayer({ openModal, closeModal, dataEdit, indexPlayer, code }: PropsType) {
+export default function ModalEditPlayer({ openModal, closeModal, dataEdit, indexPlayer }: PropsType) {
     return (
         <>
             <Modal open={openModal}>
                 <Box sx={style}>
-                    <FormEdit playerEdit={dataEdit} indexPlayerEdit={indexPlayer} code={code} />
+                    <FormEdit playerEdit={dataEdit} indexPlayerEdit={indexPlayer} />
                     <Button variant="contained" onClick={closeModal}><Close /></Button>
                 </Box>
             </Modal>

@@ -28,14 +28,14 @@ const useApiPlayer = (url: string) => {
         };
     };
 
-    const getPlayer = async ({ name }: PlayerType) => {
+    const getPlayer = async (id: number) => {
         const options: RequestInit = {
             method: "GET",
             headers: { "content-type": "application/json" },
         };
         try {
             setLoading(true);
-            const response = await fetch(`${url}/${name}`, options);
+            const response = await fetch(`${url}/${id}`, options);
             if (response.ok) {
                 const dataValues = await response.json();
                 setData(dataValues);
@@ -50,7 +50,7 @@ const useApiPlayer = (url: string) => {
         }
     };
 
-    const putPlayer = async (codeEvent: string, { name, surname, phoneNumber, email, state }: PlayerType) => {
+    const putPlayer = async (id: number, { name, surname, phoneNumber, email, state }: PlayerType) => {
         const dataValues = { name, surname, phoneNumber, email, state };
         const options: RequestInit = {
             method: "PUT",
@@ -59,7 +59,7 @@ const useApiPlayer = (url: string) => {
         };
 
         try {
-            const response = await fetch(`${url}/${codeEvent}`, options);
+            const response = await fetch(`${url}/${id}`, options);
             if (response.ok) {
                 setLoading(true);
                 setError({ errorValue: false, message: "Actualizado correctamente." });
@@ -73,14 +73,14 @@ const useApiPlayer = (url: string) => {
         }
     };
 
-    const deletePlayer = async ({ name }: PlayerType) => {
+    const deletePlayer = async (id: number) => {
         const options: RequestInit = {
             method: "DELETE",
             headers: { "content-type": "application/json" },
         };
         try {
             setLoading(true);
-            const request = await fetch(`${url}/${name}`, options);
+            const request = await fetch(`${url}/${id}`, options);
             if (!request.ok) {
                 setError({ errorValue: false, message: "Eliminado correctamente" });
             }

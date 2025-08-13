@@ -9,7 +9,7 @@ import { useContext } from "react";
 interface PropsType {
     openDialog: boolean,
     indexDelete: number,
-    namePlayerDelete: PlayerType,
+    playerDelete: PlayerType,
     closeDialog: () => void,
 };
 const style = {
@@ -23,7 +23,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-export default function DeletePlayerDialog({ openDialog, indexDelete, namePlayerDelete, closeDialog }: PropsType) {
+export default function DeletePlayerDialog({ openDialog, indexDelete, playerDelete, closeDialog }: PropsType) {
     //propiedades e métodos del contexto
     const { removePlayers } = useContext(PlayerContext);
     //utilizar el hook personalizado para los alert
@@ -34,8 +34,8 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, namePlayer
 
     const handleDeleted = () => {
         removePlayers(indexDelete);
-        if (namePlayerDelete.name !== undefined || namePlayerDelete.name !== "") {
-            deletePlayer(namePlayerDelete);
+        if (playerDelete.name !== undefined || playerDelete.name !== "") {
+            deletePlayer(playerDelete.id);
         };
         handleShowAlert();
         handleSetTimeOut();

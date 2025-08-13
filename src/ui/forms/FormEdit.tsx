@@ -9,12 +9,11 @@ import useApiPlayer from "@/hooks/useApiPlayer";
 interface PropsType {
     playerEdit: PlayerType,
     indexPlayerEdit: number,
-    code: string
 };
 
-export default function FormEdit({ playerEdit, indexPlayerEdit, code }: PropsType) {
+export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsType) {
     //Inicializar form con los valores segun el jugador a editar
-    const initialForm = { name: playerEdit.name, surname: playerEdit.surname, phoneNumber: playerEdit.phoneNumber, email: playerEdit.email, state: playerEdit.state }
+    const initialForm = { id: 0, name: playerEdit.name, surname: playerEdit.surname, phoneNumber: playerEdit.phoneNumber, email: playerEdit.email, state: playerEdit.state }
     //Utilizar las propiedades e métodos para el hook personalizado del formulario
     const { form, error, setForm, handleChangeName, handleChangeSurname, handleChangePhoneNumber, handleChangeEmail, handleBlurName, handleBlurSurname, handleBlurPhoneNumber, handleBlurEmail, handleChangeState, handleBlurState } = useForm({ initialForm });
     //Utilizar a los alert del hook personalizado
@@ -27,12 +26,12 @@ export default function FormEdit({ playerEdit, indexPlayerEdit, code }: PropsTyp
 
     const handleSubmit = () => {
         players.splice(indexPlayerEdit, 1, form);
-        if (code.trim() !== undefined || code.trim() !== "") {
-            putPlayer(code, { name: form.name, surname: form.surname, phoneNumber: form.phoneNumber, email: form.email, state: form.state });
+        if (playerEdit.id !== undefined) {
+            putPlayer(playerEdit.id, { id: playerEdit.id, name: form.name, surname: form.surname, phoneNumber: form.phoneNumber, email: form.email, state: form.state });
         }
         handleShowAlert();
         handleSetTimeOut();
-        setForm({ name: "", surname: "", phoneNumber: 0, email: "", state: "" });
+        setForm({ id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" });
     }
 
     return (

@@ -14,7 +14,7 @@ import { useContext, useState } from "react";
 
 export default function EventUpdate() {
     //Utilizar estados para manejar el posible cambio de la información
-    const [editPlayer, setEditPlayer] = useState<PlayerType>({ name: "", surname: "", phoneNumber: 0, email: "", state: "" });
+    const [editPlayer, setEditPlayer] = useState<PlayerType>({ id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" });
     const [indexPlayer, setIndexPlayer] = useState<number>(0);
     //Utilizar propiedades e métodos para utilizar los modales
     const { modalPlayer, closeModalPlayer, openModalPlayer, modalPlayerEdit, closeModalPlayerEdit, openModalPlayerEdit } = useModal();
@@ -58,8 +58,8 @@ export default function EventUpdate() {
                     <Button variant="contained" onClick={handleSaveEventUpdate}><Save /></Button>
                 </CardActions>
             </Card>
-            {modalPlayerEdit ? <ModalEditPlayer openModal={modalPlayerEdit} closeModal={closeModalPlayerEdit} dataEdit={editPlayer} indexPlayer={indexPlayer} code={event.codigo} /> : null}
-            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} namePlayerDelete={{ name: editPlayer.name, surname: "", phoneNumber: 0, email: "", state: "" }} /> : null}
+            {modalPlayerEdit ? <ModalEditPlayer openModal={modalPlayerEdit} closeModal={closeModalPlayerEdit} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
+            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} playerDelete={{ id: editPlayer.id, name: editPlayer.name, surname: "", phoneNumber: 0, email: "", state: "" }} /> : null}
             {modalPlayer ? <ModalCreatePlayer openModal={modalPlayer} closeModal={closeModalPlayer} /> : null}
             {saveEvent ? <SaveEventUpdate openDialog={saveEvent} code={event.codigo} closeDialog={closeSaveEvent} /> : null}
         </>
