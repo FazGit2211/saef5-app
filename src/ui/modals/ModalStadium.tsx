@@ -21,7 +21,7 @@ const style = {
 };
 export default function ModalStadium({ openModal, closeModal, stadium, addStadium }: PropsType) {
     //Inicializar form con valores en las props
-    const [form, setForm] = useState<StadiumType>({ name: stadium.name, address: stadium.address });
+    const [form, setForm] = useState<StadiumType>({ id: 0, name: stadium.name, address: stadium.address });
     //Manejar el estado para los alert de mensajes
     const [sendForm, setSendForm] = useState(false);
 

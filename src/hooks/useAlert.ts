@@ -7,7 +7,7 @@ const useAlert = () => {
     const handleSetTimeOut = () => {
         setTimeout(() => {
             setAlert(false);
-        }, 2000);
+        }, 5000);
     }
 
     return { alert, handleShowAlert, handleSetTimeOut }

@@ -4,7 +4,7 @@ import useForm from "@/hooks/useForm";
 import { Alert, Button, FormGroup, TextField } from "@mui/material";
 import { useContext } from "react";
 
-const initialForm = { name: "", surname: "", phoneNumber: 0, email: "", state: "" };
+const initialForm = { id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" };
 
 export default function FormCreate() {
     //Llamar al contexto
@@ -15,10 +15,10 @@ export default function FormCreate() {
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     const handleSubmit = () => {
         if (!error.errorValue) {
-            addPlayer({ name: form.name, surname: form.surname, phoneNumber: form.phoneNumber, email: form.email, state: "" });
+            addPlayer({ id: 0, name: form.name, surname: form.surname, phoneNumber: form.phoneNumber, email: form.email, state: "" });
             handleShowAlert();
             handleSetTimeOut();
-            setForm({ name: "", surname: "", phoneNumber: 0, email: "", state: "" });
+            setForm({ id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" });
         }
 
     };

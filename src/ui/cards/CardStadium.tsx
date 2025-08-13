@@ -4,9 +4,9 @@ import { Save } from "@mui/icons-material";
 import { Alert, Button, Card, CardContent, TextField } from "@mui/material";
 import { useContext, useState } from "react";
 
-export default function CardStadium({ name, address }: StadiumType) {
+export default function CardStadium({ id, name, address }: StadiumType) {
     //utilizar el hook personalizado para los alert
-    const { alert, handleShowAlert, handleSetTimeOut  } = useAlert();
+    const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //estados para actualizar
     const [nameUpdate, setNameUpdate] = useState(name);
     const [addressUpdate, setAddressUpdate] = useState(address);
@@ -15,7 +15,7 @@ export default function CardStadium({ name, address }: StadiumType) {
 
     const handleSaveUpdate = () => {
         handleShowAlert();
-        addStadium({ name: nameUpdate, address: addressUpdate });
+        addStadium({ id: 0, name: nameUpdate, address: addressUpdate });
         handleSetTimeOut();
     }
     return (

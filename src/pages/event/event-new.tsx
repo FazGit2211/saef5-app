@@ -6,11 +6,11 @@ import CardNewEvent from "@/ui/cards/CardNewEvent";
 import CardPlayers from "@/ui/cards/CardPlayers";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, Card, CardActions, CardContent, TextField, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 export default function Event() {
     const [date, setDate] = useState("");
-    const [stadium, setStadium] = useState<StadiumType>({ name: "", address: "" });
+    const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
     const [codigo, setCodigo] = useState("");
     //propiedades e métodos para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
@@ -37,7 +37,7 @@ export default function Event() {
 
     const handleError = () => {
         setDate("");
-        setStadium({ name: "", address: "" });
+        setStadium({ id: 0, name: "", address: "" });
         removeAll();
     };
 

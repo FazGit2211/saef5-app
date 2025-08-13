@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from "react"
 
 export interface PlayerType {
-    id:number;
+    id: number;
     name: string,
     surname: string,
     phoneNumber: number,
@@ -10,6 +10,7 @@ export interface PlayerType {
 };
 
 export interface StadiumType {
+    id: number,
     name: string,
     address: string
 };
@@ -35,7 +36,7 @@ interface ProviderType {
 
 const defaultValues: ContextType = {
     event: { codigo: "", date: "" },
-    stadium: { name: "", address: "" },
+    stadium: { id: 0, name: "", address: "" },
     players: [],
     addEvent: () => { },
     addStadium: () => { },
@@ -46,7 +47,7 @@ const defaultValues: ContextType = {
 const EventContext = createContext(defaultValues);
 const EventProvider = ({ children }: ProviderType) => {
     const [event, setEvent] = useState<EventType>({ codigo: "", date: "" });
-    const [stadium, setStadium] = useState<StadiumType>({ name: "", address: "" });
+    const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
     const [players, setPlayers] = useState<PlayerType[]>([]);
 
     const addEvent = (eventData: EventType) => {
@@ -63,7 +64,7 @@ const EventProvider = ({ children }: ProviderType) => {
 
     const removeEvent = () => {
         setEvent({ codigo: "", date: "" });
-        setStadium({ name: "", address: "" });
+        setStadium({ id: 0, name: "", address: "" });
         setPlayers([]);
     }
 

@@ -8,7 +8,7 @@ export default function CardPlayers() {
         <Card>
             <CardContent>
                 <List>
-                    {players.length === 0 ? <Typography>No Hay Jugadores Agregados</Typography> : players.map((elem) => {return <ListItem key={elem.name}>{elem.name}</ListItem>})}
+                    {players.length === 0 ? <Typography>No Hay Jugadores Agregados</Typography> : players.map((elem) => {return <ListItem key={elem.id}>{elem.name}</ListItem>})}
                 </List>
             </CardContent>
         </Card>

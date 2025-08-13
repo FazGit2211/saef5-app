@@ -33,10 +33,10 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
 
     //método para cargar datos al contexto
     const addDataContextEvent = () => {
-        addEvent({ codigo: data.codigo, date: data.date });
-        data.Players.forEach((player) => (players.push(player)));
-        addStadium({ name: data.Stadium.name, address: data.Stadium.address });
-    };
+        addEvent({ codigo: data.info.codigo, date: data.info.date });
+        data.info.Players.forEach((player) => (players.push(player)));
+        addStadium({ id: 0, name: data.info.Stadium.name, address: data.info.Stadium.address });
+    }
     //método para re direccionar
     const handleClickRedirect = async () => {
         if (data) {
@@ -53,9 +53,9 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
             <CardContent>
                 {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
                 {error.errorValue ? <Alert variant="filled" severity="warning">{error.message}</Alert> : null}
-                {data ? <Typography>Codigo:{data.codigo} Fecha:{data.date} Estadio:{data.Stadium.name} Dirección:{data.Stadium.address}</Typography> : <h3>No hay datos</h3>}
+                {data ? <Typography>Codigo:{data.info.codigo} Fecha:{data.info.date} Estadio:{data.info.Stadium.name} Dirección:{data.info.Stadium.address}</Typography> : <h3>No hay datos</h3>}
                 <h2>Participantes</h2>
-                {data ? <List>{data.Players.map((player) => (<ListItem key={player.id}><People />{player.name} {player.state}</ListItem>))}</List> : <h3>No hay jugadores</h3>}
+                {data ? <List>{data.info.Players.map((player) => (<ListItem key={player.id}><People />{player.name} {player.state}</ListItem>))}</List> : <h3>No hay jugadores</h3>}
                 {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} code={codigoParams} closeDialog={closeDeleteEvent} /> : null}
             </CardContent>
             <CardActions>
