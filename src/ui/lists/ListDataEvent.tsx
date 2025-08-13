@@ -33,7 +33,7 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
 
     //método para cargar datos al contexto
     const addDataContextEvent = () => {
-        addEvent({ codigo: data.info.codigo, date: data.info.date });
+        addEvent({ id: 0, codigo: data.info.codigo, date: data.info.date });
         data.info.Players.forEach((player) => (players.push(player)));
         addStadium({ id: 0, name: data.info.Stadium.name, address: data.info.Stadium.address });
     }
@@ -56,7 +56,7 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
                 {data ? <Typography>Codigo:{data.info.codigo} Fecha:{data.info.date} Estadio:{data.info.Stadium.name} Dirección:{data.info.Stadium.address}</Typography> : <h3>No hay datos</h3>}
                 <h2>Participantes</h2>
                 {data ? <List>{data.info.Players.map((player) => (<ListItem key={player.id}><People />{player.name} {player.state}</ListItem>))}</List> : <h3>No hay jugadores</h3>}
-                {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} code={codigoParams} closeDialog={closeDeleteEvent} /> : null}
+                {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} closeDialog={closeDeleteEvent} /> : null}
             </CardContent>
             <CardActions>
                 <Button variant="contained" onClick={handleClickRedirect}><Edit />Actualizar</Button>

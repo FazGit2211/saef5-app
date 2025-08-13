@@ -14,7 +14,7 @@ export default function CardEvent({ codigo, date }: EventType) {
 
     const handleSaveUpdate = () => {
         handleShowAlert();
-        addEvent({ codigo: codigo, date: dateUpdate });
+        addEvent({ id:0,codigo: codigo, date: dateUpdate });
         handleSetTimeOut();
     }
     return (

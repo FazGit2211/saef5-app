@@ -3,6 +3,7 @@ import { useState } from "react"
 
 interface EventGetType {
     info: {
+        id: number,
         codigo: string,
         date: string,
         Stadium: StadiumType,
@@ -21,7 +22,7 @@ export interface ErrorType {
     message: string
 };
 
-const useDefaulValues: EventGetType = { info: { codigo: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" }] } };
+const useDefaulValues: EventGetType = { info: { id: 0, codigo: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" }] } };
 
 const useApi = (url: string) => {
 
@@ -99,14 +100,14 @@ const useApi = (url: string) => {
         }
     };
 
-    const deleteEvent = async (codigo: string) => {
+    const deleteEvent = async (id: number) => {
         const options: RequestInit = {
             method: "DELETE",
             headers: { "content-type": "application/json" },
         };
         try {
             setLoading(true);
-            const request = await fetch(`${url}/${codigo}`, options);
+            const request = await fetch(`${url}/${id}`, options);
             if (!request.ok) {
                 setError({ errorValue: false, message: "Eliminado correctamente" });
             }

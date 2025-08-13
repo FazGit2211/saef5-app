@@ -3,11 +3,10 @@ import useAlert from "@/hooks/useAlert";
 import useApi from "@/hooks/useApi";
 import { Cancel, Delete } from "@mui/icons-material";
 import { Alert, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import { useContext} from "react";
+import { useContext } from "react";
 
 export interface PropsDialogType {
     openDialog: boolean,
-    code: string | string[] | undefined,
     closeDialog: () => void
 };
 
@@ -22,20 +21,18 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-export default function DeleteEventDialog({ openDialog, code, closeDialog }: PropsDialogType) {
+export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDialogType) {
     //utilizar el hook personalizado para realizar las peticiones a la api
     const url = "http://localhost:5000/api/event";
     const { loading, error, deleteEvent } = useApi(url);
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //utilizar el contexto del evento
-    const { removeEvent } = useContext(EventContext);
+    const { removeEvent, event } = useContext(EventContext);
     const handleDeleted = () => {
-        if (code !== undefined) {
-            deleteEvent(code.toString());
-            handleShowAlert();
-            handleSetTimeOut();
-        }
+        deleteEvent(event.id);
+        handleShowAlert();
+        handleSetTimeOut();
     };
 
     return (

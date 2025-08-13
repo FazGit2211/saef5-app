@@ -16,6 +16,7 @@ export interface StadiumType {
 };
 
 export interface EventType {
+    id: number,
     codigo: string,
     date: string,
 };
@@ -35,7 +36,7 @@ interface ProviderType {
 };
 
 const defaultValues: ContextType = {
-    event: { codigo: "", date: "" },
+    event: { id: 0, codigo: "", date: "" },
     stadium: { id: 0, name: "", address: "" },
     players: [],
     addEvent: () => { },
@@ -46,7 +47,7 @@ const defaultValues: ContextType = {
 
 const EventContext = createContext(defaultValues);
 const EventProvider = ({ children }: ProviderType) => {
-    const [event, setEvent] = useState<EventType>({ codigo: "", date: "" });
+    const [event, setEvent] = useState<EventType>({ id: 0, codigo: "", date: "" });
     const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
     const [players, setPlayers] = useState<PlayerType[]>([]);
 
@@ -63,7 +64,7 @@ const EventProvider = ({ children }: ProviderType) => {
     };
 
     const removeEvent = () => {
-        setEvent({ codigo: "", date: "" });
+        setEvent({ id: 0, codigo: "", date: "" });
         setStadium({ id: 0, name: "", address: "" });
         setPlayers([]);
     }

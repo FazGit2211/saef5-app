@@ -81,7 +81,7 @@ const useApiPlayer = (url: string) => {
         try {
             setLoading(true);
             const request = await fetch(`${url}/${id}`, options);
-            if (!request.ok) {
+            if (request.ok) {
                 setError({ errorValue: false, message: "Eliminado correctamente" });
             }
         } catch (error: unknown) {

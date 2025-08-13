@@ -34,7 +34,7 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, playerDele
 
     const handleDeleted = () => {
         removePlayers(indexDelete);
-        if (playerDelete.name !== undefined || playerDelete.name !== "") {
+        if (playerDelete.id !== undefined && playerDelete.name !== "") {
             deletePlayer(playerDelete.id);
         };
         handleShowAlert();

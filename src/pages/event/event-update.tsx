@@ -49,7 +49,7 @@ export default function EventUpdate() {
             <Card>
                 <CardContent>
                     <h2>Información del evento a actualizar</h2>
-                    {event ? <CardEvent codigo={event.codigo} date={event.date} /> : <h3>No hay datos</h3>}
+                    {event ? <CardEvent id={0} codigo={event.codigo} date={event.date} /> : <h3>No hay datos</h3>}
                     {stadium ? <CardStadium id={stadium.id} name={stadium.name} address={stadium.address} /> : <h3>No hay datos</h3>}
                     {players && players.length > 0 ? <List>{players.map((elem, index) => (<ListItem key={elem.name}><People />{elem.name} {elem.state}<Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button><Button variant="contained" onClick={() => handleDeletedItem(index, elem)}><Delete /></Button></ListItem>))}</List> : <h3>No hay jugadores</h3>}
                 </CardContent>
@@ -61,7 +61,7 @@ export default function EventUpdate() {
             {modalPlayerEdit ? <ModalEditPlayer openModal={modalPlayerEdit} closeModal={closeModalPlayerEdit} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
             {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} playerDelete={{ id: editPlayer.id, name: "", surname: "", phoneNumber: 0, email: "", state: "" }} /> : null}
             {modalPlayer ? <ModalCreatePlayer openModal={modalPlayer} closeModal={closeModalPlayer} /> : null}
-            {saveEvent ? <SaveEventUpdate openDialog={saveEvent} code={event.codigo} closeDialog={closeSaveEvent} /> : null}
+            {saveEvent ? <SaveEventUpdate openDialog={saveEvent} closeDialog={closeSaveEvent}/> : null}
         </>
     )
 }

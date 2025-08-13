@@ -17,7 +17,7 @@ const style = {
     boxShadow: 20,
     p: 2,
 };
-export default function SaveEventUpdate({ openDialog, code, closeDialog }: PropsDialogType) {
+export default function SaveEventUpdate({ openDialog, closeDialog }: PropsDialogType) {
     //propiedades e métodos para enviar los datos hacia la api
     const url = "http://localhost:5000/api/event";
     const { putEvent, loading, error } = useApi(url);
@@ -27,13 +27,9 @@ export default function SaveEventUpdate({ openDialog, code, closeDialog }: Props
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
 
     const handleSave = () => {
-        if (code !== undefined) {
-            const codigo = event.codigo;
-            const date = event.date;
-            putEvent(code.toString(), { codigo, date, stadium, players });
+            putEvent(event.codigo,{codigo:event.codigo,date:event.date,stadium:{id:0,name:stadium.name,address:stadium.address},players:players});
             handleShowAlert();
             handleSetTimeOut();
-        };
     };
 
     return (
