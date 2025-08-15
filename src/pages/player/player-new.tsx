@@ -10,8 +10,6 @@ import { useContext } from "react";
 export default function PlayerNew() {
     const { modalPlayer, closeModalPlayer, openModalPlayer } = useModal();
     const { players } = useContext(PlayersContext);
-
-
     return (
         <>
             <Button variant="contained" onClick={openModalPlayer}><Add /></Button>

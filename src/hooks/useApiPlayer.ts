@@ -1,98 +1,105 @@
 import { PlayerType } from "@/context/EventContext";
 import { useState } from "react";
-import { ErrorType } from "./useApi";
-
+interface ErrorPlayerType {
+    errorValue: boolean,
+    message: string
+};
 const useApiPlayer = (url: string) => {
 
-    const [data, setData] = useState<PlayerType>();
-    const [error, setError] = useState<ErrorType>({ errorValue: false, message: "" });
-    const [loading, setLoading] = useState(false);
+    const [dataPlayer, setDataPlayer] = useState<PlayerType>();
+    const [errorPlayer, setErrorPlayer] = useState<ErrorPlayerType>({ errorValue: false, message: "" });
+    const [loadingPlayer, setLoadingPlayer] = useState(false);
 
-    const postPlayer = async (codeEvent: string, { name, surname, phoneNumber, email, state }: PlayerType) => {
-        const dataValues = { name, surname, phoneNumber, email, state };
-        const options: RequestInit = {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(dataValues)
-        };
+    const postPlayer = async (idEvent: number, { name, email, state, admin }: PlayerType) => {
         try {
-            const response = await fetch(`${url}/${codeEvent}`, options);
+            setLoadingPlayer(true);
+            const dataValues = { name, email, state, admin };
+            const options: RequestInit = {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify(dataValues)
+            };
+            const response = await fetch(`${url}/${idEvent}`, options);
             if (response.ok) {
-                setLoading(true);
-                setError({ errorValue: false, message: "Enviado correctamente." })
-            }
+                setErrorPlayer({ errorValue: false, message: "Creado." });
+            };
+            setErrorPlayer({ errorValue: true, message: "Error POST." })
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
-            }
+                setErrorPlayer({ errorValue: true, message: error.message });
+            };
+        } finally {
+            setLoadingPlayer(false);
         };
     };
 
     const getPlayer = async (id: number) => {
-        const options: RequestInit = {
-            method: "GET",
-            headers: { "content-type": "application/json" },
-        };
         try {
-            setLoading(true);
+            setLoadingPlayer(true);
+            const options: RequestInit = {
+                method: "GET",
+                headers: { "content-type": "application/json" },
+            };
             const response = await fetch(`${url}/${id}`, options);
             if (response.ok) {
                 const dataValues = await response.json();
-                setData(dataValues);
-                setError({ errorValue: false, message: "Ok." });
-            }
+                setDataPlayer(dataValues);
+                setErrorPlayer({ errorValue: false, message: "Ok." });
+            };
+            setErrorPlayer({ errorValue: true, message: "Error GET." });
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
+                setErrorPlayer({ errorValue: true, message: error.message });
             }
         } finally {
-            setLoading(false);
+            setLoadingPlayer(false);
         }
     };
 
-    const putPlayer = async (id: number, { name, surname, phoneNumber, email, state }: PlayerType) => {
-        const dataValues = { name, surname, phoneNumber, email, state };
-        const options: RequestInit = {
-            method: "PUT",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(dataValues)
-        };
-
+    const putPlayer = async ({ id, name, email, state, admin }: PlayerType) => {
         try {
-            const response = await fetch(`${url}/${id}`, options);
+            setLoadingPlayer(true);
+            const dataValues = { id, name, email, state, admin };
+            const options: RequestInit = {
+                method: "PUT",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify(dataValues)
+            };
+            const response = await fetch(url, options);
             if (response.ok) {
-                setLoading(true);
-                setError({ errorValue: false, message: "Actualizado correctamente." });
-            }
+                setErrorPlayer({ errorValue: false, message: "Actualizado correctamente." });
+            };
+            setErrorPlayer({ errorValue: true, message: "Error PUT." });
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
+                setErrorPlayer({ errorValue: true, message: error.message });
             }
         } finally {
-            setLoading(false);
+            setLoadingPlayer(false);
         }
     };
 
     const deletePlayer = async (id: number) => {
-        const options: RequestInit = {
-            method: "DELETE",
-            headers: { "content-type": "application/json" },
-        };
         try {
-            setLoading(true);
+            setLoadingPlayer(true);
+            const options: RequestInit = {
+                method: "DELETE",
+                headers: { "content-type": "application/json" },
+            };
             const request = await fetch(`${url}/${id}`, options);
             if (request.ok) {
-                setError({ errorValue: false, message: "Eliminado correctamente" });
-            }
+                setErrorPlayer({ errorValue: false, message: "Eliminado correctamente" });
+            };
+            setErrorPlayer({ errorValue: true, message: "Error DELETE." });
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
+                setErrorPlayer({ errorValue: true, message: error.message });
             }
         } finally {
-            setLoading(false);
+            setLoadingPlayer(false);
         }
     };
 
-    return { data, loading, error, postPlayer, putPlayer, getPlayer, deletePlayer }
+    return { dataPlayer, loadingPlayer, errorPlayer, postPlayer, putPlayer, getPlayer, deletePlayer }
 };
 export default useApiPlayer;

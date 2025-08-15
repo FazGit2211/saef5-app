@@ -3,10 +3,9 @@ import { createContext, ReactNode, useState } from "react"
 export interface PlayerType {
     id: number;
     name: string,
-    surname: string,
-    phoneNumber: number,
     email: string,
-    state: string
+    state: string,
+    admin: boolean
 };
 
 export interface StadiumType {
@@ -28,7 +27,7 @@ interface ContextType {
     addEvent: (even: EventType) => void,
     addStadium: (stadium: StadiumType) => void,
     addPlayers: (player: PlayerType[]) => void,
-    removeEvent: () => void
+    removeEvent: () => void,
 };
 
 interface ProviderType {
@@ -42,7 +41,7 @@ const defaultValues: ContextType = {
     addEvent: () => { },
     addStadium: () => { },
     addPlayers: () => { },
-    removeEvent: () => { }
+    removeEvent: () => { },
 }
 
 const EventContext = createContext(defaultValues);
@@ -67,7 +66,7 @@ const EventProvider = ({ children }: ProviderType) => {
         setEvent({ id: 0, codigo: "", date: "" });
         setStadium({ id: 0, name: "", address: "" });
         setPlayers([]);
-    }
+    };
 
     const data = { event, stadium, players, addEvent, addStadium, addPlayers, removeEvent };
     return <EventContext.Provider value={data}>{children}</EventContext.Provider>

@@ -9,13 +9,11 @@ export default function CardContainer() {
     const handleClickRedirect = () => {
         router.push('event/event-new');
     };
-
     const handleClickBtnCodigo = () => {
         if (codigo.trim() !== "") {
             router.push(`event/event-find/${codigo}`);
         };
     };
-
     return (
         <>
             <Button variant="contained" onClick={handleClickRedirect}>Nuevo evento <Add /></Button>

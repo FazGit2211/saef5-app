@@ -1,5 +1,6 @@
 import EventContext, { EventType } from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
+import useApi from "@/hooks/useApi";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, Card, CardContent, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
@@ -10,11 +11,14 @@ export default function CardEvent({ codigo, date }: EventType) {
     //estado para actualizar
     const [dateUpdate, setDateUpdate] = useState(date);
     //contexto para actualizar
-    const { addEvent } = useContext(EventContext);
+    const { event, stadium, players } = useContext(EventContext);
+    //Utilizar propiedades e métodos para enviar los datos hacia la api
+    const urlEvent = "http://localhost:5000/api/event";
+    const { putEvent, loading, error } = useApi(urlEvent);
 
     const handleSaveUpdate = () => {
+        putEvent(event.id, { codigo: codigo, date: dateUpdate, stadium: { id: 0, name: stadium.name, address: stadium.address }, players: players });
         handleShowAlert();
-        addEvent({ id:0,codigo: codigo, date: dateUpdate });
         handleSetTimeOut();
     }
     return (
@@ -24,6 +28,8 @@ export default function CardEvent({ codigo, date }: EventType) {
                     <Typography>Codigo: {codigo}</Typography>
                     <TextField label="Fecha" variant="outlined" value={dateUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateUpdate(e.target.value)}></TextField>
                     <Button variant="contained" onClick={handleSaveUpdate}><Save /></Button>
+                    {loading ? <Alert variant="filled" severity="info">Actualizando...</Alert> : null}
+                    {error.errorValue ? <Alert variant="filled" severity="warning">{error.message}</Alert> : null}
                     {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </CardContent>
             </Card>

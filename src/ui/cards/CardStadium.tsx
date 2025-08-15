@@ -1,5 +1,6 @@
 import EventContext, { StadiumType } from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
+import useApiStadium from "@/hooks/useApiStadium";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, Card, CardContent, TextField } from "@mui/material";
 import { useContext, useState } from "react";
@@ -11,13 +12,14 @@ export default function CardStadium({ id, name, address }: StadiumType) {
     const [nameUpdate, setNameUpdate] = useState(name);
     const [addressUpdate, setAddressUpdate] = useState(address);
     //contexto para actualizar
-    const { addStadium } = useContext(EventContext);
+    const urlStadium = "http://localhost:5000/api/stadium";
+    const { loadingStadium, errorStadium, putStadium } = useApiStadium(urlStadium);
 
     const handleSaveUpdate = () => {
+        putStadium({ id: id, name: nameUpdate, address: addressUpdate });
         handleShowAlert();
-        addStadium({ id: 0, name: nameUpdate, address: addressUpdate });
         handleSetTimeOut();
-    }
+    };
     return (
         <>
             <Card>
@@ -25,6 +27,8 @@ export default function CardStadium({ id, name, address }: StadiumType) {
                     <TextField label="Nombre" variant="outlined" value={nameUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNameUpdate(e.target.value)}></TextField>
                     <TextField label="Dirección" variant="outlined" value={addressUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddressUpdate(e.target.value)}></TextField>
                     <Button variant="contained" onClick={handleSaveUpdate}><Save /></Button>
+                    {loadingStadium ? <Alert variant="filled" severity="info">Actualizando...</Alert> : null}
+                    {errorStadium.errorValue ? <Alert variant="filled" severity="warning">{errorStadium.message}</Alert> : null}
                     {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </CardContent>
             </Card>

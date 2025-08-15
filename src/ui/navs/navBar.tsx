@@ -8,7 +8,7 @@ export default function NavBar() {
         router.push('/');
     };
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton size="large" edge="start" color="inherit" aria-label="home" onClick={handleClickRedirect}>

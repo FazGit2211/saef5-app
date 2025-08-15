@@ -33,9 +33,9 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
 
     //método para cargar datos al contexto
     const addDataContextEvent = () => {
-        addEvent({ id: 0, codigo: data.info.codigo, date: data.info.date });
+        addEvent({ id: data.info.id, codigo: data.info.codigo, date: data.info.date });
         data.info.Players.forEach((player) => (players.push(player)));
-        addStadium({ id: 0, name: data.info.Stadium.name, address: data.info.Stadium.address });
+        addStadium({ id: data.info.Stadium.id, name: data.info.Stadium.name, address: data.info.Stadium.address });
     }
     //método para re direccionar
     const handleClickRedirect = async () => {
@@ -46,6 +46,7 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
     };
     //Método para mostrar el dialogo de eliminar
     const handleDeleteEvent = () => {
+        addEvent({ id: data.info.id, codigo: data.info.codigo, date: data.info.date });
         openDeleteEvent();
     };
     return (

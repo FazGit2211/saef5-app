@@ -2,22 +2,12 @@ import { StadiumType } from "@/context/EventContext";
 import { Close, Save } from "@mui/icons-material";
 import { Alert, Box, Button, Modal, TextField } from "@mui/material";
 import { useState } from "react";
-interface PropsType {
+import { style } from "./ModalCreatePlayer";
+export interface PropsType {
     openModal: boolean,
     closeModal: () => void,
     stadium: StadiumType,
     addStadium: (s: StadiumType) => void
-};
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
 };
 export default function ModalStadium({ openModal, closeModal, stadium, addStadium }: PropsType) {
     //Inicializar form con valores en las props

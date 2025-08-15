@@ -15,7 +15,7 @@ export default function ListPlayer() {
     const { modalPlayer, closeModalPlayer, openModalPlayer } = useModal();
     //propiedades e método para utilizar los dialogos de confirmacion
     const { deletePlayer, openDeletePlayer, closeDeletePlayer } = useDialog();
-    const [editPlayer, setEditPlayer] = useState<PlayerType>({ id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" });
+    const [editPlayer, setEditPlayer] = useState<PlayerType>({ id: 0, name: "", email: "", state: "", admin: true });
     const { players } = useContext(PlayerContext);
     const [indexPlayer, setIndexPlayer] = useState<number>(0);
     const router = useRouter()
@@ -34,15 +34,15 @@ export default function ListPlayer() {
 
     const handleConfirmBtn = () => {
         router.push("/event/event-new")
-    }
+    };
     return (
         <>
             <List>
                 {players.map((elem, index) => (<ListItem key={elem.id}><People /> {elem.name} <Button variant="contained" onClick={() => handleDeletedItem(index)}><Delete /></Button> <Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button> </ListItem>))}
                 <Button variant="contained" onClick={handleConfirmBtn}>CONFIRMAR JUGADORES</Button>
             </List>
-            {modalPlayer ? <ModalEditPlayer openModal={modalPlayer} closeModal={closeModalPlayer} dataEdit={editPlayer} indexPlayer={indexPlayer}/> : null}
-            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} playerDelete={{ id: 0, name: "", surname: "", phoneNumber: 0, email: "", state: "" }} /> : null}
+            {modalPlayer ? <ModalEditPlayer openModal={modalPlayer} closeModal={closeModalPlayer} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
+            {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} playerDelete={{ id: 0, name: "", email: "", state: "", admin: true }} /> : null}
         </>
     )
 }

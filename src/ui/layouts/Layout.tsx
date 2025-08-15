@@ -9,7 +9,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
     return (
         <div className="flex flex-col min-h-screen">
-            <header className="flex">
+            <header className="flex justify-evenly">
                 <NavBar />
             </header>
             <main className="flex flex-col flex-grow-1 m-1 items-center">

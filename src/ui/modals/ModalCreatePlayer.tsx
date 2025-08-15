@@ -2,11 +2,11 @@ import { Close } from "@mui/icons-material";
 import { Box, Button, Modal } from "@mui/material";
 import FormCreate from "../forms/FormCreate";
 
-interface PropsType {
+export interface PropsType {
     openModal: boolean,
     closeModal: () => void,
 };
-const style = {
+export const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -19,8 +19,6 @@ const style = {
 };
 
 export default function ModalCreatePlayer({ openModal, closeModal }: PropsType) {
-
-
     return (
         <Modal open={openModal}>
             <Box sx={style}>

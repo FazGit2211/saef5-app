@@ -1,6 +1,7 @@
 import { Close, Save } from "@mui/icons-material";
 import { Alert, Box, Button, Modal, TextField } from "@mui/material";
 import { useState } from "react";
+import { style } from "./ModalCreatePlayer";
 
 interface PropsType {
     openModal: boolean,
@@ -9,17 +10,6 @@ interface PropsType {
     setDate: (d: string) => void
 };
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
 export default function ModalDate({ openModal, closeModal, date, setDate }: PropsType) {
     //Manejar el estado para los alert de mensajes
     const [sendForm, setSendForm] = useState(false);

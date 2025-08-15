@@ -5,31 +5,24 @@ import useApi from "@/hooks/useApi";
 import { useContext } from "react";
 import EventContext from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 600,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 20,
-    p: 2,
-};
+import { style } from "../modals/ModalCreatePlayer";
+import useApiStadium from "@/hooks/useApiStadium";
 export default function SaveEventUpdate({ openDialog, closeDialog }: PropsDialogType) {
-    //propiedades e métodos para enviar los datos hacia la api
-    const url = "http://localhost:5000/api/event";
-    const { putEvent, loading, error } = useApi(url);
-    //propiedades e métodos para utilizar el contexto evento
+    //Utilizar propiedades e métodos para enviar los datos hacia la api
+    const urlEvent = "http://localhost:5000/api/event";
+    const { putEvent, loading, error } = useApi(urlEvent);
+    const urlStadium = "http://localhost:5000/api/stadium";
+    const { putStadium } = useApiStadium(urlStadium);
+    //Utilizar propiedades e métodos para utilizar el contexto evento
     const { event, stadium, players } = useContext(EventContext);
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
 
     const handleSave = () => {
-            putEvent(event.codigo,{codigo:event.codigo,date:event.date,stadium:{id:0,name:stadium.name,address:stadium.address},players:players});
-            handleShowAlert();
-            handleSetTimeOut();
+        putEvent(event.id, { codigo: event.codigo, date: event.date, stadium: { id: 0, name: stadium.name, address: stadium.address }, players: players });
+        putStadium({ id: stadium.id, name: stadium.name, address: stadium.address });
+        handleShowAlert();
+        handleSetTimeOut();
     };
 
     return (
@@ -38,8 +31,9 @@ export default function SaveEventUpdate({ openDialog, closeDialog }: PropsDialog
                 <DialogTitle>Confirmar?</DialogTitle>
                 <DialogActions><Button variant="contained" onClick={handleSave}><Save /></Button></DialogActions>
                 <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
-                {alert && loading ? <Alert variant="filled" severity="info">Enviando....{error.message}</Alert> : null}
-                {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="success">Actualizado correctamente</Alert> : null}
+                {loading ? <Alert variant="filled" severity="info">Enviando....</Alert> : null}
+                {!loading && error.errorValue ? <Alert variant="filled" severity="warning">Error {error.message}</Alert> : null}
+                {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="success">Actualizado</Alert> : null}
             </Dialog>
         </>
     )
