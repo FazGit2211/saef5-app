@@ -3,7 +3,7 @@ import useModal from "@/hooks/useModal";
 import ListPlayer from "@/ui/lists/ListPlayer";
 import ModalCreatePlayer from "@/ui/modals/ModalCreatePlayer";
 import { Add } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useContext } from "react";
 
 
@@ -12,8 +12,8 @@ export default function PlayerNew() {
     const { players } = useContext(PlayersContext);
     return (
         <>
-            <Button variant="contained" onClick={openModalPlayer}><Add /></Button>
-            {players.length === 0 ? <h3>No hay jugadores agregados</h3> : <ListPlayer />}
+            <Button variant="contained" onClick={openModalPlayer} color="success"><Add /></Button>
+            {players.length === 0 ? <Typography variant="h6" color="warning">No hay jugadores</Typography> : <ListPlayer />}
             {modalPlayer ? <ModalCreatePlayer openModal={modalPlayer} closeModal={closeModalPlayer} /> : null}
         </>
     );
