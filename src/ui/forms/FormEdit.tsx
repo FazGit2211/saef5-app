@@ -40,7 +40,7 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditT
                 <TextField label="Email" variant="outlined" value={form.email} onChange={handleChangeEmail} onBlur={handleBlurEmail} error={errorInfo.errorValue} helperText={errorInfo.email} />
                 <TextField label="Estado" variant="outlined" value={form.state} onChange={handleChangeState} onBlur={handleBlurState} error={errorInfo.errorValue} helperText={errorInfo.state} />
                 <Typography>Administrador para el evento:</Typography>
-                <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success" />
+                <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin} />
             </FormGroup>
             <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
             {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}

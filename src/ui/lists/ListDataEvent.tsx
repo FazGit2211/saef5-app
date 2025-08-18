@@ -67,7 +67,7 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
                 </ListItemButton>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            {data.info.Players.length > 0 ? data.info.Players.map((elem) => (<ListItem key={elem.id}><People />{elem.name} {elem.state}</ListItem>)) : <Typography variant="h6" color="#ff5722">No Hay Jugadores Agregados</Typography>}
+                            {data.info.Players.length > 0 ? data.info.Players.map((elem) => (<ListItem key={elem.name}><People />{elem.name} {elem.state}</ListItem>)) : <Typography variant="h6" color="#ff5722">No Hay Jugadores Agregados</Typography>}
                         </List>
                     </Collapse></List> : null}
                 {deleteEvent ? <DeleteEventDialog openDialog={deleteEvent} closeDialog={closeDeleteEvent} /> : null}

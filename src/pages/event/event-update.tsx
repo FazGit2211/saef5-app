@@ -6,11 +6,10 @@ import CardEvent from "@/ui/cards/CardEvent";
 import CardStadium from "@/ui/cards/CardStadium";
 import DeletePlayerDialog from "@/ui/dialogs/DeletePlayerDialog";
 import SaveEventUpdate from "@/ui/dialogs/SaveEventUpdate";
-import ListPlayer from "@/ui/lists/ListPlayer";
 import ModalAddPlayerEvent from "@/ui/modals/ModalAddPlayerEvent";
 import ModalEditPlayerEvent from "@/ui/modals/ModalEditPlayerEvent";
 import { Add, Delete, Edit, ExpandLess, ExpandMore, People } from "@mui/icons-material";
-import { Button, Card, CardActions, CardContent, Collapse, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Button, Card, CardActions, CardContent, Collapse, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
 export default function EventUpdate() {
@@ -63,7 +62,7 @@ export default function EventUpdate() {
                     </List>
                 </CardContent>
                 <CardActions>
-                    <Button variant="contained" onClick={handleAddPlayer} color="success">Agregar<Add /></Button>
+                    <Button variant="contained" onClick={handleAddPlayer} color="success"><Typography>Agregar</Typography><Add /></Button>
                 </CardActions>
             </Card>
             {modalPlayerEdit ? <ModalEditPlayerEvent openModal={modalPlayerEdit} closeModal={closeModalPlayerEdit} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}

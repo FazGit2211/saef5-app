@@ -2,7 +2,7 @@ import EventContext from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
 import useApi from "@/hooks/useApi";
 import { Cancel, Delete } from "@mui/icons-material";
-import { Alert, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { Alert, Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useContext } from "react";
 import { style } from "../modals/ModalCreatePlayer";
 
@@ -19,7 +19,6 @@ export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDial
     //utilizar el contexto del evento
     const { removeEvent, event } = useContext(EventContext);
     const handleDeleted = () => {
-        console.log(event);
         deleteEvent(event.id);
         if (!error.errorValue) {
             removeEvent();
@@ -29,7 +28,7 @@ export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDial
     };
 
     return (
-        <>
+        <Box>
             <Dialog open={openDialog} sx={style}>
                 <DialogTitle>
                     Eliminar?
@@ -39,9 +38,9 @@ export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDial
                     <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
                     {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
                     {!loading && error.errorValue ? <Alert variant="filled" severity="warning">{error.message}</Alert> : null}
-                    {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="success">{error.message}</Alert> : null}
+                    {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="success">Eliminado</Alert> : null}
                 </DialogActions>
             </Dialog>
-        </>
+        </Box>
     );
 }

@@ -20,7 +20,7 @@ const useApiPlayer = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(`${url}/${idEvent}`, options);
-            if (!response.ok) {
+            if (!response.ok) {                
                 setErrorPlayer({ errorValue: true, message: "Error POST." })
             };
         } catch (error: unknown) {

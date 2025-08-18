@@ -42,10 +42,9 @@ const useApi = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(url, options);
-            if (response.ok) {
-                setError({ errorValue: false, message: "Enviado correctamente." })
+            if (!response.ok) {
+                setError({ errorValue: true, message: "Error POST." });;
             };
-            setError({ errorValue: true, message: "Error POST." });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setError({ errorValue: true, message: error.message });
@@ -107,10 +106,9 @@ const useApi = (url: string) => {
                 headers: { "content-type": "application/json" },
             };
             const request = await fetch(`${url}/${id}`, options);
-            if (request.ok) {
-                setError({ errorValue: false, message: "Eliminado correctamente" });
+            if (!request.ok) {
+                setError({ errorValue: true, message: "Error DELETE." });
             };
-            setError({ errorValue: true, message: "Error DELETE." });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setError({ errorValue: true, message: error.message });

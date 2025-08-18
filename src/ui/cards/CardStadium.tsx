@@ -1,9 +1,9 @@
-import EventContext, { StadiumType } from "@/context/EventContext";
+import { StadiumType } from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
 import useApiStadium from "@/hooks/useApiStadium";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, Card, CardContent, TextField } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 export default function CardStadium({ id, name, address }: StadiumType) {
     //utilizar el hook personalizado para los alert
@@ -28,8 +28,8 @@ export default function CardStadium({ id, name, address }: StadiumType) {
                     <TextField label="Dirección" variant="outlined" value={addressUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddressUpdate(e.target.value)}></TextField>
                     <Button variant="contained" onClick={handleSaveUpdate} color="success"><Save /></Button>
                     {loadingStadium ? <Alert variant="filled" severity="info">Actualizando...</Alert> : null}
-                    {errorStadium.errorValue ? <Alert variant="filled" severity="warning">{errorStadium.message}</Alert> : null}
-                    {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
+                    {!loadingStadium && errorStadium.errorValue ? <Alert variant="filled" severity="warning">{errorStadium.message}</Alert> : null}
+                    {alert && !loadingStadium && !errorStadium.errorValue ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </CardContent>
             </Card>
         </>

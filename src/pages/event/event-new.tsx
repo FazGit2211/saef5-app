@@ -5,7 +5,7 @@ import useApi from "@/hooks/useApi";
 import CardNewEvent from "@/ui/cards/CardNewEvent";
 import CardPlayers from "@/ui/cards/CardPlayers";
 import { Save } from "@mui/icons-material";
-import { Alert, Button, Card, CardActions, CardContent, TextField, Typography } from "@mui/material";
+import { Alert, Button, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
 export default function Event() {
@@ -40,17 +40,19 @@ export default function Event() {
         setStadium({ id: 0, name: "", address: "" });
         removeAll();
     };
+    console.log(error)
 
     return (
         <>
             <CardNewEvent date={date} setDate={handleSetDate} stadium={stadium} addStadium={handleSetStadium} />
             <CardPlayers />
-            <Typography variant="h6" color="white">{date}</Typography>
-            <Typography variant="h6" color="white">{stadium.name + '' + stadium.address}</Typography>
+            <Typography variant="h6">{date}</Typography>
+            <Typography variant="h6">{stadium.name + '' + stadium.address}</Typography>
             <TextField label="Nombre, codigo o alias del evento." variant="outlined" value={codigo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCodigo(e.target.value)}></TextField>
-            {((players.length !== 0) && (date !== "") && (stadium.name !== "") && (stadium.address !== "") && (codigo !== "") ? <Button variant="contained" onClick={handleSendEvent}><Save /></Button> : null)}
-            {alert && loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-            {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="info" >{error.message}</Alert> : null}
+            {((players.length !== 0) && (date !== "") && (stadium.name !== "") && (stadium.address !== "") && (codigo !== "") ? <Button variant="contained" onClick={handleSendEvent} color="success"><Save /></Button> : null)}
+            {loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
+            {!loading && error.errorValue ? <Alert variant="filled" severity="warning">{error.message}</Alert> : null}
+            {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="success" >Guardado</Alert> : null}
 
         </>
     );

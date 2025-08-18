@@ -19,7 +19,7 @@ export default function CardPlayers() {
                     </ListItemButton>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            {players.length > 0 ? players.map((elem) => (<ListItem key={elem.id}><People />{elem.name} {elem.state}</ListItem>)) : <Typography variant="h6" color="#ff5722">No Hay Jugadores Agregados</Typography>}
+                            {players.length > 0 ? players.map((elem) => (<ListItem key={elem.name}><People />{elem.name} {elem.state}</ListItem>)) : <Typography variant="h6" color="#ff5722">No Hay Jugadores Agregados</Typography>}
                         </List>
                     </Collapse>
                 </List>

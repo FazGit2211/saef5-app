@@ -43,10 +43,9 @@ const useApiStadium = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(url, options);
-            if (response.ok) {
-                setErrorStadium({ errorValue: false, message: "Actualizado correctamente." });
+            if (!response.ok) {
+                setErrorStadium({ errorValue: true, message: "Error PUT." });
             };
-            setErrorStadium({ errorValue: true, message: "Error PUT." });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorStadium({ errorValue: true, message: error.message });

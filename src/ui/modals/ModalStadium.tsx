@@ -1,6 +1,6 @@
 import { StadiumType } from "@/context/EventContext";
 import { Close, Save } from "@mui/icons-material";
-import { Alert, Box, Button, Modal, TextField } from "@mui/material";
+import { Alert, Box, Button, FormGroup, Modal, TextField } from "@mui/material";
 import { useState } from "react";
 import { style } from "./ModalCreatePlayer";
 export interface PropsType {
@@ -37,11 +37,13 @@ export default function ModalStadium({ openModal, closeModal, stadium, addStadiu
 
     return (
         <>
-            <Modal open={openModal} sx={style}>
-                <Box>
-                    <TextField label="Nombre" variant="outlined" value={form.name} onChange={handleChangeName}></TextField>
-                    <TextField label="Direccion" variant="outlined" value={form.address} onChange={handleChangeAddress}></TextField>
-                    <Button variant="contained" onClick={handleSaveBtn}><Save /></Button>
+            <Modal open={openModal}>
+                <Box sx={style}>
+                    <FormGroup>
+                        <TextField label="Nombre" variant="outlined" value={form.name} onChange={handleChangeName}></TextField>
+                        <TextField label="Direccion" variant="outlined" value={form.address} onChange={handleChangeAddress}></TextField>
+                    </FormGroup>
+                    <Button variant="contained" onClick={handleSaveBtn} color="success"><Save /></Button>
                     <Button variant="contained" onClick={closeModal}><Close /></Button>
                     {sendForm ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </Box>
