@@ -12,8 +12,8 @@ export default function PlayerNew() {
     const { players } = useContext(PlayersContext);
     return (
         <>
-            <Button variant="contained" onClick={openModalPlayer} color="success"><Add /></Button>
-            {players.length === 0 ? <Typography variant="h6" color="warning">No hay jugadores</Typography> : <ListPlayer />}
+            <Button variant="contained" onClick={openModalPlayer} color="success">Nuevo <Add /></Button>
+            {players.length === 0 ? <Typography variant="h6" color="primary">No hay jugadores</Typography> : <ListPlayer />}
             {modalPlayer ? <ModalCreatePlayer openModal={modalPlayer} closeModal={closeModalPlayer} /> : null}
         </>
     );

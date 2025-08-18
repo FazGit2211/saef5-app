@@ -26,7 +26,7 @@ export default function CardStadium({ id, name, address }: StadiumType) {
                 <CardContent>
                     <TextField label="Nombre" variant="outlined" value={nameUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNameUpdate(e.target.value)}></TextField>
                     <TextField label="Dirección" variant="outlined" value={addressUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddressUpdate(e.target.value)}></TextField>
-                    <Button variant="contained" onClick={handleSaveUpdate}><Save /></Button>
+                    <Button variant="contained" onClick={handleSaveUpdate} color="success"><Save /></Button>
                     {loadingStadium ? <Alert variant="filled" severity="info">Actualizando...</Alert> : null}
                     {errorStadium.errorValue ? <Alert variant="filled" severity="warning">{errorStadium.message}</Alert> : null}
                     {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}

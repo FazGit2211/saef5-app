@@ -39,7 +39,7 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, playerDele
                     Eliminar Jugador ?
                 </DialogTitle>
                 <DialogActions>
-                    <Button variant="contained" onClick={handleDeleted}><Delete /></Button>
+                    <Button variant="contained" onClick={handleDeleted} sx={{ backgroundColor: "red" }}><Delete /></Button>
                     <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
                     {loadingPlayer ? <Alert variant="filled" severity="info">Eliminando...</Alert> : null}
                     {!loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}

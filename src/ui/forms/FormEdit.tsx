@@ -27,7 +27,7 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditT
     const handleSubmit = () => {
         players.splice(indexPlayerEdit, 1, form);
         if (playerEdit.id !== undefined) {
-            putPlayer(playerEdit.id, { id: playerEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });
+            putPlayer({ id: playerEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });
         }
         handleShowAlert();
         handleSetTimeOut();
@@ -40,12 +40,10 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditT
                 <TextField label="Email" variant="outlined" value={form.email} onChange={handleChangeEmail} onBlur={handleBlurEmail} error={errorInfo.errorValue} helperText={errorInfo.email} />
                 <TextField label="Estado" variant="outlined" value={form.state} onChange={handleChangeState} onBlur={handleBlurState} error={errorInfo.errorValue} helperText={errorInfo.state} />
                 <Typography>Administrador para el evento:</Typography>
-                <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success"/>
+                <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success" />
             </FormGroup>
-            <FormGroup>
-                <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
-                {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
-            </FormGroup>
+            <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
+            {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
         </>
     )
 }

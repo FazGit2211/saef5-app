@@ -6,10 +6,11 @@ import CardEvent from "@/ui/cards/CardEvent";
 import CardStadium from "@/ui/cards/CardStadium";
 import DeletePlayerDialog from "@/ui/dialogs/DeletePlayerDialog";
 import SaveEventUpdate from "@/ui/dialogs/SaveEventUpdate";
+import ListPlayer from "@/ui/lists/ListPlayer";
 import ModalAddPlayerEvent from "@/ui/modals/ModalAddPlayerEvent";
 import ModalEditPlayerEvent from "@/ui/modals/ModalEditPlayerEvent";
-import { Add, Delete, Edit, People, Save } from "@mui/icons-material";
-import { Button, Card, CardActions, CardContent, List, ListItem } from "@mui/material";
+import { Add, Delete, Edit, ExpandLess, ExpandMore, People } from "@mui/icons-material";
+import { Button, Card, CardActions, CardContent, Collapse, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { useContext, useState } from "react";
 
 export default function EventUpdate() {
@@ -23,6 +24,10 @@ export default function EventUpdate() {
     //propiedades e métodos para utilizar los datos del contexto
     const { event, stadium, addPlayers } = useContext(EventContext);
     const { players } = useContext(PlayerContext);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(!open);
+    };
     //método para editar al jugador individualmente por el index
     const handleSelectEdit = (elem: PlayerType, index: number) => {
         setEditPlayer(elem);
@@ -45,15 +50,25 @@ export default function EventUpdate() {
                 <CardContent>
                     {event ? <CardEvent id={event.id} codigo={event.codigo} date={event.date} /> : <h3>No hay datos</h3>}
                     {stadium ? <CardStadium id={stadium.id} name={stadium.name} address={stadium.address} /> : <h3>No hay datos</h3>}
-                    {players && players.length > 0 ? <List>{players.map((elem, index) => (<ListItem key={elem.id}><People />{elem.name} {elem.state}<Button variant="contained" onClick={() => handleSelectEdit(elem, index)}><Edit /></Button><Button variant="contained" onClick={() => handleDeletedItem(index, elem)}><Delete /></Button></ListItem>))}</List> : <h3>No hay jugadores</h3>}
+                    <List>
+                        <ListItemButton onClick={handleOpen}>
+                            <ListItemText primary="Jugadores" />
+                            {open ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                {players.map((elem, index) => (<ListItem key={elem.id}><People />{elem.name} {elem.state}<Button variant="contained" onClick={() => handleSelectEdit(elem, index)} color="secondary"><Edit /></Button><Button variant="contained" onClick={() => handleDeletedItem(index, elem)} color="warning"><Delete /></Button></ListItem>))}
+                            </List>
+                        </Collapse>
+                    </List>
                 </CardContent>
                 <CardActions>
-                    <Button variant="contained" onClick={handleAddPlayer}><Add /></Button>
+                    <Button variant="contained" onClick={handleAddPlayer} color="success">Agregar<Add /></Button>
                 </CardActions>
             </Card>
             {modalPlayerEdit ? <ModalEditPlayerEvent openModal={modalPlayerEdit} closeModal={closeModalPlayerEdit} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
             {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} playerDelete={editPlayer} /> : null}
-            {modalPlayer ? <ModalAddPlayerEvent openModal={modalPlayer} closeModal={closeModalPlayer}/> : null}
+            {modalPlayer ? <ModalAddPlayerEvent openModal={modalPlayer} closeModal={closeModalPlayer} /> : null}
             {saveEvent ? <SaveEventUpdate openDialog={saveEvent} closeDialog={closeSaveEvent} /> : null}
         </>
     )

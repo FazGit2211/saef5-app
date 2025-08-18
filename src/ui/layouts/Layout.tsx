@@ -8,7 +8,7 @@ interface LayoutProps {
 }
 export default function Layout({ children }: LayoutProps) {
     return (
-        <div className="flex flex-col min-h-screen bg-black">
+        <div className="flex flex-col min-h-screen bg-zinc-200">
             <header className="flex justify-evenly">
                 <NavBar />
             </header>
@@ -16,7 +16,7 @@ export default function Layout({ children }: LayoutProps) {
                 {children}
             </main>
             <footer className="flex justify-evenly">
-                <Typography variant="h6" color="white"><Email /> zuletafacundoadolfo2211@gmail.com</Typography><Typography variant="h6" color="white"><LinkedIn />linkedin.com/in/facundo-zuleta-/</Typography>
+                <Typography variant="h6"><Email /> zuletafacundoadolfo2211@gmail.com</Typography><Typography variant="h6"><LinkedIn />linkedin.com/in/facundo-zuleta-/</Typography>
             </footer>
         </div>
     );

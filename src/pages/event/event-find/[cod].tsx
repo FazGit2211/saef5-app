@@ -7,7 +7,6 @@ export default function EventFind() {
 
     return (
         <>
-            <h3>Información del Evento</h3>
             <ListDataEvent codigoParams={codigoEvent} />
         </>
     );

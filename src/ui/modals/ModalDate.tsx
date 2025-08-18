@@ -1,5 +1,5 @@
 import { Close, Save } from "@mui/icons-material";
-import { Alert, Box, Button, Modal, TextField } from "@mui/material";
+import { Alert, Box, Button, FormGroup, Modal, TextField } from "@mui/material";
 import { useState } from "react";
 import { style } from "./ModalCreatePlayer";
 
@@ -24,8 +24,10 @@ export default function ModalDate({ openModal, closeModal, date, setDate }: Prop
             <Modal open={openModal} sx={style}>
                 <Box>
                     <TextField label="Fecha" variant="outlined" value={date} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDate(e.target.value)}></TextField>
-                    <Button variant="contained" onClick={handleSaveBtn}><Save /></Button>
-                    <Button variant="contained" onClick={closeModal}><Close /></Button>
+                    <FormGroup>
+                        <Button variant="contained" onClick={handleSaveBtn}><Save /></Button>
+                        <Button variant="contained" onClick={closeModal}><Close /></Button>
+                    </FormGroup>
                     {sendForm ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </Box>
             </Modal>

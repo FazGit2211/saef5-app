@@ -64,9 +64,9 @@ const useApi = (url: string) => {
             if (response.ok) {
                 const dataValues: EventGetType = await response.json();
                 setData(dataValues);
-                setError({ errorValue: false, message: "Ok." });
+            } else {
+                setError({ errorValue: true, message: "Error GET." });
             };
-            setError({ errorValue: true, message: "Error GET." });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setError({ errorValue: true, message: error.message });

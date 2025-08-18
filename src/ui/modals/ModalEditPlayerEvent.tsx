@@ -4,7 +4,7 @@ import { style } from "./ModalCreatePlayer";
 import { PropsType } from "./ModalEditPlayer";
 import useAlert from "@/hooks/useAlert";
 import useApiPlayer from "@/hooks/useApiPlayer";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import PlayerContext from "@/context/PlayersContext";
 import useForm from "@/hooks/useForm";
 
@@ -25,13 +25,13 @@ export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, 
         if (dataEdit.id !== undefined) {
             putPlayer({ id: dataEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });
         };
-        if (!errorPlayer.errorValue) {
+        if (!loadingPlayer && !errorPlayer.errorValue) {
             players.splice(indexPlayer, 1, form);
             handleShowAlert();
             handleSetTimeOut();
             setForm({ id: 0, name: "", email: "", state: "", admin: true });
         };
-    }
+    };
     return (
         <Modal open={openModal}>
             <Box sx={style}>
@@ -43,7 +43,7 @@ export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, 
                     <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success" />
                 </FormGroup>
                 <FormGroup>
-                    <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
+                    <Button variant="contained" onClick={handleSubmit}>Enviar</Button>
                     {loadingPlayer ? <Alert variant="filled" severity="info">Actualizando... </Alert> : null}
                     {(!loadingPlayer && errorPlayer.errorValue) ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
                     {(alert && !loadingPlayer && !errorPlayer.errorValue) ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}

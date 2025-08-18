@@ -27,9 +27,9 @@ export default function CardEvent({ codigo, date }: EventType) {
                 <CardContent>
                     <Typography>Codigo: {codigo}</Typography>
                     <TextField label="Fecha" variant="outlined" value={dateUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateUpdate(e.target.value)}></TextField>
-                    <Button variant="contained" onClick={handleSaveUpdate}><Save /></Button>
+                    <Button variant="contained" onClick={handleSaveUpdate} color="success"><Save /></Button>
                     {loading ? <Alert variant="filled" severity="info">Actualizando...</Alert> : null}
-                    {error.errorValue ? <Alert variant="filled" severity="warning">{error.message}</Alert> : null}
+                    {!loading && error.errorValue ? <Alert variant="filled" severity="warning">{error.message}</Alert> : null}
                     {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </CardContent>
             </Card>

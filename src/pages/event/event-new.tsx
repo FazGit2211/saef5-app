@@ -50,7 +50,7 @@ export default function Event() {
             <TextField label="Nombre, codigo o alias del evento." variant="outlined" value={codigo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCodigo(e.target.value)}></TextField>
             {((players.length !== 0) && (date !== "") && (stadium.name !== "") && (stadium.address !== "") && (codigo !== "") ? <Button variant="contained" onClick={handleSendEvent}><Save /></Button> : null)}
             {alert && loading ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-            {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="info">{error.message}</Alert> : null}
+            {alert && !loading && !error.errorValue ? <Alert variant="filled" severity="info" >{error.message}</Alert> : null}
 
         </>
     );

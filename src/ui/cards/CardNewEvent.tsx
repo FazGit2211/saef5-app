@@ -23,9 +23,9 @@ export default function CardNewEvent({ date, setDate, stadium, addStadium }: Pro
     };
     return (
         <>
-            <Button variant="contained" onClick={handleClickRedirect}>Participantes<Add></Add></Button>
-            <Button variant="contained" onClick={openModalDate}>Fecha<Add></Add></Button>
-            <Button variant="contained" onClick={openModalStadium}>Cancha<Add></Add></Button>
+            <Button variant="contained" onClick={handleClickRedirect} color="info">Participantes<Add></Add></Button>
+            <Button variant="contained" onClick={openModalDate} color="info">Fecha<Add></Add></Button>
+            <Button variant="contained" onClick={openModalStadium} color="info">Cancha<Add></Add></Button>
             {modalDate ? <ModalDate openModal={modalDate} closeModal={closeModalDate} date={date} setDate={setDate} /> : null}
             {modalStadium ? <ModalStadium openModal={modalStadium} closeModal={closeModalStadium} stadium={stadium} addStadium={addStadium} /> : null}
         </>

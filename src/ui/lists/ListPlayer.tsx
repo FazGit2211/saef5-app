@@ -1,6 +1,6 @@
 import PlayerContext from "@/context/PlayersContext";
 import { Delete, Edit, ExpandLess, ExpandMore, People } from "@mui/icons-material";
-import { Button, Collapse, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
+import { Button, Card, Collapse, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import { useContext, useState } from "react";
 import ModalEditPlayer from "../modals/ModalEditPlayer";
@@ -43,7 +43,7 @@ export default function ListPlayer() {
         setOpen(!open);
     };
     return (
-        <>
+        <Card>
             <List>
                 <ListItemButton onClick={handleOpen} color="info">
                     <ListItemText primary="Jugadores" />
@@ -58,6 +58,6 @@ export default function ListPlayer() {
             </List>
             {modalPlayer ? <ModalEditPlayer openModal={modalPlayer} closeModal={closeModalPlayer} dataEdit={editPlayer} indexPlayer={indexPlayer} /> : null}
             {deletePlayer ? <DeletePlayerDialog openDialog={deletePlayer} indexDelete={indexPlayer} closeDialog={closeDeletePlayer} playerDelete={{ id: 0, name: "", email: "", state: "", admin: true }} /> : null}
-        </>
+        </Card>
     )
 }

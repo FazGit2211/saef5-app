@@ -1,5 +1,5 @@
 import PlayerContext from "@/context/PlayersContext";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, People } from "@mui/icons-material";
 import { Card, CardContent, Collapse, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
@@ -13,13 +13,13 @@ export default function CardPlayers() {
         <Card>
             <CardContent>
                 <List>
-                    <ListItemButton onClick={handleOpen} color="info">
+                    <ListItemButton onClick={handleOpen}>
                         <ListItemText primary="Jugadores" />
                         {open ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            {players.length === 0 ? <Typography variant="h6" color="#ff5722">No Hay Jugadores Agregados</Typography> : players.map((elem) => { return <ListItem key={elem.id}>{elem.name}</ListItem> })}
+                            {players.length > 0 ? players.map((elem) => (<ListItem key={elem.id}><People />{elem.name} {elem.state}</ListItem>)) : <Typography variant="h6" color="#ff5722">No Hay Jugadores Agregados</Typography>}
                         </List>
                     </Collapse>
                 </List>

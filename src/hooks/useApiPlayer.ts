@@ -20,10 +20,9 @@ const useApiPlayer = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(`${url}/${idEvent}`, options);
-            if (response.ok) {
-                setErrorPlayer({ errorValue: false, message: "Creado." });
+            if (!response.ok) {
+                setErrorPlayer({ errorValue: true, message: "Error POST." })
             };
-            setErrorPlayer({ errorValue: true, message: "Error POST." })
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorPlayer({ errorValue: true, message: error.message });
@@ -66,10 +65,9 @@ const useApiPlayer = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(url, options);
-            if (response.ok) {
-                setErrorPlayer({ errorValue: false, message: "Actualizado correctamente." });
+            if (!response.ok) {
+                setErrorPlayer({ errorValue: true, message: "Error PUT." });
             };
-            setErrorPlayer({ errorValue: true, message: "Error PUT." });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorPlayer({ errorValue: true, message: error.message });
@@ -87,10 +85,9 @@ const useApiPlayer = (url: string) => {
                 headers: { "content-type": "application/json" },
             };
             const request = await fetch(`${url}/${id}`, options);
-            if (request.ok) {
-                setErrorPlayer({ errorValue: false, message: "Eliminado correctamente" });
+            if (!request.ok) {
+                setErrorPlayer({ errorValue: true, message: "Error DELETE." });
             };
-            setErrorPlayer({ errorValue: true, message: "Error DELETE." });
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorPlayer({ errorValue: true, message: error.message });
