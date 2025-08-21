@@ -4,7 +4,7 @@ import { style } from "./ModalCreatePlayer";
 import { PropsType } from "./ModalEditPlayer";
 import useAlert from "@/hooks/useAlert";
 import useApiPlayer from "@/hooks/useApiPlayer";
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 import PlayerContext from "@/context/PlayersContext";
 import useForm from "@/hooks/useForm";
 
@@ -40,7 +40,7 @@ export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, 
                     <TextField label="Email" variant="outlined" value={form.email} onChange={handleChangeEmail} onBlur={handleBlurEmail} error={errorInfo.errorValue} helperText={errorInfo.email} />
                     <TextField label="Estado" variant="outlined" value={form.state} onChange={handleChangeState} onBlur={handleBlurState} error={errorInfo.errorValue} helperText={errorInfo.state} />
                     <Typography>Administrador para el evento:</Typography>
-                    <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success" />
+                    <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin}/>
                 </FormGroup>
                 <FormGroup>
                     <Button variant="contained" onClick={handleSubmit}>Enviar</Button>

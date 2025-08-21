@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import ModalDate from "../modals/ModalDate";
 import ModalStadium from "../modals/ModalStadium";
@@ -23,9 +23,9 @@ export default function CardNewEvent({ date, setDate, stadium, addStadium }: Pro
     };
     return (
         <>
-            <Button variant="contained" onClick={handleClickRedirect} color="info">Participantes<Add></Add></Button>
-            <Button variant="contained" onClick={openModalDate} color="info">Fecha<Add></Add></Button>
-            <Button variant="contained" onClick={openModalStadium} color="info">Cancha<Add></Add></Button>
+            <Typography variant="h6" className="flex flex-col"><Button variant="contained" onClick={handleClickRedirect} color="info"><Add /></Button>Jugadores</Typography>
+            <Typography variant="h6" className="flex flex-col"><Button variant="contained" onClick={openModalDate} color="info"><Add /></Button>Fecha</Typography>
+            <Typography variant="h6" className="flex flex-col"><Button variant="contained" onClick={openModalStadium} color="info"><Add /></Button>Cancha</Typography>
             {modalDate ? <ModalDate openModal={modalDate} closeModal={closeModalDate} date={date} setDate={setDate} /> : null}
             {modalStadium ? <ModalStadium openModal={modalStadium} closeModal={closeModalStadium} stadium={stadium} addStadium={addStadium} /> : null}
         </>

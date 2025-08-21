@@ -22,12 +22,12 @@ export default function ModalAddPlayerEvent({ openModal, closeModal }: PropsType
     const handleSubmit = () => {
         if (!errorInfo.errorValue) {
             postPlayer(event.id, { id: 0, name: form.name, email: form.email, state: "", admin: form.admin });
-            if (errorPlayer.errorValue !== false) {
-                addPlayer({ id: 0, name: form.name, email: form.email, state: "", admin: form.admin });
-                handleShowAlert();
-                handleSetTimeOut();
-                setForm({ id: 0, name: "", email: "", state: "", admin: true });
-            };
+        };
+        if (errorPlayer.errorValue == false) {
+            addPlayer({ id: 0, name: form.name, email: form.email, state: "", admin: form.admin });
+            handleShowAlert();
+            handleSetTimeOut();
+            setForm({ id: 0, name: "", email: "", state: "", admin: true });
         };
     };
     return (
@@ -41,7 +41,7 @@ export default function ModalAddPlayerEvent({ openModal, closeModal }: PropsType
                 <FormGroup>
                     <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
                     {loadingPlayer ? <Alert variant="filled" severity="info">Enviando </Alert> : null}
-                    {(!loadingPlayer && errorPlayer.errorValue) ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
+                    {!loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
                     {(alert && !loadingPlayer && !errorPlayer.errorValue) ? <Alert variant="filled" severity="success">Agregado</Alert> : null}
                 </FormGroup>
                 <Button variant="contained" onClick={closeModal}><Close /></Button>

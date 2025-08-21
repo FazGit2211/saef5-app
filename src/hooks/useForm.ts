@@ -24,8 +24,8 @@ const useForm = ({ initialForm }: FormType) => {
     //Funciones para detectar el ingreso de datos en los inputs
     const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
-            ...form, name: e.target.value
-        })
+            ...form, name: e.target.value.trim()
+        });
     };
 
     const handleBlurName = () => {
@@ -40,8 +40,8 @@ const useForm = ({ initialForm }: FormType) => {
 
     const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
-            ...form, email: e.target.value
-        })
+            ...form, email: e.target.value.trim()
+        });
     };
 
     const handleBlurEmail = () => {
@@ -53,7 +53,7 @@ const useForm = ({ initialForm }: FormType) => {
     };
 
     const handleChangeState = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({ ...form, state: e.target.value })
+        setForm({ ...form, state: e.target.value.trim() });
     };
 
     const handleBlurState = () => {

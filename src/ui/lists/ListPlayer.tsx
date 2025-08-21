@@ -51,7 +51,7 @@ export default function ListPlayer() {
                 </ListItemButton>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {players.map((elem, index) => (<ListItem key={elem.id}><Typography variant="h6"><People />{elem.name}</Typography>  <Button variant="contained" onClick={() => handleDeletedItem(index)} sx={{ backgroundColor: "red", margin: 1 }}><Delete /></Button> <Button variant="contained" onClick={() => handleSelectEdit(elem, index)} color="secondary"><Edit /></Button> </ListItem>))}
+                        {players.map((elem, index) => (<ListItem key={elem.name}><Typography variant="h6"><People />{elem.name}</Typography>  <Button variant="contained" onClick={() => handleDeletedItem(index)} sx={{ backgroundColor: "red", margin: 1 }}><Delete /></Button> <Button variant="contained" onClick={() => handleSelectEdit(elem, index)} color="secondary"><Edit /></Button> </ListItem>))}
                     </List>
                 </Collapse>
                 <Button variant="contained" onClick={handleConfirmBtn}>Confirmar a los jugadores</Button>

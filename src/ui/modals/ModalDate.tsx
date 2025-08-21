@@ -10,6 +10,7 @@ interface PropsType {
     setDate: (d: string) => void
 };
 
+
 export default function ModalDate({ openModal, closeModal, date, setDate }: PropsType) {
     //Manejar el estado para los alert de mensajes
     const [sendForm, setSendForm] = useState(false);
@@ -21,13 +22,11 @@ export default function ModalDate({ openModal, closeModal, date, setDate }: Prop
     }
     return (
         <>
-            <Modal open={openModal} sx={style}>
-                <Box>
+            <Modal open={openModal}>
+                <Box sx={style}>
                     <TextField label="Fecha" variant="outlined" value={date} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDate(e.target.value)}></TextField>
-                    <FormGroup>
-                        <Button variant="contained" onClick={handleSaveBtn}><Save /></Button>
-                        <Button variant="contained" onClick={closeModal}><Close /></Button>
-                    </FormGroup>
+                    <Button variant="contained" onClick={handleSaveBtn}><Save /></Button>
+                    <Button variant="contained" onClick={closeModal}><Close /></Button>
                     {sendForm ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </Box>
             </Modal>

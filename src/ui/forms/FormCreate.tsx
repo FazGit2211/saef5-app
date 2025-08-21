@@ -29,7 +29,7 @@ export default function FormCreate() {
                 <TextField label="Email (Opcional)" variant="outlined" value={form.email} onChange={handleChangeEmail} />
                 <TextField label="Estado de confirmación (Opcional)" variant="outlined" value={form.state} onChange={handleChangeState} />
                 <Typography>Administrador para el evento:</Typography>
-                <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success" />
+                <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin} />
             </FormGroup>
             <Button variant="contained" onClick={handleSubmit}><Save /></Button>
             {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}

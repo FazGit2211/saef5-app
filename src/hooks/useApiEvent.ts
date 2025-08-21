@@ -24,15 +24,15 @@ interface ErrorType {
 
 const useDefaulValues: EventGetType = { info: { id: 0, codigo: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] } };
 
-const useApi = (url: string) => {
+const useApiEvent = (url: string) => {
 
-    const [data, setData] = useState(useDefaulValues);
-    const [error, setError] = useState<ErrorType>({ errorValue: false, message: "" });
-    const [loading, setLoading] = useState(false);
+    const [dataEvent, setDataEvent] = useState(useDefaulValues);
+    const [errorEvent, setErrorEvent] = useState<ErrorType>({ errorValue: false, message: "" });
+    const [loadingEvent, setLoadingEvent] = useState(false);
 
     const postEvent = async ({ codigo, date, stadium, players }: EventType) => {
         try {
-            setLoading(true);
+            setLoadingEvent(true);
             const dataValues = {
                 codigo, date, stadium, players
             };
@@ -42,20 +42,21 @@ const useApi = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(url, options);
-            if (response.ok) {
-                setError({ errorValue: false, message: "Enviado correctamente." })
+            if (!response.ok) {
+                setErrorEvent({ errorValue: true, message: "Error POST." });;
             };
-            setError({ errorValue: true, message: "Error POST." });
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
+                setErrorEvent({ errorValue: true, message: error.message });
             }
-        };
+        } finally {
+            setLoadingEvent(false);
+        }
     };
 
     const getEventByCodigo = async (codigo: string) => {
         try {
-            setLoading(true);
+            setLoadingEvent(true);
             const options: RequestInit = {
                 method: "GET",
                 headers: { "content-type": "application/json" },
@@ -63,22 +64,24 @@ const useApi = (url: string) => {
             const response = await fetch(`${url}/${codigo}`, options);
             if (response.ok) {
                 const dataValues: EventGetType = await response.json();
-                setData(dataValues);
+                setDataEvent(dataValues);
             } else {
-                setError({ errorValue: true, message: "Error GET." });
+                const dataInfo = await response.json();
+                console.log(dataInfo);
+                setErrorEvent({ errorValue: true, message: `${dataInfo.message.info}` });
             };
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
+                setErrorEvent({ errorValue: true, message: error.message });
             };
         } finally {
-            setLoading(false);
+            setLoadingEvent(false);
         };
     };
 
     const putEvent = async (idEvent: number, { date }: EventType) => {
         try {
-            setLoading(true);
+            setLoadingEvent(true);
             const dataValues = { date };
             const options: RequestInit = {
                 method: "PUT",
@@ -87,39 +90,38 @@ const useApi = (url: string) => {
             };
             const response = await fetch(`${url}/${idEvent}`, options);
             if (response.ok) {
-                setError({ errorValue: false, message: "Actualizado correctamente." });
+                setErrorEvent({ errorValue: false, message: "Actualizado correctamente." });
             };
-            setError({ errorValue: true, message: "Error PUT." });
+            setErrorEvent({ errorValue: true, message: "Error PUT." });
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
+                setErrorEvent({ errorValue: true, message: error.message });
             }
         } finally {
-            setLoading(false);
+            setLoadingEvent(false);
         }
     };
 
     const deleteEvent = async (id: number) => {
         try {
-            setLoading(true);
+            setLoadingEvent(true);
             const options: RequestInit = {
                 method: "DELETE",
                 headers: { "content-type": "application/json" },
             };
             const request = await fetch(`${url}/${id}`, options);
-            if (request.ok) {
-                setError({ errorValue: false, message: "Eliminado correctamente" });
+            if (!request.ok) {
+                setErrorEvent({ errorValue: true, message: "Error DELETE." });
             };
-            setError({ errorValue: true, message: "Error DELETE." });
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setError({ errorValue: true, message: error.message });
+                setErrorEvent({ errorValue: true, message: error.message });
             };
         } finally {
-            setLoading(false);
+            setLoadingEvent(false);
         };
     }
 
-    return { data, loading, error, postEvent, getEventByCodigo, putEvent, deleteEvent }
+    return { dataEvent, loadingEvent, errorEvent, postEvent, getEventByCodigo, putEvent, deleteEvent }
 }
-export default useApi;
+export default useApiEvent;
