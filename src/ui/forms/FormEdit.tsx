@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Alert, Button, Checkbox, FormGroup, TextField, Typography } from "@mui/material";
-import PlayerContext from "@/context/PlayersContext";
+import PlayerContext, { PlayerType } from "@/context/PlayersContext";
 import useForm from "@/hooks/useForm";
-import { PlayerType } from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
 import useApiPlayer from "@/hooks/useApiPlayer";
+import { Save } from "@mui/icons-material";
 
 interface PropsFormEditType {
     playerEdit: PlayerType,
@@ -24,11 +24,11 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditT
     //Llamar al listado actual
     const { players } = useContext(PlayerContext);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!errorInfo.errorValue) {
             players.splice(indexPlayerEdit, 1, form);
             if (playerEdit.id !== undefined) {
-                putPlayer({ id: playerEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });
+                await putPlayer({ id: playerEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });
             }
             handleShowAlert();
             handleSetTimeOut();
@@ -44,8 +44,8 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditT
                 <Typography>Administrador para el evento:</Typography>
                 <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin} />
             </FormGroup>
-            <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
-            {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
+            <Button variant="contained" onClick={handleSubmit} color="success"><Save /></Button>
+            {alert ? <Alert variant="filled" severity="info">Editado correctamente</Alert> : null}
         </>
     )
 }

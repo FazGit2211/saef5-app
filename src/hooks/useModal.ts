@@ -17,8 +17,12 @@ const useModal = () => {
     const closeModalStadium = () => { setModalStadium(false) };
     const openModalStadium = () => { setModalStadium(true) };
 
+    const [modalUserSingin, setModalUserSingin] = useState(false);
+    const closeModalUserSingin = () => { setModalUserSingin(false) };
+    const openModalUserSingin = () => { setModalUserSingin(true) };
 
-    return { modalDate, closeModalDate, openModalDate, modalStadium, closeModalStadium, openModalStadium, modalPlayer, closeModalPlayer, openModalPlayer, modalPlayerEdit, closeModalPlayerEdit, openModalPlayerEdit }
+
+    return { modalDate, closeModalDate, openModalDate, modalStadium, closeModalStadium, openModalStadium, modalPlayer, closeModalPlayer, openModalPlayer, modalPlayerEdit, closeModalPlayerEdit, openModalPlayerEdit, modalUserSingin, closeModalUserSingin, openModalUserSingin }
 }
 
 export default useModal;

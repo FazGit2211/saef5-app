@@ -1,5 +1,4 @@
-import { PlayerType } from "@/context/EventContext";
-import PlayerContext from "@/context/PlayersContext";
+import PlayerContext, { PlayerType } from "@/context/PlayersContext";
 import useAlert from "@/hooks/useAlert";
 import useApiPlayer from "@/hooks/useApiPlayer";
 import { Cancel, Delete } from "@mui/icons-material";
@@ -22,15 +21,15 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, playerDele
     const url = "http://localhost:5000/api/player";
     const { deletePlayer, loadingPlayer, errorPlayer } = useApiPlayer(url);
 
-    const handleDeleted = () => {
+    const handleDeleted = async () => {
         if (playerDelete.id !== undefined && playerDelete.name !== "") {
-            deletePlayer(playerDelete.id);
+            await deletePlayer(playerDelete.id);
+            handleShowAlert();
         };
         if (!errorPlayer.errorValue) {
             removePlayers(indexDelete);
-            handleShowAlert();
             handleSetTimeOut();
-        }
+        };
     };
     return (
         <>

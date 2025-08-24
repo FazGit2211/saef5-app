@@ -1,12 +1,5 @@
 import { createContext, ReactNode, useState } from "react"
-
-export interface PlayerType {
-    id: number;
-    name: string,
-    email: string,
-    state: string,
-    admin: boolean
-};
+import { PlayerType } from "./PlayersContext";
 
 export interface StadiumType {
     id: number,
@@ -18,12 +11,12 @@ export interface EventType {
     id: number,
     codigo: string,
     date: string,
+    Stadium: StadiumType,
+    Player: PlayerType[]
 };
 
-interface ContextType {
+interface ContextEventType {
     event: EventType,
-    stadium: StadiumType,
-    players: PlayerType[],
     addEvent: (even: EventType) => void,
     addStadium: (stadium: StadiumType) => void,
     addPlayers: (player: PlayerType[]) => void,
@@ -34,10 +27,8 @@ interface ProviderType {
     children: ReactNode
 };
 
-const defaultValues: ContextType = {
-    event: { id: 0, codigo: "", date: "" },
-    stadium: { id: 0, name: "", address: "" },
-    players: [],
+const defaultValues: ContextEventType = {
+    event: { id: 0, codigo: "", date: "", Stadium: { id: 0, name: "", address: "" }, Player: [] },
     addEvent: () => { },
     addStadium: () => { },
     addPlayers: () => { },
@@ -46,7 +37,7 @@ const defaultValues: ContextType = {
 
 const EventContext = createContext(defaultValues);
 const EventProvider = ({ children }: ProviderType) => {
-    const [event, setEvent] = useState<EventType>({ id: 0, codigo: "", date: "" });
+    const [event, setEvent] = useState<EventType>({ id: 0, codigo: "", date: "", Stadium: { id: 0, name: "", address: "" }, Player: [] });
     const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
     const [players, setPlayers] = useState<PlayerType[]>([]);
 
@@ -63,7 +54,7 @@ const EventProvider = ({ children }: ProviderType) => {
     };
 
     const removeEvent = () => {
-        setEvent({ id: 0, codigo: "", date: "" });
+        setEvent({ id: 0, codigo: "", date: "", Stadium: { id: 0, name: "", address: "" }, Player: [] });
         setStadium({ id: 0, name: "", address: "" });
         setPlayers([]);
     };

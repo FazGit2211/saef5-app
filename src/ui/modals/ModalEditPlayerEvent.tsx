@@ -20,7 +20,6 @@ export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, 
     const { loadingPlayer, errorPlayer, putPlayer } = useApiPlayer(url);
     //Llamar al listado actual
     const { players } = useContext(PlayerContext);
-
     const handleSubmit = () => {
         if (dataEdit.id !== undefined) {
             putPlayer({ id: dataEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });

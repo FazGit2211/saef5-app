@@ -12,11 +12,11 @@ export default function CardStadium({ id, name, address }: StadiumType) {
     const [nameUpdate, setNameUpdate] = useState(name);
     const [addressUpdate, setAddressUpdate] = useState(address);
     //contexto para actualizar
-    const urlStadium = "http://localhost:5000/api/stadium";
+    const urlStadium = "http://localhost:5000//api/stadium";
     const { loadingStadium, errorStadium, putStadium } = useApiStadium(urlStadium);
 
-    const handleSaveUpdate = () => {
-        putStadium({ id: id, name: nameUpdate, address: addressUpdate });
+    const handleSaveUpdate =async () => {
+        await putStadium({ id: id, name: nameUpdate, address: addressUpdate });
         handleShowAlert();
         handleSetTimeOut();
     };

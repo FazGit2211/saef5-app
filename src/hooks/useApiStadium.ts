@@ -22,7 +22,8 @@ const useApiStadium = (url: string) => {
                 setDataStadium(dataValues);
                 setErrorStadium({ errorValue: false, message: "Get ok." });
             } else {
-                setErrorStadium({ errorValue: true, message: "Error GET." })
+                const dataInfo = await response.json();
+                setErrorStadium({ errorValue: true, message: `${dataInfo.message.info}` });
             };
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -44,7 +45,8 @@ const useApiStadium = (url: string) => {
             };
             const response = await fetch(url, options);
             if (!response.ok) {
-                setErrorStadium({ errorValue: true, message: "Error PUT." });
+                const dataInfo = await response.json();
+                setErrorStadium({ errorValue: true, message: `${dataInfo.message.info}` });
             };
         } catch (error: unknown) {
             if (error instanceof Error) {

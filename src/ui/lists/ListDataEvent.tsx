@@ -37,7 +37,7 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
 
     //método para cargar datos al contexto
     const addDataContextEvent = () => {
-        addEvent({ id: dataEvent.info.id, codigo: dataEvent.info.codigo, date: dataEvent.info.date });
+        addEvent({ id: dataEvent.info.id, codigo: dataEvent.info.codigo, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
         dataEvent.info.Players.forEach((player) => (players.push(player)));
         addStadium({ id: dataEvent.info.Stadium.id, name: dataEvent.info.Stadium.name, address: dataEvent.info.Stadium.address });
     }
@@ -51,12 +51,10 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
     //Método para mostrar el dialogo de eliminar
     const handleDeleteEvent = () => {
         if (dataEvent.info.codigo !== "" && dataEvent.info.codigo !== undefined) {
-            addEvent({ id: dataEvent.info.id, codigo: dataEvent.info.codigo, date: dataEvent.info.date });
+            addEvent({ id: dataEvent.info.id, codigo: dataEvent.info.codigo, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
             openDeleteEvent();
         };
     };
-
-    console.log(errorEvent);
     return (
         <Card>
             <CardContent>

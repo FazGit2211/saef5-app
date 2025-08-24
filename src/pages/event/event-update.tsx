@@ -1,5 +1,5 @@
-import EventContext, { PlayerType } from "@/context/EventContext";
-import PlayerContext from "@/context/PlayersContext";
+import EventContext from "@/context/EventContext";
+import PlayerContext, { PlayerType } from "@/context/PlayersContext";
 import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
 import CardEvent from "@/ui/cards/CardEvent";
@@ -21,7 +21,7 @@ export default function EventUpdate() {
     //Utilizar propiedades e métodos para utilizar los dialogos de confirmación
     const { deletePlayer, openDeletePlayer, closeDeletePlayer, saveEvent, closeSaveEvent } = useDialog();
     //propiedades e métodos para utilizar los datos del contexto
-    const { event, stadium, addPlayers } = useContext(EventContext);
+    const { event } = useContext(EventContext);
     const { players } = useContext(PlayerContext);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -47,8 +47,8 @@ export default function EventUpdate() {
         <>
             <Card>
                 <CardContent>
-                    {event ? <CardEvent id={event.id} codigo={event.codigo} date={event.date} /> : <h3>No hay datos</h3>}
-                    {stadium ? <CardStadium id={stadium.id} name={stadium.name} address={stadium.address} /> : <h3>No hay datos</h3>}
+                    {event ? <CardEvent id={event.id} codigo={event.codigo} date={event.date} Stadium={{ id: event.Stadium.id, name: event.Stadium.name, address: event.Stadium.address }} Player={[]} /> : <h3>No hay datos</h3>}
+                    {event.Stadium ? <CardStadium id={event.Stadium.id} name={event.Stadium.name} address={event.Stadium.address} /> : <h3>No hay datos</h3>}
                     <List>
                         <ListItemButton onClick={handleOpen}>
                             <ListItemText primary="Jugadores" />

@@ -1,4 +1,4 @@
-import { PlayerType } from "@/context/EventContext";
+import { PlayerType } from "@/context/PlayersContext";
 import { useState } from "react";
 interface ErrorPlayerType {
     errorValue: boolean,
@@ -20,8 +20,9 @@ const useApiPlayer = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(`${url}/${idEvent}`, options);
-            if (!response.ok) {                
-                setErrorPlayer({ errorValue: true, message: "Error POST." })
+            if (!response.ok) {
+                const dataInfo = await response.json();
+                setErrorPlayer({ errorValue: true, message: `${dataInfo.message.info}` });
             };
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -44,8 +45,10 @@ const useApiPlayer = (url: string) => {
                 const dataValues = await response.json();
                 setDataPlayer(dataValues);
                 setErrorPlayer({ errorValue: false, message: "Ok." });
-            };
-            setErrorPlayer({ errorValue: true, message: "Error GET." });
+            } else {
+                const dataInfo = await response.json();
+                setErrorPlayer({ errorValue: true, message: `${dataInfo.message.info}` });
+            }
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorPlayer({ errorValue: true, message: error.message });
@@ -66,7 +69,8 @@ const useApiPlayer = (url: string) => {
             };
             const response = await fetch(url, options);
             if (!response.ok) {
-                setErrorPlayer({ errorValue: true, message: "Error PUT." });
+                const dataInfo = await response.json();
+                setErrorPlayer({ errorValue: true, message: `${dataInfo.message.info}` });
             };
         } catch (error: unknown) {
             if (error instanceof Error) {

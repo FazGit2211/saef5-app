@@ -24,6 +24,7 @@ export default function FormCreate() {
     };
     return (
         <>
+            <Typography variant="h5">Ingrese los datos de los participantes:</Typography>
             <FormGroup>
                 <TextField label="Nombre" variant="outlined" value={form.name} onChange={handleChangeName} onBlur={handleBlurName} error={errorInfo.errorValue} helperText={errorInfo.name} />
                 <TextField label="Email (Opcional)" variant="outlined" value={form.email} onChange={handleChangeEmail} />
@@ -31,7 +32,7 @@ export default function FormCreate() {
                 <Typography>Administrador para el evento:</Typography>
                 <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin} />
             </FormGroup>
-            <Button variant="contained" onClick={handleSubmit}><Save /></Button>
+            <Button variant="contained" onClick={handleSubmit} color="success"><Save /></Button>
             {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
         </>
     );

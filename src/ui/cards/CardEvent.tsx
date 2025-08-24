@@ -11,13 +11,13 @@ export default function CardEvent({ codigo, date }: EventType) {
     //estado para actualizar
     const [dateUpdate, setDateUpdate] = useState(date);
     //contexto para actualizar
-    const { event, stadium, players } = useContext(EventContext);
+    const { event } = useContext(EventContext);
     //Utilizar propiedades e métodos para enviar los datos hacia la api
     const urlEvent = "http://localhost:5000/api/event";
     const { putEvent, loadingEvent, errorEvent } = useApiEvent(urlEvent);
 
-    const handleSaveUpdate = () => {
-        putEvent(event.id, { codigo: codigo, date: dateUpdate, stadium: { id: 0, name: stadium.name, address: stadium.address }, players: players });
+    const handleSaveUpdate = async () => {
+        await putEvent(event.id, { codigo: codigo, date: dateUpdate, userId: 0, stadium: { id: 0, name: event.Stadium.name, address: event.Stadium.address }, players: event.Player });
         handleShowAlert();
         handleSetTimeOut();
     }

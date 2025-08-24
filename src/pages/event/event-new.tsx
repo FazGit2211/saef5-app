@@ -7,7 +7,6 @@ import CardPlayers from "@/ui/cards/CardPlayers";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-
 export default function Event() {
     const [date, setDate] = useState("");
     const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
@@ -18,41 +17,31 @@ export default function Event() {
     const { players, removeAll } = useContext(PlayerContext);
     const url = "http://localhost:5000/api/event";
     const { loadingEvent, errorEvent, postEvent } = useApiEvent(url);
-
-
     const handleSetDate = (d: string) => {
         if (d.trim() !== "") {
             setDate(d);
         };
     };
-
     const handleSetStadium = (s: StadiumType) => {
         if (s.name.trim() !== "" && s.address.trim() !== "") {
             setStadium(s);
         };
     };
-
     const handleChangeCodigo = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.trim() !== "") {
             setCodigo(e.target.value.trim());
         };
-    }
-
-    const handleSendEvent = () => {
-        postEvent({ codigo, date, stadium, players });
-        handleError();
     };
-
-    const handleError = () => {
+    const handleSendEvent = async () => {
+        await postEvent({ codigo, date, stadium, players, userId: 0 });
+        handleShowAlert();
         if (!errorEvent.errorValue) {
-            handleShowAlert();
             handleSetTimeOut();
             setDate("");
             setStadium({ id: 0, name: "", address: "" });
             removeAll();
         };
     };
-
     return (
         <>
             <CardNewEvent date={date} setDate={handleSetDate} stadium={stadium} addStadium={handleSetStadium} />

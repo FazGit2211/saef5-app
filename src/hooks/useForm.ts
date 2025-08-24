@@ -1,4 +1,4 @@
-import { PlayerType } from "@/context/EventContext";
+import { PlayerType } from "@/context/PlayersContext";
 import { useState } from "react";
 
 interface ErrorType {
@@ -17,14 +17,14 @@ const useForm = ({ initialForm }: FormType) => {
     //Inicializar form con valores vacios
     const [form, setForm] = useState<PlayerType>(initialForm);
     //Estado para obtener los errores
-    const [errorInfo, setErrorInfo] = useState<ErrorType>({ errorValue: false, name: "", email: "", state: "", admin: false });
+    const [errorInfo, setErrorInfo] = useState<ErrorType>({ errorValue: true, name: "", email: "", state: "", admin: false });
     //Expreciones regulares
     const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     const regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
     //Funciones para detectar el ingreso de datos en los inputs
     const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
-            ...form, name: e.target.value.trim()
+            ...form, name: e.target.value
         });
     };
 
@@ -40,7 +40,7 @@ const useForm = ({ initialForm }: FormType) => {
 
     const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
-            ...form, email: e.target.value.trim()
+            ...form, email: e.target.value
         });
     };
 
@@ -53,7 +53,7 @@ const useForm = ({ initialForm }: FormType) => {
     };
 
     const handleChangeState = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({ ...form, state: e.target.value.trim() });
+        setForm({ ...form, state: e.target.value });
     };
 
     const handleBlurState = () => {

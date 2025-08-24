@@ -1,7 +1,12 @@
 import { createContext, ReactNode, useState } from "react"
-import { PlayerType } from "./EventContext";
-
-interface ContextType {
+export interface PlayerType {
+    id: number;
+    name: string,
+    email: string,
+    state: string,
+    admin: boolean
+};
+interface ContextPlayerType {
     players: PlayerType[],
     playersEdited: PlayerType[],
     addPlayer: (player: PlayerType) => void,
@@ -10,15 +15,15 @@ interface ContextType {
     removeAll: () => void;
 };
 
-interface ProviderType {
+interface ProviderPlayerType {
     children: ReactNode
 };
-const useContextDefault: ContextType = {
+const useContextDefault: ContextPlayerType = {
     players: [], playersEdited: [], addPlayer: () => { }, addPlayerEdited: () => { }, removePlayers: () => { }, removeAll: () => { }
 }
 const PlayerContext = createContext(useContextDefault);
 
-const PlayerProvider: React.FC<ProviderType> = ({ children }) => {
+const PlayerProvider: React.FC<ProviderPlayerType> = ({ children }) => {
     const [players, setPlayers] = useState<PlayerType[]>([]);
     const [playersEdited, setPlayersEdited] = useState<PlayerType[]>([]);
 

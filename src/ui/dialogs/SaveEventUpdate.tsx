@@ -14,13 +14,13 @@ export default function SaveEventUpdate({ openDialog, closeDialog }: PropsDialog
     const urlStadium = "http://localhost:5000/api/stadium";
     const { putStadium } = useApiStadium(urlStadium);
     //Utilizar propiedades e métodos para utilizar el contexto evento
-    const { event, stadium, players } = useContext(EventContext);
+    const { event } = useContext(EventContext);
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
 
-    const handleSave = () => {
-        putEvent(event.id, { codigo: event.codigo, date: event.date, stadium: { id: 0, name: stadium.name, address: stadium.address }, players: players });
-        putStadium({ id: stadium.id, name: stadium.name, address: stadium.address });
+    const handleSave = async () => {
+        await putEvent(event.id, { codigo: event.codigo, date: event.date, userId: 0, stadium: { id: 0, name: event.Stadium.name, address: event.Stadium.address }, players: event.Player });
+        await putStadium({ id: event.Stadium.id, name: event.Stadium.name, address: event.Stadium.address });
         handleShowAlert();
         handleSetTimeOut();
     };
