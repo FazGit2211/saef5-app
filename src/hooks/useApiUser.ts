@@ -8,10 +8,10 @@ interface ErrorUserType {
     errorValue: boolean,
     message: string
 };
-const useDefaulValues: UserGetType = { message: "", info: { id: 0, username: "", password: "" } };
+const useDefaulValues: UserGetType = { message: "", info: { id: 0, username: "", password: "", Events: [] } };
 const useApiUser = (url: string) => {
     const [dataUser, setDataUser] = useState(useDefaulValues);
-    const [errorUser, setErrorUser] = useState<ErrorUserType>({ errorValue: false, message: "" });
+    const [errorUser, setErrorUser] = useState<ErrorUserType>({ errorValue: true, message: "" });
     const [loadingUser, setLoadingUser] = useState(false);
     const login = async ({ username, password }: UserType) => {
         try {
@@ -26,6 +26,7 @@ const useApiUser = (url: string) => {
             if (response.ok) {
                 const dataInfo: UserGetType = await response.json();
                 setDataUser(dataInfo);
+                setErrorUser({ errorValue: false, message: `${dataInfo.message}` });
             } else {
                 const dataInfo = await response.json();
                 setErrorUser({ errorValue: true, message: `${dataInfo.message.info}` });
@@ -60,6 +61,30 @@ const useApiUser = (url: string) => {
             setLoadingUser(false);
         };
     };
-    return { dataUser, errorUser, loadingUser, login, signin };
+    const eventUserById = async (idUser: number) => {
+        try {
+            setLoadingUser(true);
+            const options: RequestInit = {
+                method: "GET",
+                headers: { "content-type": "application/json" },
+            };
+            const response = await fetch(`${url}/${idUser}`, options);
+            if (response.ok) {
+                const dataInfo: UserGetType = await response.json();
+                setDataUser(dataInfo);
+                setErrorUser({ errorValue: false, message: `${dataInfo.message}` });
+            } else {
+                const dataInfo = await response.json();
+                setErrorUser({ errorValue: true, message: `${dataInfo.message.info}` });
+            };
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorUser({ errorValue: true, message: error.message });
+            };
+        } finally {
+            setLoadingUser(false);
+        };
+    }
+    return { dataUser, errorUser, loadingUser, login, signin, eventUserById };
 };
 export default useApiUser;

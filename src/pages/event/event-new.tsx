@@ -1,5 +1,6 @@
 import { StadiumType } from "@/context/EventContext";
 import PlayerContext from "@/context/PlayersContext";
+import UserContext from "@/context/UserContext";
 import useAlert from "@/hooks/useAlert";
 import useApiEvent from "@/hooks/useApiEvent";
 import CardNewEvent from "@/ui/cards/CardNewEvent";
@@ -11,12 +12,15 @@ export default function Event() {
     const [date, setDate] = useState("");
     const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
     const [codigo, setCodigo] = useState("");
-    //propiedades e métodos para los alert
+    //Utilizar las propiedades e métodos para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
-    //Llamar al contexto
+    //Utilizar los métodos e propiedades del contexto
+    const { user } = useContext(UserContext);
     const { players, removeAll } = useContext(PlayerContext);
+    //Utilizar propiedades e métodos del hook
     const url = "http://localhost:5000/api/event";
     const { loadingEvent, errorEvent, postEvent } = useApiEvent(url);
+    //Métodos para almacenar el estado
     const handleSetDate = (d: string) => {
         if (d.trim() !== "") {
             setDate(d);
@@ -32,8 +36,9 @@ export default function Event() {
             setCodigo(e.target.value.trim());
         };
     };
-    const handleSendEvent = async () => {
-        await postEvent({ codigo, date, stadium, players, userId: 0 });
+    //Método para crear el evento
+    const handleSendEvent = () => {
+        postEvent({ codigo, date, stadium, players, userId: user.id });
         handleShowAlert();
         if (!errorEvent.errorValue) {
             handleSetTimeOut();
@@ -42,6 +47,7 @@ export default function Event() {
             removeAll();
         };
     };
+    console.log(user);
     return (
         <>
             <CardNewEvent date={date} setDate={handleSetDate} stadium={stadium} addStadium={handleSetStadium} />

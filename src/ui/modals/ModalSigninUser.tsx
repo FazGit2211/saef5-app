@@ -12,7 +12,7 @@ export default function ModalSigninUser({ openModal, closeModal }: PropsType) {
     //Método para verificar la autentificacion
     const handleClickLogin = async () => {
         if (!errorFormUser.errorUser) {
-            await signin({ id: 0, username: formUser.username, password: formUser.password });
+            await signin({ id: 0, username: formUser.username, password: formUser.password, Events: [] });
             handleShowAlert();
             if (!loadingUser && !errorUser.errorValue) {
                 handleSetTimeOut();

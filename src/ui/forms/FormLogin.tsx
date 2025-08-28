@@ -5,8 +5,6 @@ import useModal from "@/hooks/useModal";
 import { Login } from "@mui/icons-material";
 import { Alert, Button, Card, CardActions, FormGroup, TextField, Typography } from "@mui/material";
 import ModalSinginUser from "../modals/ModalSigninUser";
-import { useContext } from "react";
-import UserContext from "@/context/UserContext";
 import { useRouter } from "next/router";
 export default function FormLogin() {
     //Utilizar propiedades e métodos del hook personalizado
@@ -15,24 +13,23 @@ export default function FormLogin() {
     const { loadingUser, errorUser, dataUser, login } = useApiUser(url);
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     const { modalUserSingin, openModalUserSingin, closeModalUserSingin } = useModal();
-    //Utilizar el contexto
-    const { addUser } = useContext(UserContext);
     //Utilizar el hook router
     const router = useRouter();
     //Método para verificar la autentificacion
-    const handleClickLogin = async () => {
+    const handleClickLogin = () => {
         if (!errorFormUser.errorUser) {
-            await login({ id: 0, username: formUser.username, password: formUser.password });
+            login({ id: 0, username: formUser.username, password: formUser.password, Events: [] });
             handleShowAlert();
-            if (!loadingUser && !errorUser.errorValue) {
-                addUser({ id: dataUser.info.id, username: dataUser.info.username, password: dataUser.info.password });
-                router.push("/user/user-event-find/user-event");
-            };
             handleSetTimeOut();
         };
     };
     const handleClickSingin = () => {
         openModalUserSingin();
+    };
+    if (!errorUser.errorValue) {
+        if (dataUser.info.username !== "" || dataUser.info.username !== undefined) {
+            router.push(`/user/user-event-find/${dataUser.info.id}`);
+        };
     };
     return (
         <>
@@ -46,7 +43,7 @@ export default function FormLogin() {
                     <Typography><Button variant="contained" color="success" onClick={handleClickLogin}><Login /></Button></Typography>
                 </CardActions>
                 {loadingUser ? <Alert variant="filled" severity="info">Verificando</Alert> : null}
-                {!loadingUser && errorUser.errorValue ? <Alert variant="filled" severity="warning">{errorUser.message}</Alert> : null}
+                {alert && !loadingUser && errorUser.errorValue ? <Alert variant="filled" severity="warning">{errorUser.message}</Alert> : null}
                 {alert && !loadingUser && !errorUser.errorValue ? <Alert variant="filled" severity="success">Autentificado correctamente</Alert> : null}
                 {modalUserSingin ? <ModalSinginUser openModal={modalUserSingin} closeModal={closeModalUserSingin} /> : null}
             </Card>
