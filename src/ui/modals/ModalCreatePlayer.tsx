@@ -23,7 +23,7 @@ export default function ModalCreatePlayer({ openModal, closeModal }: PropsType) 
         <Modal open={openModal}>
             <Box sx={style}>
                 <FormCreate />
-                <Button variant="contained" onClick={closeModal} color="info"><Close /></Button>
+                <Button variant="contained" onClick={closeModal} color="warning"><Close /></Button>
             </Box>
         </Modal>
     )

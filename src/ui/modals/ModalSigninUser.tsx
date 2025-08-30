@@ -10,9 +10,9 @@ export default function ModalSigninUser({ openModal, closeModal }: PropsType) {
     const { loadingUser, errorUser, signin } = useApiUser(url);
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //Método para verificar la autentificacion
-    const handleClickLogin = async () => {
+    const handleClickLogin = () => {
         if (!errorFormUser.errorUser) {
-            await signin({ id: 0, username: formUser.username, password: formUser.password, Events: [] });
+            signin({ id: 0, username: formUser.username, password: formUser.password, Events: [] });
             handleShowAlert();
             if (!loadingUser && !errorUser.errorValue) {
                 handleSetTimeOut();
@@ -33,7 +33,7 @@ export default function ModalSigninUser({ openModal, closeModal }: PropsType) {
                         <Typography><Button variant="contained" color="info" onClick={closeModal}><Close /></Button></Typography>
                     </FormGroup>
                     {loadingUser ? <Alert variant="filled" severity="info">Enviando...</Alert> : null}
-                    {!loadingUser && errorUser.errorValue ? <Alert variant="filled" severity="warning">{errorUser.message}</Alert> : null}
+                    {alert && !loadingUser && errorUser.errorValue ? <Alert variant="filled" severity="warning">{errorUser.message}</Alert> : null}
                     {alert && !loadingUser && !errorUser.errorValue ? <Alert variant="filled" severity="success">Creado correctamente</Alert> : null}
                 </Box>
             </Modal>

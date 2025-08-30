@@ -10,16 +10,17 @@ import useDialog from "@/hooks/useDialog";
 import DeletePlayerDialog from "../dialogs/DeletePlayerDialog";
 
 export default function ListPlayer() {
-    //propiedades e método para utilizar los modales
+    //Utilizar las propiedades e método para utilizar los modales
     const { modalPlayer, closeModalPlayer, openModalPlayer } = useModal();
-    //propiedades e método para utilizar los dialogos de confirmacion
+    //Utilizar las propiedades e método para utilizar los dialogos de confirmacion
     const { deletePlayer, openDeletePlayer, closeDeletePlayer } = useDialog();
     //Utilizar propiedades e  métodos del contexto
     const { players } = useContext(PlayerContext);
-    //Estados 
+    //Estados para almacenar
     const [editPlayer, setEditPlayer] = useState<PlayerType>({ id: 0, name: "", email: "", state: "", admin: true });
     const [indexPlayer, setIndexPlayer] = useState<number>(0);
     const [open, setOpen] = useState(false);
+    //Utilizar el hook del router
     const router = useRouter()
     const handleSelectEdit = (elem: PlayerType, index: number) => {
         openModalPlayer();

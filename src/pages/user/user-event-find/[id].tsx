@@ -29,16 +29,17 @@ export default function UserEvent() {
     }, [dataUser]);
     //Método para ir a crear un nuevo evento para el usuario registrado
     const handleClickRedirect = () => {
-        addUser({ id: dataUser.info.id, username: dataUser.info.username, password: dataUser.info.password, Events: dataUser.info.Events });
-        route.push('/event/event-new');
+        if (dataUser.info.username !== "") {
+            addUser({ id: dataUser.info.id, username: dataUser.info.username, password: dataUser.info.password, Events: dataUser.info.Events });
+            route.push('/event/event-new');
+        };
     };
-    if (dataUser.info.username !== "")
-        return (
-            <>
-                {loadingUser ? <Alert variant="filled" severity="info">Cargando...</Alert> : null}
-                {dataUser.info.username !== "" ? <Typography variant="h5">Hola usuario {dataUser.info.username}, hemos encontrado éstos eventos:</Typography> : errorUser.message}
-                {dataUser.info.Events.length > 0 ? <TableEventUser /> : <Typography variant="h6">No tienes eventos. </Typography>}
-                <Button variant="contained" onClick={handleClickRedirect} color="success"><Add />Nuevo evento</Button>
-            </>
-        );
+    return (
+        <>
+            {loadingUser ? <Alert variant="filled" severity="info">Cargando...</Alert> : null}
+            {dataUser.info.username !== "" ? <Typography variant="h5">Hola usuario {dataUser.info.username}, hemos encontrado éstos eventos:</Typography> : errorUser.message}
+            {dataUser.info.Events.length > 0 ? <TableEventUser /> : <Typography variant="h6">No tienes eventos. </Typography>}
+            <Button variant="contained" onClick={handleClickRedirect} color="success"><Add />Nuevo evento</Button>
+        </>
+    );
 };

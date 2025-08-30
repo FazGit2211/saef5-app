@@ -33,7 +33,7 @@ export default function FormCreate() {
                 <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin} />
             </FormGroup>
             <Button variant="contained" onClick={handleSubmit} color="success"><Save /></Button>
-            {alert ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
+            {alert ? <Alert variant="filled" severity="info">Agregado Correctamente</Alert> : null}
         </>
     );
 }

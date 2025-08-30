@@ -1,10 +1,10 @@
-import { Close } from "@mui/icons-material";
+import { Close, Save } from "@mui/icons-material";
 import { Alert, Box, Button, Checkbox, FormGroup, Modal, TextField, Typography } from "@mui/material";
 import { style } from "./ModalCreatePlayer";
 import { PropsType } from "./ModalEditPlayer";
 import useAlert from "@/hooks/useAlert";
 import useApiPlayer from "@/hooks/useApiPlayer";
-import { useContext} from "react";
+import { useContext } from "react";
 import PlayerContext from "@/context/PlayersContext";
 import useForm from "@/hooks/useForm";
 
@@ -36,18 +36,16 @@ export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, 
             <Box sx={style}>
                 <FormGroup>
                     <TextField label="Nombre" variant="outlined" value={form.name} onChange={handleChangeName} onBlur={handleBlurName} error={errorInfo.errorValue} helperText={errorInfo.name} />
-                    <TextField label="Email" variant="outlined" value={form.email} onChange={handleChangeEmail} onBlur={handleBlurEmail} error={errorInfo.errorValue} helperText={errorInfo.email} />
+                    <TextField label="Email" variant="outlined" value={form.email} onChange={handleChangeEmail} />
                     <TextField label="Estado" variant="outlined" value={form.state} onChange={handleChangeState} onBlur={handleBlurState} error={errorInfo.errorValue} helperText={errorInfo.state} />
                     <Typography>Administrador para el evento:</Typography>
-                    <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin}/>
+                    <Checkbox onChange={handleCkeckBoxChange} color="success" value={form.admin} />
                 </FormGroup>
-                <FormGroup>
-                    <Button variant="contained" onClick={handleSubmit}>Enviar</Button>
-                    {loadingPlayer ? <Alert variant="filled" severity="info">Actualizando... </Alert> : null}
-                    {(!loadingPlayer && errorPlayer.errorValue) ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
-                    {(alert && !loadingPlayer && !errorPlayer.errorValue) ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
-                </FormGroup>
-                <Button variant="contained" onClick={closeModal}><Close /></Button>
+                <Button variant="contained" onClick={handleSubmit} color="info"><Save /></Button>
+                <Button variant="contained" onClick={closeModal} color="warning"><Close /></Button>
+                {loadingPlayer ? <Alert variant="filled" severity="success">Actualizando... </Alert> : null}
+                {alert && !loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
+                {alert && !loadingPlayer && !errorPlayer.errorValue ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
             </Box>
         </Modal>
     )

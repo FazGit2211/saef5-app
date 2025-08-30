@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Checkbox, FormGroup, Modal, TextField, Typography } from "@mui/material";
 import { PropsType, style } from "./ModalCreatePlayer";
-import { Close } from "@mui/icons-material";
+import { Close, Save } from "@mui/icons-material";
 import { useContext } from "react";
 import PlayersContext from "@/context/PlayersContext";
 import useAlert from "@/hooks/useAlert";
@@ -39,12 +39,12 @@ export default function ModalAddPlayerEvent({ openModal, closeModal }: PropsType
                 <Typography>Administrador para el evento:</Typography>
                 <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success" />
                 <FormGroup>
-                    <Button variant="contained" onClick={handleSubmit}>ENVIAR</Button>
-                    {loadingPlayer ? <Alert variant="filled" severity="info">Enviando </Alert> : null}
-                    {!loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
-                    {(alert && !loadingPlayer && !errorPlayer.errorValue) ? <Alert variant="filled" severity="success">Agregado</Alert> : null}
+                    <Button variant="contained" onClick={handleSubmit} color="success"><Save/></Button>
+                    {loadingPlayer ? <Alert variant="filled" severity="info">Agregando...</Alert> : null}
+                    {!loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="info">{errorPlayer.message}</Alert> : null}
+                    {(alert && !loadingPlayer && !errorPlayer.errorValue) ? <Alert variant="filled" severity="success">Agregado correctamente.</Alert> : null}
                 </FormGroup>
-                <Button variant="contained" onClick={closeModal}><Close /></Button>
+                <Button variant="contained" onClick={closeModal} color="warning"><Close /></Button>
             </Box>
         </Modal>
     )

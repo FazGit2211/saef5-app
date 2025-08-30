@@ -5,14 +5,14 @@ import { useState } from "react"
 interface EventGetType {
     info: {
         id: number,
-        codigo: string,
+        code: string,
         date: string,
         Stadium: StadiumType,
         Players: PlayerType[],
     }
 };
 interface EventType {
-    codigo: string,
+    code: string,
     date: string,
     stadium: StadiumType,
     players: PlayerType[],
@@ -24,19 +24,19 @@ interface ErrorType {
     message: string
 };
 
-const useDefaulValues: EventGetType = { info: { id: 0, codigo: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] } };
+const useDefaulValues: EventGetType = { info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] } };
 
 const useApiEvent = (url: string) => {
 
     const [dataEvent, setDataEvent] = useState(useDefaulValues);
-    const [errorEvent, setErrorEvent] = useState<ErrorType>({ errorValue: false, message: "" });
+    const [errorEvent, setErrorEvent] = useState<ErrorType>({ errorValue: true, message: "" });
     const [loadingEvent, setLoadingEvent] = useState(false);
 
-    const postEvent = async ({ codigo, date, stadium, players, userId }: EventType) => {
+    const postEvent = async ({ code, date, stadium, players, userId }: EventType) => {
         try {
             setLoadingEvent(true);
             const dataValues = {
-                codigo, date, stadium, players, userId
+                code, date, stadium, players, userId
             };
             const options: RequestInit = {
                 method: "POST",
@@ -44,33 +44,37 @@ const useApiEvent = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(url, options);
-            if (!response.ok) {
+            if (response.ok) {
                 const dataInfo = await response.json();
-                setErrorEvent({ errorValue: true, message: `${dataInfo.message.info}` });
+                setErrorEvent({ errorValue: false, message: `${dataInfo.message}` });
+            } else {
+                const dataInfo = await response.json();
+                setErrorEvent({ errorValue: true, message: `${dataInfo.title}` });
             };
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setErrorEvent({ errorValue: true, message: error.message });
-            }
+                setErrorEvent({ errorValue: true, message: error.name });
+            };
         } finally {
             setLoadingEvent(false);
         }
     };
 
-    const getEventByCodigo = async (codigo: string) => {
+    const getEventByCode = async (codeEvent: string) => {
         try {
             setLoadingEvent(true);
             const options: RequestInit = {
                 method: "GET",
                 headers: { "content-type": "application/json" },
             };
-            const response = await fetch(`${url}/${codigo}`, options);
+            const response = await fetch(`${url}/${codeEvent}`, options);
             if (response.ok) {
                 const dataValues: EventGetType = await response.json();
                 setDataEvent(dataValues);
             } else {
                 const dataInfo = await response.json();
-                setErrorEvent({ errorValue: true, message: `${dataInfo.message.info}` });
+                console.log(dataInfo);
+                setErrorEvent({ errorValue: true, message: `${dataInfo.title}` });
             };
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -151,6 +155,6 @@ const useApiEvent = (url: string) => {
         }
     };
 
-    return { dataEvent, loadingEvent, errorEvent, postEvent, getEventByCodigo, putEvent, deleteEvent, getEventByUser }
+    return { dataEvent, loadingEvent, errorEvent, postEvent, getEventByCode, putEvent, deleteEvent, getEventByUser }
 }
 export default useApiEvent;

@@ -12,11 +12,11 @@ export default function CardStadium({ id, name, address }: StadiumType) {
     const [nameUpdate, setNameUpdate] = useState(name);
     const [addressUpdate, setAddressUpdate] = useState(address);
     //contexto para actualizar
-    const urlStadium = "http://localhost:5000//api/stadium";
+    const urlStadium = "http://localhost:5000/api/stadium";
     const { loadingStadium, errorStadium, putStadium } = useApiStadium(urlStadium);
 
-    const handleSaveUpdate =async () => {
-        await putStadium({ id: id, name: nameUpdate, address: addressUpdate });
+    const handleSaveUpdate = () => {
+        putStadium({ id: id, name: nameUpdate, address: addressUpdate });
         handleShowAlert();
         handleSetTimeOut();
     };
@@ -26,9 +26,9 @@ export default function CardStadium({ id, name, address }: StadiumType) {
                 <CardContent>
                     <TextField label="Nombre" variant="outlined" value={nameUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNameUpdate(e.target.value)}></TextField>
                     <TextField label="Dirección" variant="outlined" value={addressUpdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddressUpdate(e.target.value)}></TextField>
-                    <Button variant="contained" onClick={handleSaveUpdate} color="info"><Save /></Button>
+                    <Button variant="contained" onClick={handleSaveUpdate} color="success"><Save /></Button>
                     {loadingStadium ? <Alert variant="filled" severity="info">Actualizando...</Alert> : null}
-                    {!loadingStadium && errorStadium.errorValue ? <Alert variant="filled" severity="warning">{errorStadium.message}</Alert> : null}
+                    {!loadingStadium && errorStadium.errorValue ? <Alert variant="filled" severity="info">{errorStadium.message}</Alert> : null}
                     {alert && !loadingStadium && !errorStadium.errorValue ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
                 </CardContent>
             </Card>

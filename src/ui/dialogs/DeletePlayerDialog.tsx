@@ -20,13 +20,14 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, playerDele
     //utilizar el hook personalizado para eliminar un jugador
     const url = "http://localhost:5000/api/player";
     const { deletePlayer, loadingPlayer, errorPlayer } = useApiPlayer(url);
-
-    const handleDeleted = async () => {
-        if (playerDelete.id !== undefined && playerDelete.name !== "") {
-            await deletePlayer(playerDelete.id);
+    //Métodos para eliminar
+    const handleDeleted = () => {
+        if (playerDelete.id !== undefined && playerDelete.name.trim() !== "") {
+            deletePlayer(playerDelete.id);
             handleShowAlert();
         };
         if (!errorPlayer.errorValue) {
+            handleShowAlert();
             removePlayers(indexDelete);
             handleSetTimeOut();
         };
@@ -41,7 +42,7 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, playerDele
                     <Button variant="contained" onClick={handleDeleted} sx={{ backgroundColor: "red" }}><Delete /></Button>
                     <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
                     {loadingPlayer ? <Alert variant="filled" severity="info">Eliminando...</Alert> : null}
-                    {!loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
+                    {alert && !loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="warning">{errorPlayer.message}</Alert> : null}
                     {alert && !loadingPlayer && !errorPlayer.errorValue ? <Alert variant="filled" severity="success"></Alert> : null}
                 </DialogActions>
             </Dialog>

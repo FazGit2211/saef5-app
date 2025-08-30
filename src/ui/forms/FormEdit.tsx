@@ -19,16 +19,16 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditT
     //Utilizar a los alert del hook personalizado
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //Utilizar las propiedades e métodos del hook personalizado del formulario
-    const url = "http://localhost:5000/api/player";
+    const url = "https://saf5-api.onrender.com/api/player";
     const { putPlayer } = useApiPlayer(url);
     //Llamar al listado actual
     const { players } = useContext(PlayerContext);
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         if (!errorInfo.errorValue) {
             players.splice(indexPlayerEdit, 1, form);
             if (playerEdit.id !== undefined) {
-                await putPlayer({ id: playerEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });
+                putPlayer({ id: playerEdit.id, name: form.name, email: form.email, state: form.state, admin: form.admin });
             }
             handleShowAlert();
             handleSetTimeOut();

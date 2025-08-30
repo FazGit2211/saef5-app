@@ -29,7 +29,7 @@ export default function NavBar() {
                     <Search />
                 </IconButton>
                 <IconButton size="small" edge="end" color="inherit" onClick={handleClickUserAccount}>
-                    <AccountCircle /><Typography variant="h6" sx={{ color: "black" }}>Acceder</Typography>
+                    <AccountCircle /><Typography variant="h6" color="inherit">Acceder</Typography>
                 </IconButton>
             </Toolbar>
         </AppBar>

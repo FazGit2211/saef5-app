@@ -18,13 +18,12 @@ export default function SaveEventUpdate({ openDialog, closeDialog }: PropsDialog
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
 
-    const handleSave = async () => {
-        await putEvent(event.id, { codigo: event.codigo, date: event.date, userId: 0, stadium: { id: 0, name: event.Stadium.name, address: event.Stadium.address }, players: event.Player });
-        await putStadium({ id: event.Stadium.id, name: event.Stadium.name, address: event.Stadium.address });
+    const handleSave = () => {
+        putEvent(event.id, { code: event.code, date: event.date, userId: 0, stadium: { id: 0, name: event.Stadium.name, address: event.Stadium.address }, players: event.Player });
+        putStadium({ id: event.Stadium.id, name: event.Stadium.name, address: event.Stadium.address });
         handleShowAlert();
         handleSetTimeOut();
     };
-
     return (
         <>
             <Dialog open={openDialog} sx={style}>

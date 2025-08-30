@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 
 export default function EventFind() {
     const route = useRouter();
-    const codigoEvent = route.query.cod;
+    const codeEvent = route.query.cod;
 
     return (
         <>
-            <ListDataEvent codigoParams={codigoEvent} />
+            <ListDataEvent codeParams={codeEvent} />
         </>
     );
 };

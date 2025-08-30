@@ -47,7 +47,7 @@ export default function EventUpdate() {
         <>
             <Card>
                 <CardContent>
-                    {event ? <CardEvent id={event.id} codigo={event.codigo} date={event.date} Stadium={{ id: event.Stadium.id, name: event.Stadium.name, address: event.Stadium.address }} Player={[]} /> : <h3>No hay datos</h3>}
+                    {event ? <CardEvent id={event.id} code={event.code} date={event.date} Stadium={{ id: event.Stadium.id, name: event.Stadium.name, address: event.Stadium.address }} Player={[]} /> : <Typography variant="h6">No hay datos</Typography>}
                     {event.Stadium ? <CardStadium id={event.Stadium.id} name={event.Stadium.name} address={event.Stadium.address} /> : <h3>No hay datos</h3>}
                     <List>
                         <ListItemButton onClick={handleOpen}>

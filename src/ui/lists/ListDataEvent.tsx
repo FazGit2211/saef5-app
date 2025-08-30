@@ -10,13 +10,13 @@ import DeleteEventDialog from "../dialogs/DeleteEventDialog";
 import useApiEvent from "@/hooks/useApiEvent";
 
 interface PropsType {
-    codigoParams: string | string[] | undefined
+    codeParams: string | string[] | undefined
 }
-export default function ListDataEvent({ codigoParams }: PropsType) {
+export default function ListDataEvent({ codeParams }: PropsType) {
     //url para poder realizar la petición hacia la api
-    const url = "http://localhost:5000/api/event";
+    const urlEvent = "http://localhost:5000/api/event";
     //propiedades del hook personalizado con información del estado de la petición
-    const { loadingEvent, errorEvent, getEventByCodigo, dataEvent } = useApiEvent(url);
+    const { loadingEvent, errorEvent, getEventByCode, dataEvent } = useApiEvent(urlEvent);
     //propiedades e método de los contextos
     const { addEvent, addStadium } = useContext(EventContext);
     const { players } = useContext(PlayerContext);
@@ -30,28 +30,28 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
     };
     //invocación del método useEffect para buscar e obtener el evento
     useEffect(() => {
-        if (codigoParams !== undefined) {
-            getEventByCodigo(codigoParams.toString());
+        if (codeParams !== undefined) {
+            getEventByCode(codeParams.toString());
         };
     }, []);
 
     //método para cargar datos al contexto
     const addDataContextEvent = () => {
-        addEvent({ id: dataEvent.info.id, codigo: dataEvent.info.codigo, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
+        addEvent({ id: dataEvent.info.id, code: dataEvent.info.code, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
         dataEvent.info.Players.forEach((player) => (players.push(player)));
         addStadium({ id: dataEvent.info.Stadium.id, name: dataEvent.info.Stadium.name, address: dataEvent.info.Stadium.address });
     }
     //método para re direccionar
     const handleClickRedirect = async () => {
-        if (dataEvent.info.codigo !== "" && dataEvent.info.codigo !== undefined) {
+        if (dataEvent.info.code !== "" && dataEvent.info.code !== undefined) {
             addDataContextEvent();
             router.push('/event/event-update');
         };
     };
     //Método para mostrar el dialogo de eliminar
     const handleDeleteEvent = () => {
-        if (dataEvent.info.codigo !== "" && dataEvent.info.codigo !== undefined) {
-            addEvent({ id: dataEvent.info.id, codigo: dataEvent.info.codigo, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
+        if (dataEvent.info.code !== "" && dataEvent.info.code !== undefined) {
+            addEvent({ id: dataEvent.info.id, code: dataEvent.info.code, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
             openDeleteEvent();
         };
     };
@@ -59,9 +59,9 @@ export default function ListDataEvent({ codigoParams }: PropsType) {
         <Card>
             <CardContent>
                 {loadingEvent ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-                {!loadingEvent && errorEvent.errorValue ? <Alert variant="filled" sx={{ backgroundColor: "red" }}>{errorEvent.message}</Alert> : null}
-                {dataEvent.info !== null ? <Typography>Codigo:{dataEvent.info.codigo} Fecha:{dataEvent.info.date} Estadio:{dataEvent.info.Stadium.name} Dirección:{dataEvent.info.Stadium.address}</Typography> : <Typography>No hay datos</Typography>}
-                <h2>Participantes</h2>
+                {loadingEvent && errorEvent.errorValue ? <Alert variant="filled" sx={{ backgroundColor: "red" }}>{errorEvent.message}</Alert> : null}
+                {dataEvent.info !== null ? <Typography variant="h6">Codigo {dataEvent.info.code} Fecha {dataEvent.info.date} Estadio {dataEvent.info.Stadium.name} Dirección {dataEvent.info.Stadium.address}</Typography> : <Typography>No hay datos</Typography>}
+                <Typography variant="h6" color="warning">PARTICIPANTES</Typography>
                 {dataEvent.info !== null ? <List><ListItemButton onClick={handleOpen}>
                     <ListItemText primary="Jugadores" />
                     {open ? <ExpandLess /> : <ExpandMore />}

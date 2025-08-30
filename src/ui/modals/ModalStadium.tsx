@@ -25,11 +25,13 @@ export default function ModalStadium({ openModal, closeModal, stadium, addStadiu
         })
     };
     const handleSaveBtn = () => {
-        addStadium(form);
-        setSendForm(true);
-        setTimeout(() => {
-            setSendForm(false);
-        }, 3000);
+        if (form.name.trim() !== "" && form.address.trim() !== "") {
+            addStadium(form);
+            setSendForm(true);
+            setTimeout(() => {
+                setSendForm(false);
+            }, 3000);
+        };
     };
     return (
         <>
@@ -41,8 +43,8 @@ export default function ModalStadium({ openModal, closeModal, stadium, addStadiu
                         <TextField label="Direccion" variant="outlined" value={form.address} onChange={handleChangeAddress}></TextField>
                     </FormGroup>
                     <Button variant="contained" onClick={handleSaveBtn} color="success"><Save /></Button>
-                    <Button variant="contained" onClick={closeModal}><Close /></Button>
-                    {sendForm ? <Alert variant="filled" severity="success">Agregado Correctamente</Alert> : null}
+                    <Button variant="contained" onClick={closeModal} color="warning"><Close /></Button>
+                    {sendForm ? <Alert variant="filled" severity="success" color="info">Agregado Correctamente</Alert> : null}
                 </Box>
             </Modal>
         </>

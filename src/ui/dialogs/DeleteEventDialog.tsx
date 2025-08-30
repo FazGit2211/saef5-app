@@ -21,8 +21,8 @@ export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDial
     const { removeEvent, event } = useContext(EventContext);
     //Utilizar el router para redireccionar
     const router = useRouter();
-    const handleDeleted = async () => {
-        await deleteEvent(event.id);
+    const handleDeleted = () => {
+        deleteEvent(event.id);
         if (!errorEvent.errorValue) {
             removeEvent();
             handleShowAlert();
