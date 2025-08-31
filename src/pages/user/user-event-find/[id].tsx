@@ -8,7 +8,7 @@ import { useContext, useEffect } from "react";
 
 export default function UserEvent() {
     //Utilizar propiedades e métodos del hook
-    const url = "http://localhost:5000/api/user";
+    const url = "https://saf5-api.onrender.com/api/user";
     const { dataUser, loadingUser, errorUser, eventUserById } = useApiUser(url);
     //Utilizar el hook del router de next
     const route = useRouter();

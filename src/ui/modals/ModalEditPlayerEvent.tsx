@@ -12,11 +12,11 @@ export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, 
     //Inicializar form con los valores segun el jugador a editar
     const initialForm = { id: 0, name: dataEdit.name, email: dataEdit.email, state: dataEdit.state, admin: dataEdit.admin }
     //Utilizar las propiedades e métodos para el hook personalizado del formulario
-    const { form, errorInfo, setForm, handleChangeName, handleChangeEmail, handleBlurName, handleBlurEmail, handleChangeState, handleBlurState, handleCkeckBoxChange } = useForm({ initialForm });
+    const { form, errorInfo, setForm, handleChangeName, handleChangeEmail, handleBlurName, handleChangeState, handleBlurState, handleCkeckBoxChange } = useForm({ initialForm });
     //Utilizar a los alert del hook personalizado
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //Utilizar las propiedades e métodos del hook personalizado del formulario
-    const url = "http://localhost:5000/api/player";
+    const url = "https://saf5-api.onrender.com/api/player";
     const { loadingPlayer, errorPlayer, putPlayer } = useApiPlayer(url);
     //Llamar al listado actual
     const { players } = useContext(PlayerContext);

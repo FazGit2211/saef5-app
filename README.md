@@ -4,3 +4,8 @@ Tiene como objetivo el poder agendar los eventos de manera sencilla y rapida, me
 
 HERRAMIENTAS:
 Frontend desarrollado con el framework Next js con React y Typescript, Material UI, Taildwind css.
+Backend desarrollado con Node js utilizando el framework Express js, ORM Sequelize y Mysql.
+
+HOST
+https://saef5.netlify.app/
+https://saf5-api.onrender.com/

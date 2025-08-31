@@ -73,7 +73,6 @@ const useApiEvent = (url: string) => {
                 setDataEvent(dataValues);
             } else {
                 const dataInfo = await response.json();
-                console.log(dataInfo);
                 setErrorEvent({ errorValue: true, message: `${dataInfo.title}` });
             };
         } catch (error: unknown) {

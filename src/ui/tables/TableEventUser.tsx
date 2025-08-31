@@ -9,7 +9,7 @@ export default function TableEventUser() {
     //Utilizar los métodos e propiedades del contexto
     const { user, removeEventUser } = useContext(UserContext);
     //utilizar el hook personalizado para realizar las peticiones a la api
-    const url = "http://localhost:5000/api/event";
+    const url = "https://saf5-api.onrender.com/api/event";
     const { loadingEvent, errorEvent, deleteEvent } = useApiEvent(url);
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
@@ -36,7 +36,7 @@ export default function TableEventUser() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {user.Events.map((elem, index) => (<TableRow key={elem.id}><TableCell>{elem.codigo}</TableCell><TableCell>{elem.date}</TableCell><TableCell><Button variant="contained" onClick={() => handleClickBtnUpdate(elem.codigo)}><Edit />Actualizar</Button><Button variant="contained" onClick={() => handleClickBtnDelete(elem.id, index)} color="warning"><Delete />Eliminar</Button></TableCell></TableRow>))}
+                    {user.Events.map((elem, index) => (<TableRow key={elem.id}><TableCell>{elem.code}</TableCell><TableCell>{elem.date}</TableCell><TableCell><Button variant="contained" onClick={() => handleClickBtnUpdate(elem.code)}><Edit />Actualizar</Button><Button variant="contained" onClick={() => handleClickBtnDelete(elem.id, index)} color="warning"><Delete />Eliminar</Button></TableCell></TableRow>))}
                     {alert && !loadingEvent && !errorEvent.errorValue ? <Alert variant="filled" severity="success">Eliminado</Alert> : null}
                 </TableBody>
             </Table>

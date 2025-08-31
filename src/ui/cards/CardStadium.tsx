@@ -12,7 +12,7 @@ export default function CardStadium({ id, name, address }: StadiumType) {
     const [nameUpdate, setNameUpdate] = useState(name);
     const [addressUpdate, setAddressUpdate] = useState(address);
     //contexto para actualizar
-    const urlStadium = "http://localhost:5000/api/stadium";
+    const urlStadium = "https://saf5-api.onrender.com/api/stadium";
     const { loadingStadium, errorStadium, putStadium } = useApiStadium(urlStadium);
 
     const handleSaveUpdate = () => {

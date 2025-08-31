@@ -6,7 +6,7 @@ interface FormErrorType {
     errorUser: boolean,
 };
 const useFormUser = () => {
-    const [formUser, setUserForm] = useState<UserType>({ id: 0, username: "", password: "" });
+    const [formUser, setUserForm] = useState<UserType>({ id: 0, username: "", password: "", Events: [] });
     const [errorFormUser, setErrorFormUser] = useState<FormErrorType>({ usernameError: "", passwordError: "", errorUser: true });
     const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserForm({ ...formUser, username: e.target.value });

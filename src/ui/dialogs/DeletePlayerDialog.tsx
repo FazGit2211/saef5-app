@@ -18,7 +18,7 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, playerDele
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //utilizar el hook personalizado para eliminar un jugador
-    const url = "http://localhost:5000/api/player";
+    const url = "https://saf5-api.onrender.com/api/player";
     const { deletePlayer, loadingPlayer, errorPlayer } = useApiPlayer(url);
     //Métodos para eliminar
     const handleDeleted = () => {

@@ -18,7 +18,7 @@ export default function Event() {
     const { user } = useContext(UserContext);
     const { players, removeAll } = useContext(PlayerContext);
     //Utilizar propiedades e métodos del hook
-    const url = "http://localhost:5000/api/event";
+    const url = "https://saf5-api.onrender.com/api/event";
     const { loadingEvent, errorEvent, postEvent } = useApiEvent(url);
     //Métodos para almacenar el estado
     const handleSetDate = (d: string) => {

@@ -14,7 +14,7 @@ interface PropsType {
 }
 export default function ListDataEvent({ codeParams }: PropsType) {
     //url para poder realizar la petición hacia la api
-    const urlEvent = "http://localhost:5000/api/event";
+    const urlEvent = "https://saf5-api.onrender.com/api/event";
     //propiedades del hook personalizado con información del estado de la petición
     const { loadingEvent, errorEvent, getEventByCode, dataEvent } = useApiEvent(urlEvent);
     //propiedades e método de los contextos

@@ -9,9 +9,9 @@ import useApiStadium from "@/hooks/useApiStadium";
 import useApiEvent from "@/hooks/useApiEvent";
 export default function SaveEventUpdate({ openDialog, closeDialog }: PropsDialogType) {
     //Utilizar propiedades e métodos para enviar los datos hacia la api
-    const urlEvent = "http://localhost:5000/api/event";
+    const urlEvent = "https://saf5-api.onrender.com/api/event";
     const { putEvent, loadingEvent, errorEvent } = useApiEvent(urlEvent);
-    const urlStadium = "http://localhost:5000/api/stadium";
+    const urlStadium = "https://saf5-api.onrender.com/api/stadium";
     const { putStadium } = useApiStadium(urlStadium);
     //Utilizar propiedades e métodos para utilizar el contexto evento
     const { event } = useContext(EventContext);

@@ -2,7 +2,7 @@ import EventContext, { EventType } from "@/context/EventContext";
 import useAlert from "@/hooks/useAlert";
 import useApiEvent from "@/hooks/useApiEvent";
 import { Save } from "@mui/icons-material";
-import { Alert, Button, Card, CardContent, FormGroup, TextField, Typography } from "@mui/material";
+import { Alert, Button, Card, CardContent, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
 export default function CardEvent({ code, date }: EventType) {
@@ -13,7 +13,7 @@ export default function CardEvent({ code, date }: EventType) {
     //contexto para actualizar
     const { event } = useContext(EventContext);
     //Utilizar propiedades e métodos para enviar los datos hacia la api
-    const urlEvent = "http://localhost:5000/api/event";
+    const urlEvent = "https://saf5-api.onrender.com/api/event";
     const { putEvent, loadingEvent, errorEvent } = useApiEvent(urlEvent);
 
     const handleSaveUpdate = () => {

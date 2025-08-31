@@ -13,7 +13,7 @@ export interface PropsDialogType {
 };
 export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDialogType) {
     //utilizar el hook personalizado para realizar las peticiones a la api
-    const url = "http://localhost:5000/api/event";
+    const url = "https://saf5-api.onrender.com/api/event";
     const { loadingEvent, errorEvent, deleteEvent } = useApiEvent(url);
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
