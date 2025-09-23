@@ -8,7 +8,7 @@ import { useContext } from "react";
 import PlayerContext from "@/context/PlayersContext";
 import useForm from "@/hooks/useForm";
 
-export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, indexPlayer }: PropsType) {
+const ModalEditPlayerEvent = ({ openModal, closeModal, dataEdit, indexPlayer }: PropsType) => {
     //Inicializar form con los valores segun el jugador a editar
     const initialForm = { id: 0, name: dataEdit.name, email: dataEdit.email, state: dataEdit.state, admin: dataEdit.admin }
     //Utilizar las propiedades e métodos para el hook personalizado del formulario
@@ -50,3 +50,4 @@ export default function ModalEditPlayerEvent({ openModal, closeModal, dataEdit, 
         </Modal>
     )
 }
+export default ModalEditPlayerEvent;

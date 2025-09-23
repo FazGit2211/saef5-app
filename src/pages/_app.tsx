@@ -1,5 +1,6 @@
 import { EventProvider } from "@/context/EventContext";
 import { PlayerProvider } from "@/context/PlayersContext";
+import { SearchProvider } from "@/context/SearchContext";
 import { UserProvider } from "@/context/UserContext";
 import "@/styles/globals.css";
 import Layout from "@/ui/layouts/Layout";
@@ -11,7 +12,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <EventProvider>
         <PlayerProvider>
           <UserProvider>
-            <Component {...pageProps} />
+            <SearchProvider>
+              <Component {...pageProps} />
+            </SearchProvider>
           </UserProvider>
         </PlayerProvider>
       </EventProvider>

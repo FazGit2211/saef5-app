@@ -1,8 +1,9 @@
 import FormLogin from "@/ui/forms/FormLogin";
-export default function LoginUser() {
+const LoginUser = () => {
     return (
         <>
             <FormLogin />
         </>
     );
 };
+export default LoginUser;

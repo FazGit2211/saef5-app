@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 interface LayoutProps {
     children: ReactNode
 }
-export default function Layout({ children }: LayoutProps) {
+const Layout = ({ children }: LayoutProps) => {
     return (
         <div className="flex flex-col min-h-screen bg-zinc-200">
             <header className="flex justify-evenly">
@@ -21,3 +21,4 @@ export default function Layout({ children }: LayoutProps) {
         </div>
     );
 }
+export default Layout;

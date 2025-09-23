@@ -1,19 +1,15 @@
-import { AppBar, IconButton, TextField, Toolbar, Typography } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import { AccountCircle, Search } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState } from "react";
 
-export default function NavBar() {
+const NavBar = () => {
     const router = useRouter();
-    const [codigo, setCodigo] = useState("");
     const handleClickRedirect = () => {
         router.push('/');
     };
-    const handleClickBtnCodigo = () => {
-        if (codigo.trim() !== "") {
-            router.push(`/event/event-find/${codigo}`);
-        };
+    const handleClickBtnSearch = () => {
+        router.push("/event/event-find");
     };
     const handleClickUserAccount = () => {
         router.push("/user/login-user");
@@ -24,9 +20,9 @@ export default function NavBar() {
                 <IconButton size="small" edge="start" color="inherit">
                     <Image src="/FNº5.png" alt="Logo de futbol" width={60} height={60} onClick={handleClickRedirect}></Image>
                 </IconButton>
-                <IconButton size="small" edge="start" color="inherit" aria-label="home" onClick={handleClickBtnCodigo}>
-                    <TextField label="Nombre,codigo o alias evento" variant="filled" value={codigo} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCodigo(e.target.value)} sx={{ backgroundColor: "white" }}></TextField>
+                <IconButton size="small" edge="start" color="inherit" aria-label="home" onClick={handleClickBtnSearch}>
                     <Search />
+                    <Typography variant="h6" color="inherit">Buscar</Typography>
                 </IconButton>
                 <IconButton size="small" edge="end" color="inherit" onClick={handleClickUserAccount}>
                     <AccountCircle /><Typography variant="h6" color="inherit">Acceder</Typography>
@@ -35,3 +31,4 @@ export default function NavBar() {
         </AppBar>
     );
 }
+export default NavBar;

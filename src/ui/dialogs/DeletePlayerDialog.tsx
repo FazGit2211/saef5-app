@@ -12,7 +12,7 @@ interface PropsType {
     playerDelete: PlayerType,
     closeDialog: () => void,
 };
-export default function DeletePlayerDialog({ openDialog, indexDelete, playerDelete, closeDialog }: PropsType) {
+const DeletePlayerDialog = ({ openDialog, indexDelete, playerDelete, closeDialog }: PropsType) => {
     //propiedades e métodos del contexto
     const { removePlayers } = useContext(PlayerContext);
     //utilizar el hook personalizado para los alert
@@ -49,3 +49,4 @@ export default function DeletePlayerDialog({ openDialog, indexDelete, playerDele
         </>
     );
 }
+export default DeletePlayerDialog;

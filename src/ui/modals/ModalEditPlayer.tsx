@@ -9,7 +9,7 @@ export interface PropsType {
     dataEdit: PlayerType,
     indexPlayer: number,
 };
-export default function ModalEditPlayer({ openModal, closeModal, dataEdit, indexPlayer }: PropsType) {
+const ModalEditPlayer = ({ openModal, closeModal, dataEdit, indexPlayer }: PropsType) => {
     return (
         <>
             <Modal open={openModal}>
@@ -21,3 +21,4 @@ export default function ModalEditPlayer({ openModal, closeModal, dataEdit, index
         </>
     )
 }
+export default ModalEditPlayer;

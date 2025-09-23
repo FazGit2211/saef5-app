@@ -11,7 +11,7 @@ export interface PropsDialogType {
     openDialog: boolean,
     closeDialog: () => void
 };
-export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDialogType) {
+const DeleteEventDialog = ({ openDialog, closeDialog }: PropsDialogType) => {
     //utilizar el hook personalizado para realizar las peticiones a la api
     const url = "https://saf5-api.onrender.com/api/event";
     const { loadingEvent, errorEvent, deleteEvent } = useApiEvent(url);
@@ -21,8 +21,8 @@ export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDial
     const { removeEvent, event } = useContext(EventContext);
     //Utilizar el router para redireccionar
     const router = useRouter();
-    const handleDeleted = () => {
-        deleteEvent(event.id);
+    const handleDeleted = async () => {
+        await deleteEvent(event.id);
         if (!errorEvent.errorValue) {
             removeEvent();
             handleShowAlert();
@@ -40,10 +40,11 @@ export default function DeleteEventDialog({ openDialog, closeDialog }: PropsDial
                     <Button variant="contained" onClick={handleDeleted} color="warning"><Delete /></Button>
                     <Button variant="contained" onClick={closeDialog}><Cancel /></Button>
                     {loadingEvent ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-                    {!loadingEvent && errorEvent.errorValue ? <Alert variant="filled" severity="warning">{errorEvent.message}</Alert> : null}
+                    {alert && !loadingEvent && errorEvent.errorValue ? <Alert variant="filled" severity="warning">{errorEvent.message}</Alert> : null}
                     {alert && !loadingEvent && !errorEvent.errorValue ? <Alert variant="filled" severity="success">Eliminado</Alert> : null}
                 </DialogActions>
             </Dialog>
         </Box>
     );
 }
+export default DeleteEventDialog;

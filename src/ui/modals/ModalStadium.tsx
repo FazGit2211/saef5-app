@@ -9,7 +9,7 @@ export interface PropsType {
     stadium: StadiumType,
     addStadium: (s: StadiumType) => void
 };
-export default function ModalStadium({ openModal, closeModal, stadium, addStadium }: PropsType) {
+const ModalStadium = ({ openModal, closeModal, stadium, addStadium }: PropsType) => {
     //Inicializar form con valores en las props
     const [form, setForm] = useState<StadiumType>({ id: 0, name: stadium.name, address: stadium.address });
     //Manejar el estado para los alert de mensajes
@@ -50,3 +50,4 @@ export default function ModalStadium({ openModal, closeModal, stadium, addStadiu
         </>
     )
 }
+export default ModalStadium;

@@ -12,7 +12,7 @@ import { Add, Delete, Edit, ExpandLess, ExpandMore, People } from "@mui/icons-ma
 import { Button, Card, CardActions, CardContent, Collapse, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
-export default function EventUpdate() {
+const EventUpdate = () => {
     //Utilizar estados para manejar el posible cambio de la información
     const [editPlayer, setEditPlayer] = useState<PlayerType>({ id: 0, name: "", email: "", state: "", admin: true });
     const [indexPlayer, setIndexPlayer] = useState<number>(0);
@@ -72,3 +72,4 @@ export default function EventUpdate() {
         </>
     )
 }
+export default EventUpdate;

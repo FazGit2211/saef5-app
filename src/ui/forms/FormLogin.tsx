@@ -6,7 +6,7 @@ import { Login } from "@mui/icons-material";
 import { Alert, Button, Card, CardActions, FormGroup, TextField, Typography } from "@mui/material";
 import ModalSinginUser from "../modals/ModalSigninUser";
 import { useRouter } from "next/router";
-export default function FormLogin() {
+const FormLogin = () => {
     //Utilizar propiedades e métodos del hook personalizado
     const { formUser, errorFormUser, handleChangePassword, handleChangeUsername, handleBlurUsername, handleBlurPassword } = useFormUser();
     const url = "https://saf5-api.onrender.com/api/user/login";
@@ -51,3 +51,4 @@ export default function FormLogin() {
         </>
     );
 }
+export default FormLogin;

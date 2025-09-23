@@ -55,8 +55,8 @@ const EventProvider = ({ children }: ProviderType) => {
 
     const removeEvent = () => {
         setEvent({ id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Player: [] });
-        setStadium({ id: 0, name: "", address: "" });
-        setPlayers([]);
+        setStadium(defaultValues.event.Stadium);
+        setPlayers(defaultValues.event.Player);
     };
 
     const data = { event, stadium, players, addEvent, addStadium, addPlayers, removeEvent };

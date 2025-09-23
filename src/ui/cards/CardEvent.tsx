@@ -5,7 +5,7 @@ import { Save } from "@mui/icons-material";
 import { Alert, Button, Card, CardContent, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
-export default function CardEvent({ code, date }: EventType) {
+const CardEvent = ({ code, date }: EventType) => {
     //utilizar el hook personalizado para los alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //estado para actualizar
@@ -36,3 +36,4 @@ export default function CardEvent({ code, date }: EventType) {
         </>
     )
 }
+export default CardEvent;

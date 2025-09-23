@@ -11,7 +11,7 @@ interface PropsFormEditType {
     indexPlayerEdit: number,
 };
 
-export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditType) {
+const FormEdit = ({ playerEdit, indexPlayerEdit }: PropsFormEditType) => {
     //Inicializar form con los valores segun el jugador a editar
     const initialForm = { id: 0, name: playerEdit.name, email: playerEdit.email, state: playerEdit.state, admin: playerEdit.admin }
     //Utilizar las propiedades e métodos para el hook personalizado del formulario
@@ -49,3 +49,4 @@ export default function FormEdit({ playerEdit, indexPlayerEdit }: PropsFormEditT
         </>
     )
 }
+export default FormEdit;

@@ -9,7 +9,7 @@ import useModal from "@/hooks/useModal";
 import useDialog from "@/hooks/useDialog";
 import DeletePlayerDialog from "../dialogs/DeletePlayerDialog";
 
-export default function ListPlayer() {
+const ListPlayer = () => {
     //Utilizar las propiedades e método para utilizar los modales
     const { modalPlayer, closeModalPlayer, openModalPlayer } = useModal();
     //Utilizar las propiedades e método para utilizar los dialogos de confirmacion
@@ -56,3 +56,4 @@ export default function ListPlayer() {
         </Card>
     )
 }
+export default ListPlayer;

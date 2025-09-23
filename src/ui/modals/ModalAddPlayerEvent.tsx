@@ -8,7 +8,7 @@ import useForm from "@/hooks/useForm";
 import useApiPlayer from "@/hooks/useApiPlayer";
 import EventContext from "@/context/EventContext";
 const initialForm = { id: 0, name: "", email: "", state: "", admin: true };
-export default function ModalAddPlayerEvent({ openModal, closeModal }: PropsType) {
+const ModalAddPlayerEvent = ({ openModal, closeModal }: PropsType) => {
     //Utilizar las propiedades e métodos del contexto
     const { event } = useContext(EventContext);
     const { addPlayer } = useContext(PlayersContext);
@@ -39,7 +39,7 @@ export default function ModalAddPlayerEvent({ openModal, closeModal }: PropsType
                 <Typography>Administrador para el evento:</Typography>
                 <Checkbox checked={form.admin} onChange={handleCkeckBoxChange} color="success" />
                 <FormGroup>
-                    <Button variant="contained" onClick={handleSubmit} color="success"><Save/></Button>
+                    <Button variant="contained" onClick={handleSubmit} color="success"><Save /></Button>
                     {loadingPlayer ? <Alert variant="filled" severity="info">Agregando...</Alert> : null}
                     {!loadingPlayer && errorPlayer.errorValue ? <Alert variant="filled" severity="info">{errorPlayer.message}</Alert> : null}
                     {(alert && !loadingPlayer && !errorPlayer.errorValue) ? <Alert variant="filled" severity="success">Agregado correctamente.</Alert> : null}
@@ -49,3 +49,4 @@ export default function ModalAddPlayerEvent({ openModal, closeModal }: PropsType
         </Modal>
     )
 }
+export default ModalAddPlayerEvent;

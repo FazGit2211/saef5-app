@@ -7,7 +7,7 @@ import { useContext } from "react";
 
 const initialForm = { id: 0, name: "", email: "", state: "", admin: true };
 
-export default function FormCreate() {
+const FormCreate = () => {
     //Llamar al contexto
     const { addPlayer } = useContext(PlayersContext);
     //Llamar al hook personalizado del formulario
@@ -37,3 +37,4 @@ export default function FormCreate() {
         </>
     );
 }
+export default FormCreate;

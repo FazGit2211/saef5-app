@@ -3,7 +3,7 @@ import { ExpandLess, ExpandMore, People } from "@mui/icons-material";
 import { Card, CardContent, Collapse, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 
-export default function CardPlayers() {
+const CardPlayers = () => {
     const { players } = useContext(PlayerContext);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -27,3 +27,4 @@ export default function CardPlayers() {
         </Card>
     )
 }
+export default CardPlayers;

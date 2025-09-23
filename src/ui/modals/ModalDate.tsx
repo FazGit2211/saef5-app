@@ -8,7 +8,7 @@ interface PropsType {
     date: string,
     setDate: (d: string) => void
 };
-export default function ModalDate({ openModal, closeModal, date, setDate }: PropsType) {
+const ModalDate = ({ openModal, closeModal, date, setDate }: PropsType) => {
     //Manejar el estado para los alert de mensajes
     const [sendForm, setSendForm] = useState(false);
     const handleChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => { setDate(e.target.value) };
@@ -34,3 +34,4 @@ export default function ModalDate({ openModal, closeModal, date, setDate }: Prop
         </>
     )
 }
+export default ModalDate;

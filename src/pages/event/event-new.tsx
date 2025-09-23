@@ -1,4 +1,4 @@
-import { StadiumType } from "@/context/EventContext";
+import EventContext, { StadiumType } from "@/context/EventContext";
 import PlayerContext from "@/context/PlayersContext";
 import UserContext from "@/context/UserContext";
 import useAlert from "@/hooks/useAlert";
@@ -8,7 +8,7 @@ import CardPlayers from "@/ui/cards/CardPlayers";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-export default function Event() {
+const Event = () => {
     const [date, setDate] = useState("");
     const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
     const [codeEvent, setCodeEvent] = useState("");
@@ -17,6 +17,7 @@ export default function Event() {
     //Utilizar los métodos e propiedades del contexto
     const { user } = useContext(UserContext);
     const { players, removeAll } = useContext(PlayerContext);
+    const { removeEvent } = useContext(EventContext);
     //Utilizar propiedades e métodos del hook
     const url = "https://saf5-api.onrender.com/api/event";
     const { loadingEvent, errorEvent, postEvent } = useApiEvent(url);
@@ -35,8 +36,8 @@ export default function Event() {
         setCodeEvent(e.target.value);
     };
     //Método para crear el evento
-    const handleSendEvent = () => {
-        postEvent({ code: codeEvent, date, stadium, players, userId: user.id });
+    const handleSendEvent = async () => {
+        await postEvent({ code: codeEvent, date, stadium, players, userId: user.id });
         handleShowAlert();
         if (!errorEvent.errorValue) {
             handleSetTimeOut();
@@ -59,3 +60,4 @@ export default function Event() {
         </>
     );
 }
+export default Event;

@@ -5,7 +5,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import { Alert, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-export default function TableEventUser() {
+const TableEventUser = () => {
     //Utilizar los métodos e propiedades del contexto
     const { user, removeEventUser } = useContext(UserContext);
     //utilizar el hook personalizado para realizar las peticiones a la api
@@ -43,3 +43,4 @@ export default function TableEventUser() {
         </TableContainer>
     );
 };
+export default TableEventUser;

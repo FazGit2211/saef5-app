@@ -6,7 +6,7 @@ import { Alert, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 
-export default function UserEvent() {
+const UserEvent = () => {
     //Utilizar propiedades e métodos del hook
     const url = "https://saf5-api.onrender.com/api/user";
     const { dataUser, loadingUser, errorUser, eventUserById } = useApiUser(url);
@@ -43,3 +43,4 @@ export default function UserEvent() {
         </>
     );
 };
+export default UserEvent;

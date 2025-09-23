@@ -7,7 +7,7 @@ import { Button, Typography } from "@mui/material";
 import { useContext } from "react";
 
 
-export default function PlayerNew() {
+const PlayerNew = () => {
     const { modalPlayer, closeModalPlayer, openModalPlayer } = useModal();
     const { players } = useContext(PlayersContext);
     return (
@@ -20,3 +20,4 @@ export default function PlayerNew() {
         </>
     );
 }
+export default PlayerNew;

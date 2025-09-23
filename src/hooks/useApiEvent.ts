@@ -9,7 +9,10 @@ interface EventGetType {
         date: string,
         Stadium: StadiumType,
         Players: PlayerType[],
-    }
+    },
+    title: string,
+    message: string,
+    statusCode: number
 };
 interface EventType {
     code: string,
@@ -19,17 +22,10 @@ interface EventType {
     userId: number
 }
 
-interface ErrorType {
-    errorValue: boolean,
-    message: string
-};
-
-const useDefaulValues: EventGetType = { info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] } };
-
 const useApiEvent = (url: string) => {
 
-    const [dataEvent, setDataEvent] = useState(useDefaulValues);
-    const [errorEvent, setErrorEvent] = useState<ErrorType>({ errorValue: true, message: "" });
+    const useDefaulValues: EventGetType = { info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] }, title: "", message: "", statusCode: 0 };
+    const [dataEvent, setDataEvent] = useState<EventGetType>(useDefaulValues);
     const [loadingEvent, setLoadingEvent] = useState(false);
 
     const postEvent = async ({ code, date, stadium, players, userId }: EventType) => {
@@ -44,16 +40,11 @@ const useApiEvent = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(url, options);
-            if (response.ok) {
-                const dataInfo = await response.json();
-                setErrorEvent({ errorValue: false, message: `${dataInfo.message}` });
-            } else {
-                const dataInfo = await response.json();
-                setErrorEvent({ errorValue: true, message: `${dataInfo.title}` });
-            };
+            const data: EventGetType = await response.json();
+            setDataEvent(data);
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setErrorEvent({ errorValue: true, message: error.name });
+                setDataEvent({ info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] }, title: error.name, message: error.message, statusCode: 500 });
             };
         } finally {
             setLoadingEvent(false);
@@ -68,16 +59,11 @@ const useApiEvent = (url: string) => {
                 headers: { "content-type": "application/json" },
             };
             const response = await fetch(`${url}/${codeEvent}`, options);
-            if (response.ok) {
-                const dataValues: EventGetType = await response.json();
-                setDataEvent(dataValues);
-            } else {
-                const dataInfo = await response.json();
-                setErrorEvent({ errorValue: true, message: `${dataInfo.title}` });
-            };
+            const data: EventGetType = await response.json();
+            setDataEvent(data);
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setErrorEvent({ errorValue: true, message: error.message });
+                setDataEvent({ info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] }, title: error.name, message: error.message, statusCode: 500 });
             };
         } finally {
             setLoadingEvent(false);
@@ -94,15 +80,11 @@ const useApiEvent = (url: string) => {
                 body: JSON.stringify(dataValues)
             };
             const response = await fetch(`${url}/${idEvent}`, options);
-            if (response.ok) {
-                setErrorEvent({ errorValue: false, message: "Actualizado correctamente." });
-            } else {
-                const dataInfo = await response.json();
-                setErrorEvent({ errorValue: true, message: `${dataInfo.message.info}` });
-            };
+            const data: EventGetType = await response.json();
+            setDataEvent(data);
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setErrorEvent({ errorValue: true, message: error.message });
+                setDataEvent({ info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] }, title: error.name, message: error.message, statusCode: 500 });
             }
         } finally {
             setLoadingEvent(false);
@@ -117,13 +99,11 @@ const useApiEvent = (url: string) => {
                 headers: { "content-type": "application/json" },
             };
             const response = await fetch(`${url}/${id}`, options);
-            if (!response.ok) {
-                const dataInfo = await response.json();
-                setErrorEvent({ errorValue: true, message: `${dataInfo.message.info}` });
-            };
+            const data: EventGetType = await response.json();
+            setDataEvent(data);
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setErrorEvent({ errorValue: true, message: error.message });
+                setDataEvent({ info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] }, title: error.name, message: error.message, statusCode: 500 });
             };
         } finally {
             setLoadingEvent(false);
@@ -138,22 +118,17 @@ const useApiEvent = (url: string) => {
                 headers: { "content-type": "application/json" },
             };
             const response = await fetch(`${url}/${idUser}`, options);
-            if (response.ok) {
-                const dataValues: EventGetType = await response.json();
-                setDataEvent(dataValues);
-            } else {
-                const dataInfo = await response.json();
-                setErrorEvent({ errorValue: true, message: `${dataInfo.message.info}` });
-            };
+            const data: EventGetType = await response.json();
+            setDataEvent(data);
         } catch (error: unknown) {
             if (error instanceof Error) {
-                setErrorEvent({ errorValue: true, message: error.message });
+                setDataEvent({ info: { id: 0, code: "", date: "", Stadium: { id: 0, name: "", address: "" }, Players: [{ id: 0, name: "", email: "", state: "", admin: false }] }, title: error.name, message: error.message, statusCode: 500 });
             };
         } finally {
             setLoadingEvent(false);
         }
     };
 
-    return { dataEvent, loadingEvent, errorEvent, postEvent, getEventByCode, putEvent, deleteEvent, getEventByUser }
+    return { dataEvent, loadingEvent, postEvent, getEventByCode, putEvent, deleteEvent, getEventByUser }
 }
 export default useApiEvent;

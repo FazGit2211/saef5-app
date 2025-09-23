@@ -18,7 +18,7 @@ export const style = {
     p: 4,
 };
 
-export default function ModalCreatePlayer({ openModal, closeModal }: PropsType) {
+const ModalCreatePlayer = ({ openModal, closeModal }: PropsType) => {
     return (
         <Modal open={openModal}>
             <Box sx={style}>
@@ -28,3 +28,4 @@ export default function ModalCreatePlayer({ openModal, closeModal }: PropsType) 
         </Modal>
     )
 }
+export default ModalCreatePlayer;

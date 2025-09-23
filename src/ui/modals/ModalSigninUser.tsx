@@ -4,7 +4,7 @@ import { PropsType, style } from "./ModalCreatePlayer";
 import useFormUser from "@/hooks/useFormUser";
 import useAlert from "@/hooks/useAlert";
 import { Close, Save } from "@mui/icons-material";
-export default function ModalSigninUser({ openModal, closeModal }: PropsType) {
+const ModalSigninUser = ({ openModal, closeModal }: PropsType) => {
     const { formUser, errorFormUser, handleChangePassword, handleChangeUsername, handleBlurUsername, handleBlurPassword } = useFormUser();
     const url = "https://saf5-api.onrender.com/api/user/signin";
     const { loadingUser, errorUser, signin } = useApiUser(url);
@@ -40,3 +40,4 @@ export default function ModalSigninUser({ openModal, closeModal }: PropsType) {
         </>
     );
 };
+export default ModalSigninUser;

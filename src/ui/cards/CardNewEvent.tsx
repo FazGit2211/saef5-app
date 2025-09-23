@@ -12,7 +12,7 @@ interface PropsType {
     stadium: StadiumType,
     addStadium: (s: StadiumType) => void
 }
-export default function CardNewEvent({ date, setDate, stadium, addStadium }: PropsType) {
+const CardNewEvent = ({ date, setDate, stadium, addStadium }: PropsType) => {
     //utilizar el hook router para redireccionar
     const router = useRouter();
     //propiedades e métodos para utilizar los modales
@@ -31,3 +31,4 @@ export default function CardNewEvent({ date, setDate, stadium, addStadium }: Pro
         </>
     )
 };
+export default CardNewEvent;
