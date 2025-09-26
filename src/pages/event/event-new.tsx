@@ -7,7 +7,7 @@ import CardNewEvent from "@/ui/cards/CardNewEvent";
 import CardPlayers from "@/ui/cards/CardPlayers";
 import { Save } from "@mui/icons-material";
 import { Alert, Button, TextField, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 const Event = () => {
     const [date, setDate] = useState("");
     const [stadium, setStadium] = useState<StadiumType>({ id: 0, name: "", address: "" });
@@ -19,8 +19,8 @@ const Event = () => {
     const { players, removeAll } = useContext(PlayerContext);
     const { removeEvent } = useContext(EventContext);
     //Utilizar propiedades e métodos del hook
-    const url = "https://saf5-api.onrender.com/api/event";
-    const { loadingEvent, errorEvent, postEvent } = useApiEvent(url);
+    const url = "http://localhost:5000/api/event";
+    const { dataEvent, loadingEvent, postEvent } = useApiEvent(url);
     //Métodos para almacenar el estado
     const handleSetDate = (d: string) => {
         if (d.trim() !== "") {
@@ -39,13 +39,16 @@ const Event = () => {
     const handleSendEvent = async () => {
         await postEvent({ code: codeEvent, date, stadium, players, userId: user.id });
         handleShowAlert();
-        if (!errorEvent.errorValue) {
+    };
+
+    useEffect(()=>{
+        if (dataEvent.statusCode == 200) {
             handleSetTimeOut();
             setDate("");
             setStadium({ id: 0, name: "", address: "" });
             removeAll();
         };
-    };
+    },[])
     return (
         <>
             <CardNewEvent date={date} setDate={handleSetDate} stadium={stadium} addStadium={handleSetStadium} />
@@ -55,8 +58,8 @@ const Event = () => {
             <TextField label="Nombre, codigo o alias del evento." variant="outlined" value={codeEvent} onChange={handleChangeCodigo}></TextField>
             {(players.length > 0) && (date.trim() !== "") && (stadium.name.trim() !== "") && (stadium.address.trim() !== "") && (codeEvent.trim() !== "") ? <Button variant="contained" onClick={handleSendEvent} color="success"><Save /></Button> : null}
             {loadingEvent ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
-            {alert && !loadingEvent && errorEvent.errorValue ? <Alert variant="filled" severity="warning">{errorEvent.message}</Alert> : null}
-            {alert && !loadingEvent && !errorEvent.errorValue ? <Alert variant="filled" severity="success" >Guardado</Alert> : null}
+            {alert && !loadingEvent && dataEvent.statusCode !== 200 ? <Alert variant="filled" severity="warning">{dataEvent.message}</Alert> : null}
+            {alert && !loadingEvent && dataEvent.statusCode == 200 ? <Alert variant="filled" severity="success" >Guardado</Alert> : null}
         </>
     );
 }

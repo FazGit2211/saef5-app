@@ -1,14 +1,16 @@
+import EventContext from "@/context/EventContext";
 import BtnSearchEvent from "@/ui/btns/BtnSearchEvent";
 import ListDataEvent from "@/ui/lists/ListDataEvent";
 import TextFieldSearchEvent from "@/ui/textfield/TextFieldSearchEvent";
+import { useContext } from "react";
 
 const EventFind = () => {
-    console.log("Componente Event FInd");
+    const { event } = useContext(EventContext);
     return (
         <>
             <TextFieldSearchEvent />
             <BtnSearchEvent />
-            <ListDataEvent />
+            {event.id > 0 ? <ListDataEvent /> : null}
         </>
     );
 };

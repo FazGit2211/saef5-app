@@ -1,5 +1,5 @@
 import EventContext from "@/context/EventContext";
-import PlayerContext, { PlayerType } from "@/context/PlayersContext";
+import { PlayerType } from "@/context/PlayersContext";
 import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
 import CardEvent from "@/ui/cards/CardEvent";
@@ -22,7 +22,6 @@ const EventUpdate = () => {
     const { deletePlayer, openDeletePlayer, closeDeletePlayer, saveEvent, closeSaveEvent } = useDialog();
     //propiedades e métodos para utilizar los datos del contexto
     const { event } = useContext(EventContext);
-    const { players } = useContext(PlayerContext);
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(!open);
@@ -56,7 +55,7 @@ const EventUpdate = () => {
                         </ListItemButton>
                         <Collapse in={open} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
-                                {players.map((elem, index) => (<ListItem key={elem.id}><People />{elem.name} {elem.state}<Button variant="contained" onClick={() => handleSelectEdit(elem, index)} color="secondary"><Edit /></Button><Button variant="contained" onClick={() => handleDeletedItem(index, elem)} color="warning"><Delete /></Button></ListItem>))}
+                                {event.Player.map((elem, index) => (<ListItem key={elem.id}><People />{elem.name} {elem.state}<Button variant="contained" onClick={() => handleSelectEdit(elem, index)} color="secondary"><Edit /></Button><Button variant="contained" onClick={() => handleDeletedItem(index, elem)} color="warning"><Delete /></Button></ListItem>))}
                             </List>
                         </Collapse>
                     </List>

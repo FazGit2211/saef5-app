@@ -16,33 +16,29 @@ const BtnSearchEvent = () => {
     const { code } = useContext(SearchContext);
     const { event, removeEvent } = useContext(EventContext);
     //Estado para manejar cuando se quiere buscar un nuevo evento
-    const [search, setSearch] = useState(false);
     //propiedades e método de los contextos
     const { addEvent, addStadium, addPlayers } = useContext(EventContext);
-    const handleClick = () => {
-        setSearch(true);
-        //Evaluar si hay data en el contexto
+    const handleClick = async () => {
+        handleShowAlert();
+        await getEventByCode(code);
+        //Evaluar si hay data en el contexto e limpiar para nueva búsqueda
         if (event.id > 0) {
             removeEvent();
-            setSearch(false);
         }
+        handleSetTimeOut();
     };
     useEffect(() => {
-        if (code.trim() !== "" && search) {
-            handleShowAlert();
-            getEventByCode(code);
-            if (dataEvent.statusCode == 200) {
-                addEvent({ id: dataEvent.info.id, code: dataEvent.info.code, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
-                addPlayers(dataEvent.info.Players);
-                addStadium({ id: dataEvent.info.Stadium.id, name: dataEvent.info.Stadium.name, address: dataEvent.info.Stadium.address });
-            };
-            handleSetTimeOut();
+        if (dataEvent.statusCode == 200) {
+            addEvent({ id: dataEvent.info.id, code: dataEvent.info.code, date: dataEvent.info.date, Stadium: dataEvent.info.Stadium, Player: dataEvent.info.Players });
+            addPlayers(dataEvent.info.Players);
+            addStadium({ id: dataEvent.info.Stadium.id, name: dataEvent.info.Stadium.name, address: dataEvent.info.Stadium.address });
         };
-    }, [search])
+    }, [alert])
     return (
         <>
             <Button variant="contained" onClick={handleClick}><Search /></Button>
-            {alert && loadingEvent ? <Typography>Cargando ...</Typography> : null}
+            {alert || loadingEvent ? <Typography>Cargando ...</Typography> : null}
+            {alert && !loadingEvent && dataEvent.statusCode !== 200 ? <Typography>{dataEvent.message}</Typography> : null}
         </>
     )
 }

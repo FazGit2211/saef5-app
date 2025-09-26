@@ -9,17 +9,17 @@ import { useRouter } from "next/router";
 const FormLogin = () => {
     //Utilizar propiedades e métodos del hook personalizado
     const { formUser, errorFormUser, handleChangePassword, handleChangeUsername, handleBlurUsername, handleBlurPassword } = useFormUser();
-    const url = "https://saf5-api.onrender.com/api/user/login";
+    const url = "http://localhost:5000/api/user/login";
     const { loadingUser, errorUser, dataUser, login } = useApiUser(url);
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     const { modalUserSingin, openModalUserSingin, closeModalUserSingin } = useModal();
     //Utilizar el hook router
     const router = useRouter();
     //Método para verificar la autentificacion
-    const handleClickLogin = () => {
+    const handleClickLogin = async () => {
         if (!errorFormUser.errorUser) {
-            login({ id: 0, username: formUser.username, password: formUser.password, Events: [] });
             handleShowAlert();
+            await login({ id: 0, username: formUser.username, password: formUser.password, Events: [] });
             handleSetTimeOut();
         };
     };
@@ -42,7 +42,7 @@ const FormLogin = () => {
                 <CardActions>
                     <Typography><Button variant="contained" color="success" onClick={handleClickLogin}><Login /></Button></Typography>
                 </CardActions>
-                {loadingUser ? <Alert variant="filled" severity="info">Verificando</Alert> : null}
+                {alert || loadingUser ? <Alert variant="filled" severity="info">Verificando</Alert> : null}
                 {alert && !loadingUser && errorUser.errorValue ? <Alert variant="filled" severity="warning">{errorUser.message}</Alert> : null}
                 {alert && !loadingUser && !errorUser.errorValue ? <Alert variant="filled" severity="success">Autentificado correctamente</Alert> : null}
                 {modalUserSingin ? <ModalSinginUser openModal={modalUserSingin} closeModal={closeModalUserSingin} /> : null}

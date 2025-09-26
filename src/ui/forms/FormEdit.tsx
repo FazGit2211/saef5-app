@@ -19,7 +19,7 @@ const FormEdit = ({ playerEdit, indexPlayerEdit }: PropsFormEditType) => {
     //Utilizar a los alert del hook personalizado
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //Utilizar las propiedades e métodos del hook personalizado del formulario
-    const url = "https://saf5-api.onrender.com/api/player";
+    const url = "http://localhost:5000/api/player";
     const { putPlayer } = useApiPlayer(url);
     //Llamar al listado actual
     const { players } = useContext(PlayerContext);

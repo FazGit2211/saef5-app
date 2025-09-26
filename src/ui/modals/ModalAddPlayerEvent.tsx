@@ -17,7 +17,7 @@ const ModalAddPlayerEvent = ({ openModal, closeModal }: PropsType) => {
     //Utilizar las propiedades e métodos del hook alert
     const { alert, handleShowAlert, handleSetTimeOut } = useAlert();
     //utilizar el hook personalizado para eliminar un jugador
-    const url = "https://saf5-api.onrender.com/api/player";
+    const url = "http://localhost:5000/api/player";
     const { loadingPlayer, errorPlayer, postPlayer } = useApiPlayer(url);
     const handleSubmit = () => {
         if (!errorInfo.errorValue) {
