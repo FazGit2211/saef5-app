@@ -1,4 +1,4 @@
-import EventContext, { StadiumType } from "@/context/EventContext";
+import { StadiumType } from "@/context/EventContext";
 import PlayerContext from "@/context/PlayersContext";
 import UserContext from "@/context/UserContext";
 import useAlert from "@/hooks/useAlert";
@@ -17,7 +17,6 @@ const Event = () => {
     //Utilizar los métodos e propiedades del contexto
     const { user } = useContext(UserContext);
     const { players, removeAll } = useContext(PlayerContext);
-    const { removeEvent } = useContext(EventContext);
     //Utilizar propiedades e métodos del hook
     const url = "http://localhost:5000/api/event";
     const { dataEvent, loadingEvent, postEvent } = useApiEvent(url);
@@ -37,18 +36,18 @@ const Event = () => {
     };
     //Método para crear el evento
     const handleSendEvent = async () => {
-        await postEvent({ code: codeEvent, date, stadium, players, userId: user.id });
         handleShowAlert();
+        await postEvent({ code: codeEvent, date, stadium, players, userId: user.id });        
+        handleSetTimeOut();
     };
 
     useEffect(()=>{
-        if (dataEvent.statusCode == 200) {
-            handleSetTimeOut();
+        if (dataEvent.statusCode == 200) {            
             setDate("");
             setStadium({ id: 0, name: "", address: "" });
             removeAll();
         };
-    },[])
+    },[alert])
     return (
         <>
             <CardNewEvent date={date} setDate={handleSetDate} stadium={stadium} addStadium={handleSetStadium} />
@@ -57,7 +56,7 @@ const Event = () => {
             <Typography variant="h6">{stadium.name + '' + stadium.address}</Typography>
             <TextField label="Nombre, codigo o alias del evento." variant="outlined" value={codeEvent} onChange={handleChangeCodigo}></TextField>
             {(players.length > 0) && (date.trim() !== "") && (stadium.name.trim() !== "") && (stadium.address.trim() !== "") && (codeEvent.trim() !== "") ? <Button variant="contained" onClick={handleSendEvent} color="success"><Save /></Button> : null}
-            {loadingEvent ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
+            {alert || loadingEvent ? <Alert variant="filled" severity="info">Cargando ...</Alert> : null}
             {alert && !loadingEvent && dataEvent.statusCode !== 200 ? <Alert variant="filled" severity="warning">{dataEvent.message}</Alert> : null}
             {alert && !loadingEvent && dataEvent.statusCode == 200 ? <Alert variant="filled" severity="success" >Guardado</Alert> : null}
         </>

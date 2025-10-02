@@ -15,7 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
             <main className="flex flex-col flex-grow-1 justify-evenly items-center">
                 {children}
             </main>
-            <footer className="flex justify-evenly">
+            <footer className="flex justify-evenly max-md:flex-col md:flex flex-row">
                 <Typography variant="h6"><Email /> zuletafacundoadolfo2211@gmail.com</Typography><Typography variant="h6"><LinkedIn />linkedin.com/in/facundo-zuleta-/</Typography>
             </footer>
         </div>
