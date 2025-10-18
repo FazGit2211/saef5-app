@@ -15,7 +15,7 @@ const NavBar = () => {
         router.push("/user/login-user");
     };
     const handleClickShoppingCart = () => {
-        router.push("/product/product-list");
+        router.push("/product/product");
     };
     return (
         <AppBar position="static" color="info">

@@ -1,3 +1,4 @@
+import { CardProductProvider } from "@/context/CartProductContext";
 import { EventProvider } from "@/context/EventContext";
 import { PlayerProvider } from "@/context/PlayersContext";
 import { SearchProvider } from "@/context/SearchContext";
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <PlayerProvider>
           <UserProvider>
             <SearchProvider>
-              <Component {...pageProps} />
+              <CardProductProvider>
+                <Component {...pageProps} />
+              </CardProductProvider>
             </SearchProvider>
           </UserProvider>
         </PlayerProvider>

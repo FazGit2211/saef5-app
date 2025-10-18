@@ -23,7 +23,7 @@ interface ContextEventType {
     removeEvent: () => void,
 };
 
-interface ProviderType {
+export interface ProviderType {
     children: ReactNode
 };
 
